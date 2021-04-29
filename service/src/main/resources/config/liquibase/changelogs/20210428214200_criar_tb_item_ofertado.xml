@@ -7,16 +7,16 @@
 
     <changeSet id="20210428214200-001" author="matheus.jagi">
         <createTable tableName="ITEM_OFERTADO">
-        <column name="ID" type="int">
+            <column name="ID" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="ID_ITEM" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-        </createTable>
-        <column name="ID_OFERTA" type="int">
+            <column name="ID_OFERTA" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+        </createTable>
     </changeSet>
     
     <changeSet id="20210428214200-002" author="matheus.jagi">
@@ -39,3 +39,4 @@
                 sequenceName="SEQ_ITEM_OFERTADO"
                 startValue="1"/>
     </changeSet>
+</databaseChangeLog>

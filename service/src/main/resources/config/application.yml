@@ -6,9 +6,9 @@ spring:
     name: sgtpmservice
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/sgtpm
-    username: sgtpm
-    password: sgtpm
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: sgt
+    password: sgt
   jackson:
     date-format: yyyy-MM-dd
     deserialization:

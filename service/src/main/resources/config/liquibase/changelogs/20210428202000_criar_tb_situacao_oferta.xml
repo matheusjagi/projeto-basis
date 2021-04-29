@@ -18,13 +18,13 @@
 
     <changeSet id="20210428202000-002" author="matheus.jagi">
         <createTable tableName="OFERTA">
-        <column name="ID" type="int">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="ID" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
             <column name="ID_ITEM" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="ID_USUARIO" type="int">
+            <column name="ID_USUARIO_OF" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="ID_SITUACAO" type="int">
@@ -40,7 +40,7 @@
                                   referencedColumnNames="ID"
                                   referencedTableName="ITEM"/>
 
-        <addForeignKeyConstraint  baseColumnNames="ID_USUARIO"
+        <addForeignKeyConstraint  baseColumnNames="ID_USUARIO_OF"
                                   baseTableName="OFERTA"
                                   constraintName="FK_OFERTA_USUARIO"
                                   referencedColumnNames="ID"
