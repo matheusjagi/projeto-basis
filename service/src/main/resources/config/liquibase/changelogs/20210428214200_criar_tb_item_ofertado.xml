@@ -12,7 +12,7 @@
             </column>
         </createTable>
     </changeSet>
-
+    
     <changeSet id="20210428214200-002" author="matheus.jagi">
         <addForeignKeyConstraint  baseColumnNames="id_item_ofertado"
                                   baseTableName="tb_item_ofertado"
@@ -25,4 +25,12 @@
                                   constraintName="fk_item_ofertado_item"
                                   referencedColumnNames="id_item"
                                   referencedTableName="tb_item"/>
+    </changeSet>
+
+    <changeSet id="20210428214200-001" author="matheus.jagi">
+        <createTable tableName="tb_item_ofertado">
+            <column name="id_item_ofertado" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
