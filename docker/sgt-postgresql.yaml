@@ -1,9 +1,9 @@
 version: '2'
 services:
-  srs-postgresql:
+  sgt-postgresql:
     image: postgres:11.5
     environment:
-      - POSTGRES_USER=srs
-      - POSTGRES_PASSWORD=srs
+      - POSTGRES_USER=sgt
+      - POSTGRES_PASSWORD=sgt
     ports:
       - 5432:5432
