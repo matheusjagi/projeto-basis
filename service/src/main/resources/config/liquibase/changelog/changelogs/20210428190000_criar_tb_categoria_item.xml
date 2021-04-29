@@ -11,14 +11,14 @@
             <column name="id_categoria" type="int">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
-            <column name="descricao" type="varchar(30)">
+            <column name="descricao" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
 
-    <changeSet id="20210420819000-002" author="Spelta">
+    <changeSet id="202104208190000-002" author="Spelta">
         <createTable tableName="tb_item">
             <column name="id_item" type="int">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
@@ -32,15 +32,17 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="foto" type="string">
+            <column name="foto" type="varchar">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="disponibilidade" type="booblean">
+            <column name="disponibilidade" type="boolean">
                 <constraints nullable="false"/>
             </column>
 
         </createTable>
+    </changeSet>
+    <changeSet id="202104208233400-003" author="Spelta">
 
         <addForeignKeyConstraint baseTableName="tb_item"
                                  baseColumnNames="id_item"
