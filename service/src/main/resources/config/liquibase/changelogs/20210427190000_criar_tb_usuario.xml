@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20210427190000-001" author="matheus.jagi">
+        <createTable tableName="tb_usuario">
+            <column name="id_usuario" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cpf" type="varchar(11)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="dt_nascimento" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210427190000-002" author="matheus.jagi">
+        <createSequence
+            incrementBy="1"
+            sequenceName="seq_usuario"
+            startValue="1"/>
+    </changeSet>
+</databaseChangeLog>
