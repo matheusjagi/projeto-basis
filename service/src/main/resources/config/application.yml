@@ -1,12 +1,16 @@
 application:
-  appName: sgtpm
+  appName: sgt
 
 spring:
   application:
-    name: sgtpmservice
+    name: sgtservice
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
+<<<<<<< HEAD
     url: jdbc:postgresql://localhost:5432/postgres
+=======
+    url: jdbc:postgresql://localhost:5432/sgt
+>>>>>>> 75a514bbd0c7dc5993b4b2787ac067135f6b3481
     username: sgt
     password: sgt
   jackson:
@@ -14,7 +18,7 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   jpa:
-    #database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
+    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
     database: POSTGRESQL
     show-sql: true
     open-in-view: false

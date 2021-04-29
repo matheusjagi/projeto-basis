@@ -1,4 +1,4 @@
-/*package com.basis.grupoum.sgt.service.dominio;
+package com.basis.grupoum.sgt.service.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,4 +40,4 @@ public class Usuario implements Serializable {
     @Column(name="DT_NASCIMENTO")
     private LocalDate dataNascimento;
 
-}*/
+}
