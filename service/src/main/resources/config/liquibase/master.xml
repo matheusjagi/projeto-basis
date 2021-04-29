@@ -7,4 +7,8 @@
 
     <include file="config/liquibase/changelogs/20210427190000_criar_tb_usuario.xml"
              relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210427190000_criar_tb_oferta.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210427190000_criar_tb_item_ofertado.xml"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>
