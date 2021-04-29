@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet id="20210428190000-001" author="Spelta">
+        <createTable tableName="tb_categoria">
+            <column name="id_categoria" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="descricao" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="20210420819000-002" author="Spelta">
+        <createTable tableName="tb_item">
+            <column name="id_item" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="nome" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="descicao" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="foto" type="string">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="disponibilidade" type="booblean">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="tb_item"
+                                 baseColumnNames="id_item"
+                                 constraintName="fk_item_usuario"
+                                 referencedTableName="tb_usuario"
+                                 referencedColumnNames="id_usuario"/>
+
+        <addForeignKeyConstraint baseTableName="tb_categoria"
+                                 baseColumnNames="id_item"
+                                 constraintName="fk_item_categoria"
+                                 referencedTableName="tb_categoria"
+                                 referencedColumnNames="id_categoria"/>
+    </changeSet>
+</databaseChangeLog>
