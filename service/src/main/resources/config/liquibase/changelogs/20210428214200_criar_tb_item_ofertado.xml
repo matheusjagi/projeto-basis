@@ -6,31 +6,36 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="20210428214200-001" author="matheus.jagi">
-        <createTable tableName="tb_item_ofertado">
-            <column name="id_item_ofertado" type="int">
+        <createTable tableName="ITEM_OFERTADO">
+        <column name="ID" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ID_ITEM" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>
+        <column name="ID_OFERTA" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
     </changeSet>
     
     <changeSet id="20210428214200-002" author="matheus.jagi">
-        <addForeignKeyConstraint  baseColumnNames="id_item_ofertado"
-                                  baseTableName="tb_item_ofertado"
-                                  constraintName="fk_item_ofertado_oferta"
-                                  referencedColumnNames="id_oferta"
-                                  referencedTableName="tb_oferta"/>
+        <addForeignKeyConstraint  baseColumnNames="ID_ITEM"
+                                  baseTableName="ITEM_OFERTADO"
+                                  constraintName="FK_ITEM_OFERTADO_ITEM"
+                                  referencedColumnNames="ID"
+                                  referencedTableName="ITEM"/>
 
-        <addForeignKeyConstraint  baseColumnNames="id_item_ofertado"
-                                  baseTableName="tb_item_ofertado"
-                                  constraintName="fk_item_ofertado_item"
-                                  referencedColumnNames="id_item"
-                                  referencedTableName="tb_item"/>
+        <addForeignKeyConstraint  baseColumnNames="ID_OFERTA"
+                                  baseTableName="ITEM_OFERTADO"
+                                  constraintName="FK_ITEM_OFERTADO_OFERTA"
+                                  referencedColumnNames="ID"
+                                  referencedTableName="OFERTA"/>
     </changeSet>
 
-    <changeSet id="20210428214200-001" author="matheus.jagi">
-        <createTable tableName="tb_item_ofertado">
-            <column name="id_item_ofertado" type="int">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-        </createTable>
+    <changeSet id="20210429134300-003" author="gabriel.angelo">
+        <createSequence
+                incrementBy="1"
+                sequenceName="SEQ_ITEM_OFERTADO"
+                startValue="1"/>
     </changeSet>

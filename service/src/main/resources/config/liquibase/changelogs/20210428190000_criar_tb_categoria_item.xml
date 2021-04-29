@@ -7,11 +7,11 @@
 
 
     <changeSet id="20210428190000-001" author="Spelta">
-        <createTable tableName="tb_categoria">
-            <column name="id_categoria" type="int">
+        <createTable tableName="CATEGORIA">
+            <column name="ID" type="int">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
-            <column name="descricao" type="varchar(100)">
+            <column name="DESCRICAO" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -19,51 +19,59 @@
 
 
     <changeSet id="202104208190000-002" author="Spelta">
-        <createTable tableName="tb_item">
-            <column name="id_item" type="int">
+        <createTable tableName="ITEM">
+            <column name="ID" type="int">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
 
-            <column name="nome" type="varchar(50)">
+            <column name="NOME" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="descricao" type="varchar(100)">
+            <column name="DESCRICAO" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="foto" type="varchar">
+            <column name="FOTO" type="varchar">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="disponibilidade" type="boolean">
+            <column name="DISPONIBILIDADE" type="boolean">
                 <constraints nullable="false"/>
             </column>
 
+            <column name="ITEM_USUARIO" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ITEM_CATEGORIA" type="boolean">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
+    
     <changeSet id="202104208233400-003" author="Spelta">
 
-        <addForeignKeyConstraint baseTableName="tb_item"
-                                 baseColumnNames="id_item"
-                                 constraintName="fk_item_usuario"
-                                 referencedTableName="tb_usuario"
-                                 referencedColumnNames="id_usuario"/>
+        <addForeignKeyConstraint baseTableName="ITEM"
+                                 baseColumnNames="ITEM_USUARIO"
+                                 constraintName="FK_ITEM_USUARIO"
+                                 referencedTableName="USUARIO"
+                                 referencedColumnNames="ID"/>
 
-        <addForeignKeyConstraint baseTableName="tb_categoria"
-                                 baseColumnNames="id_item"
-                                 constraintName="fk_item_categoria"
-                                 referencedTableName="tb_categoria"
-                                 referencedColumnNames="id_categoria"/>
+        <addForeignKeyConstraint baseTableName="ITEM"
+                                 baseColumnNames="ITEM_CATEGORIA"
+                                 constraintName="FK_ITEM_CATEGORIA"
+                                 referencedTableName="CATEGORIA"
+                                 referencedColumnNames="ID"/>
     </changeSet>
     <changeSet id="20210429093600-004" author="gabriel.angelo">
         <createSequence
             incrementBy="1"
-            sequenceName="seq_item"
+            sequenceName="SEQ_ITEM"
             startValue="1"/>
         <createSequence
             incrementBy="1"
-            sequenceName="seq_categoria"
+            sequenceName="SEQ_CATEGORIA"
             startValue="1"/>
     </changeSet>
 </databaseChangeLog>

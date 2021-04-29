@@ -1,4 +1,4 @@
-package com.basis.grupoum.sgt.service.dominio;
+/*package com.basis.grupoum.sgt.service.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,16 +16,16 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_categoria")
+@Table(name = "CATEGORIA")
 public class Categoria implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_categoria")
-    @SequenceGenerator(name = "seq_categoria", allocationSize = 1, sequenceName = "seq_categoria")
-    @Column(name="id_categoria")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CATEGORIA")
+    @SequenceGenerator(name = "SEQ_CATEGORIA", allocationSize = 1, sequenceName = "SEQ_CATEGORIA")
+    @Column(name="ID")
     private Long id;
 
-    @Column(name="descricao")
+    @Column(name="DESCRICAO")
     private String descricao;
 
-}
+}*/
