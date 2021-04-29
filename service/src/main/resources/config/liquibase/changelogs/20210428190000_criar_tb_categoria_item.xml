@@ -64,6 +64,7 @@
                                  referencedTableName="CATEGORIA"
                                  referencedColumnNames="ID"/>
     </changeSet>
+
     <changeSet id="20210429093600-004" author="gabriel.angelo">
         <createSequence
             incrementBy="1"
@@ -73,5 +74,13 @@
             incrementBy="1"
             sequenceName="SEQ_CATEGORIA"
             startValue="1"/>
+    </changeSet>
+
+    <changeSet id="20210429193000-005" author="matheus.jagi">
+        <modifyDataType
+                columnName="FOTO"
+                newDataType="blob"
+                schemaName="public"
+                tableName="ITEM"/>
     </changeSet>
 </databaseChangeLog>

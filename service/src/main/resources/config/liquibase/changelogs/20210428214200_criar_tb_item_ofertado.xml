@@ -7,9 +7,6 @@
 
     <changeSet id="20210428214200-001" author="matheus.jagi">
         <createTable tableName="ITEM_OFERTADO">
-            <column name="ID" type="int">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
             <column name="ID_ITEM" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -33,10 +30,4 @@
                                   referencedTableName="OFERTA"/>
     </changeSet>
 
-    <changeSet id="20210429134300-003" author="gabriel.angelo">
-        <createSequence
-                incrementBy="1"
-                sequenceName="SEQ_ITEM_OFERTADO"
-                startValue="1"/>
-    </changeSet>
 </databaseChangeLog>
