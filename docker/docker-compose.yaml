@@ -1,10 +1,10 @@
 version: '2'
 services: 
-  sgtpm-postgresql:
+  srs-postgresql:
     extends:
-      file: sgtpm-postgresql.yaml
-      service: sgtpm-postgresql
-    container_name: sgtpm-postgresql
+      file: srs-postgresql.yaml
+      service: srs-postgresql
+    container_name: srs-postgresql
 
   rabbitmq:
     extends:
