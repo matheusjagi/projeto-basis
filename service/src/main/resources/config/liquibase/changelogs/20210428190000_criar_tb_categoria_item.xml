@@ -28,7 +28,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="descicao" type="varchar(100)">
+            <column name="descricao" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
 
@@ -55,5 +55,15 @@
                                  constraintName="fk_item_categoria"
                                  referencedTableName="tb_categoria"
                                  referencedColumnNames="id_categoria"/>
+    </changeSet>
+    <changeSet id="20210429093600-004" author="gabriel.angelo">
+        <createSequence
+            incrementBy="1"
+            sequenceName="seq_item"
+            startValue="1"/>
+        <createSequence
+            incrementBy="1"
+            sequenceName="seq_categoria"
+            startValue="1"/>
     </changeSet>
 </databaseChangeLog>
