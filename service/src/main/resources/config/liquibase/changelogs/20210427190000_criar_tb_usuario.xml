@@ -13,7 +13,25 @@
             <column name="nome" type="varchar(80)">
                 <constraints nullable="false"/>
             </column>
+            <column name="cpf" type="varchar(11)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="dt_nascimento" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
         </createTable>
     </changeSet>
 
+    <changeSet id="20210427190000-002" author="matheus.jagi">
+        <createSequence
+            incrementBy="1"
+            sequenceName="seq_usuario"
+            startValue="1"/>
+    </changeSet>
 </databaseChangeLog>

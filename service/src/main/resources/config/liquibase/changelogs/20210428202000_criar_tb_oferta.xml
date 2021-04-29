@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20210428202000-001" author="matheus.jagi">
+        <createTable tableName="tb_situacao">
+            <column name="id_situacao" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210428202000-002" author="matheus.jagi">
+        <createTable tableName="tb_oferta">
+            <column name="id_oferta" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet  author="matheus.jagi"  id="20210428202000-003">
+        <addForeignKeyConstraint  baseColumnNames="id_oferta"
+                                  baseTableName="tb_oferta"
+                                  constraintName="fk_oferta_item"
+                                  referencedColumnNames="id_item"
+                                  referencedTableName="tb_item"/>
+
+        <addForeignKeyConstraint  baseColumnNames="id_oferta"
+                                  baseTableName="tb_oferta"
+                                  constraintName="fk_oferta_usuario"
+                                  referencedColumnNames="id_usuario"
+                                  referencedTableName="tb_usuario"/>
+
+        <addForeignKeyConstraint  baseColumnNames="id_oferta"
+                                  baseTableName="tb_oferta"
+                                  constraintName="fk_oferta_situacao"
+                                  referencedColumnNames="id_situacao"
+                                  referencedTableName="tb_situcao"/>
+    </changeSet>
+
+    <changeSet id="20210428202000-004" author="matheus.jagi">
+        <createSequence
+                incrementBy="1"
+                sequenceName="seq_oferta"
+                startValue="1"/>
+    </changeSet>
+</databaseChangeLog>
