@@ -20,8 +20,6 @@ import java.time.LocalDate;
 public class Situacao implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SITUACAO")
-    @SequenceGenerator(name = "SEQ_SITUACAO", allocationSize = 1, sequenceName = "SEQ_SITUACAO")
     @Column(name="ID")
     private Long id;
 

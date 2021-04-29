@@ -18,10 +18,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "CATEGORIA")
 public class Categoria implements Serializable {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CATEGORIA")
-    @SequenceGenerator(name = "SEQ_CATEGORIA", allocationSize = 1, sequenceName = "SEQ_CATEGORIA")
     @Column(name="ID")
     private Long id;
 

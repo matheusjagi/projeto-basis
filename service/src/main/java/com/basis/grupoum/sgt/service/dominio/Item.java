@@ -25,16 +25,18 @@ public class Item implements Serializable {
     @Column(name="DESCRICAO")
     private String descricao;
 
+    @Lob
     @Column(name="FOTO")
-    private String foto;
+    private byte[] foto;
 
     @Column(name="DISPONIBILIDADE")
     private boolean disponibilidade;
 
-    @OneToMany
-    private int id_usuario;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CATEGORIA")
+    private Categoria categoria;
 
-    @OneToMany
-    private int id_categoria;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_USUARIO")
+    private Usuario usuario;
 }

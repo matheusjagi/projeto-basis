@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,13 +20,23 @@ public class Oferta implements Serializable {
     @Column(name="ID")
     private Long id;
 
-    @OneToMany
-    private int id_item;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ITEM")
+    private Item item;
 
-    @OneToMany
-    private int id_usuario_of;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_USUARIO")
+    private Usuario usuario;
 
-    @OneToMany
-    private int id_situacao;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_SITUACAO")
+    private Situacao situacao;
+
+    @ManyToMany
+    @JoinTable(name = "ITEM_OFERTADO", joinColumns =
+            {@JoinColumn(name = "ID_OFERTA")}, inverseJoinColumns =
+            {@JoinColumn(name = "ID_ITEM")})
+    private List<Item> itensOfertados;
+
 
 }
