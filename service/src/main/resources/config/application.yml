@@ -6,7 +6,7 @@ spring:
     name: sgtservice
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/sgt
+    url: jdbc:postgresql://localhost:5432/postgres
     username: sgt
     password: sgt
   jackson:
@@ -14,7 +14,7 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   jpa:
-    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     database: POSTGRESQL
     show-sql: true
     open-in-view: false
@@ -26,6 +26,6 @@ spring:
       hibernate.generate_statistics: false
   liquibase:
     change-log: classpath:/config/liquibase/master.xml
-#        drop-first: true
+    drop-first: true
 server:
   port: 8080

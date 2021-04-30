@@ -2,9 +2,9 @@ version: '2'
 services: 
   srs-postgresql:
     extends:
-      file: srs-postgresql.yaml
-      service: srs-postgresql
-    container_name: srs-postgresql
+      file: sgt-postgresql.yaml
+      service: sgt-postgresql
+    container_name: sgt-postgresql
 
   rabbitmq:
     extends:
