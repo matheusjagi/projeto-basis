@@ -15,12 +15,20 @@ import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
 public class UsuarioServico {
+    private final UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioMapper usuarioMapper;
 
-    private Usuario getUsuario(Long id){
-        return UsuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario nao encontrado"));
+    public List<UsuarioDTO> listar (){
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        return usuarioMapper.toDto(usuarios);
     }
 
-    public UsuarioDTO salvar(UsuarioDTO dto){
+    public UsuarioDTO obterPorId(Long id){
+        Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario nao encontrado"));
+        return usuarioMapper.toDto(usuario);
+    }
+
+    public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = UsuarioMapper.toEntity(dto);
         Usuario.setToken(UUID.randomUUID().toString());
         UsuarioRepositorio.save(usuario);
