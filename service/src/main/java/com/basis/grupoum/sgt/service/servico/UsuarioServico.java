@@ -29,19 +29,21 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
-        Usuario usuario = UsuarioMapper.toEntity(dto);
+        Usuario usuario = UsuarioMapper.toEntity(usuarioDTO);
         Usuario.setToken(UUID.randomUUID().toString());
         UsuarioRepositorio.save(usuario);
         return UsuarioMapper.toDto(usuario);
     }
 
-    public UsuarioDTO atualizar(UsuarioDTO dto){
-        Usuario usuario = UsuarioMapper.toEntity(dto);
+    public UsuarioDTO atualizar(UsuarioDTO usuarioDTO){
+        Usuario usuario = UsuarioMapper.toEntity(usuarioDTO);
         Usuario usuarioSalvo = getUsuario(usuario.getId());
         usuario.setToken(usuarioSalvo.getToken());
         UsuarioRepositorio.save(usuario);
         return UsuarioMapper.toDto(usuario);
     }
 
-
+    public void deletar(Long idUsuario){
+        usuarioRepositorio.deleteById(idUsuario)
+    }
 }
