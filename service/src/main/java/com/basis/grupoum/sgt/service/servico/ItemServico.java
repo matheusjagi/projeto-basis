@@ -1,8 +1,6 @@
 package com.basis.grupoum.sgt.service.servico;
 
-import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
-import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
@@ -10,7 +8,6 @@ import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;

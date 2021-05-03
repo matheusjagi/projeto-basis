@@ -1,13 +1,8 @@
 package com.basis.grupoum.sgt.service.recurso;
 
-import com.basis.grupoum.sgt.service.dominio.Usuario;
-import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
 import com.basis.grupoum.sgt.service.servico.UsuarioServico;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioListagemDTO;
-import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
-import com.basis.grupoum.sgt.service.servico.mapper.UsuarioListagemMapper;
-import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
