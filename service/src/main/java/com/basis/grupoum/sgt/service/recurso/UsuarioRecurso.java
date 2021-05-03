@@ -9,6 +9,7 @@ import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioListagemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class UsuarioRecurso {
 
     @GetMapping
     public ResponseEntity<List<UsuarioListagemDTO>> listar(){
-        List<Usuario> usuarios = usuarioServico.findAll();
+        List<UsuarioDTO> usuarios = usuarioServico.listar();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
