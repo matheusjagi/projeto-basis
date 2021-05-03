@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,18 +30,18 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
-        Usuario usuario = UsuarioMapper.toEntity(usuarioDTO);
-        Usuario.setToken(UUID.randomUUID().toString());
-        UsuarioRepositorio.save(usuario);
-        return UsuarioMapper.toDto(usuario);
+        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+        usuario.setToken(UUID.randomUUID().toString());
+        usuarioRepositorio.save(usuario);
+        return usuarioMapper.toDto(usuario);
     }
 
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO){
-        Usuario usuario = UsuarioMapper.toEntity(usuarioDTO);
+        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         Usuario usuarioSalvo = getUsuario(usuario.getId());
         usuario.setToken(usuarioSalvo.getToken());
-        UsuarioRepositorio.save(usuario);
-        return UsuarioMapper.toDto(usuario);
+        usuarioRepositorio.save(usuario);
+        return usuarioMapper.toDto(usuario);
     }
 
     public void deletar(Long idUsuario){
