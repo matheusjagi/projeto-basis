@@ -32,20 +32,14 @@ public class ItemServico {
     }
 
     public ItemDTO salvar(ItemDTO itemDTO){
-        String foto = "imagemteste";
-        byte[] decodedString = Base64.getDecoder().decode(foto.getBytes(StandardCharsets.UTF_8));
-        itemDTO.setFoto(decodedString);
-
         Item item = itemMapper.toEntity(itemDTO);
         itemRepositorio.save(item);
-
         return itemMapper.toDto(item);
     }
 
     public ItemDTO atualizar(ItemDTO itemDTO){
         Item item = itemMapper.toEntity(itemDTO);
         itemRepositorio.save(item);
-
         return itemMapper.toDto(item);
     }
 
