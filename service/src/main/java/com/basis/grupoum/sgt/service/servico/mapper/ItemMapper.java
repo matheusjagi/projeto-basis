@@ -6,7 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface ItemMapper extends EntityMapper<ItemDTO, Item>{
+public interface ItemMapper extends EntityMapper<ItemDTO, Item>
+{
     @Override
     @Mapping(source = "usuarioDtoId", target = "usuario.id")
     @Mapping(source = "categoriaDtoId", target = "categoria.id")
