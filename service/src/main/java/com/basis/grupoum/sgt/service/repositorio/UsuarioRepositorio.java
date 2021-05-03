@@ -9,11 +9,4 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
-    Usuario findById(Long id);
-
-    Usuario getBookByTitle(String title);
-
-    Usuario saveBook(Usuario b);
-
-    void deleteBook(Usuario b);
 }
