@@ -33,8 +33,7 @@ public class Usuario implements Serializable {
     @Column(name="CPF")
     private String cpf;
 
-    @Column(name="TOKEN")
-    private String toke;
+    private String token;
 
     @Column(name="DT_NASCIMENTO")
     private LocalDate dataNascimento;
