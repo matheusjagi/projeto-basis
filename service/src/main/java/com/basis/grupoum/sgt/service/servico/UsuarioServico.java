@@ -44,6 +44,6 @@ public class UsuarioServico {
     }
 
     public void deletar(Long idUsuario){
-        usuarioRepositorio.deleteById(idUsuario)
+        usuarioRepositorio.deleteById(idUsuario);
     }
 }
