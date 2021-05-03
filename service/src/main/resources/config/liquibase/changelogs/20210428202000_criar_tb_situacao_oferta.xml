@@ -24,7 +24,7 @@
             <column name="ID_ITEM" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="ID_USUARIO_OF" type="int">
+            <column name="ID_USUARIO" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="ID_SITUACAO" type="int">
@@ -40,7 +40,7 @@
                                   referencedColumnNames="ID"
                                   referencedTableName="ITEM"/>
 
-        <addForeignKeyConstraint  baseColumnNames="ID_USUARIO_OF"
+        <addForeignKeyConstraint  baseColumnNames="ID_USUARIO"
                                   baseTableName="OFERTA"
                                   constraintName="FK_OFERTA_USUARIO"
                                   referencedColumnNames="ID"
