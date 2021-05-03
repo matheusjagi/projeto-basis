@@ -9,6 +9,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: sgt
     password: sgt
+    hikari:
+      auto-commit: false
   jackson:
     date-format: yyyy-MM-dd
     deserialization:

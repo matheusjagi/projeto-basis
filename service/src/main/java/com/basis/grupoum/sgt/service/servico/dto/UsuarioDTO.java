@@ -19,4 +19,5 @@ public class UsuarioDTO {
     private String cpf;
 
     private LocalDate dataNascimento;
+
 }
