@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20210503142000-001" author="matheus.jagi">
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="1"/>
+            <column  name="DESCRICAO"  value="Amortecedores"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="2"/>
+            <column  name="DESCRICAO"  value="Bateria"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="3"/>
+            <column  name="DESCRICAO"  value="Escapamento"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="4"/>
+            <column  name="DESCRICAO"  value="Filtros"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="5"/>
+            <column  name="DESCRICAO"  value="Freio"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="6"/>
+            <column  name="DESCRICAO"  value="Pneus"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="7"/>
+            <column  name="DESCRICAO"  value="Rodas"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="8"/>
+            <column  name="DESCRICAO"  value="Transmissão"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="9"/>
+            <column  name="DESCRICAO"  value="Velas"/>
+        </insert>
+        <insert  tableName="CATEGORIA">
+            <column  name="ID"  value="10"/>
+            <column  name="DESCRICAO"  value="Carburadores"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

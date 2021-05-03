@@ -13,5 +13,7 @@
              relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelogs/20210428214200_criar_tb_item_ofertado.xml"
              relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210503143200_inserts_tb_categoria.xml"
+             relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

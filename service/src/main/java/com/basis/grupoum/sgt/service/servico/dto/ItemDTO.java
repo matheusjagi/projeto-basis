@@ -18,7 +18,7 @@ public class ItemDTO
 
     private boolean disponibilidade;
 
-    //private CategoriaDTO dtoCategoria;
+    private Long usuarioDtoId;
 
-    //private UsuarioDTO dtoUsuario;
+    private Long categoriaDtoId;
 }
