@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/usuarios")
+@RequestMapping("api/usuario")
 @RequiredArgsConstructor
 public class UsuarioRecurso {
 
@@ -23,34 +23,31 @@ public class UsuarioRecurso {
 
     @GetMapping
     public ResponseEntity<List<UsuarioListagemDTO>> listar(){
-        List<Usuario> usuarios = UsuarioRepositorio.findAll();
-        return UsuarioListagemMapper.toDto(usuarios);
+        List<Usuario> usuarios = usuarioServico.findAll();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public UsuarioDTO obterPorId(Long id) {
-        //Usuario usuario = UsuarioRepositorio.getOne(id);
-        Usuario usuario = UsuarioRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuario nao encontrado"))
-        return UsuarioMapper.toDto(usuario);
+    public ResponseEntity<UsuarioDTO> obterPorId(@PathVariable("id") Long idUsuario) {
+        UsuarioDTO usuario = usuarioServico.obterPorId(idUsuario);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @PostMapping
-    public UsuarioDTO salvar (UsuarioDTO dto) {
-        Usuario usuario = UsuarioMapper.toEntity(dto);
-        UsuarioRepositorio.save(usuario);
-        return UsuarioMapper.toDto(usuario);
+    public ResponseEntity<UsuarioDTO> salvar (@RequestBody UsuarioDTO usuarioDTO) {
+        UsuarioDTO usuario = usuarioServico.salvar(usuarioDTO);
+        return new ResponseEntity<>(usuario, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public UsuarioDTO alterar (UsuarioDTO dto) {
-        Usuario usuario = UsuarioMapper.toEntity(dto);
-        UsuarioRepositorio.update(usuario);
-        return UsuarioMapper.toDto(usuario);
+    public ResponseEntity<UsuarioDTO> atualizar (@RequestBody UsuarioDTO usuarioDTO) {
+        UsuarioDTO usuario = usuarioServico.atualizar(usuarioDTO);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deletar (Long id){
-
+    public ResponseEntity<Void> deletar (@PathVariable("id") Long idUsuario){
+        usuarioServico.deletar(idUsuario);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
