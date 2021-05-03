@@ -28,8 +28,13 @@ public class UsuarioServico {
         return usuarioListagemMapper.toDto(usuarios);
     }
 
-    public UsuarioDTO obterPorId(Long id){
+    private Usuario getUsuario(Long id){
         Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario nao encontrado"));
+        return usuario;
+    }
+
+    public UsuarioDTO obterPorId(Long id){
+        Usuario usuario = getUsuario(id);
         return usuarioMapper.toDto(usuario);
     }
 
@@ -40,13 +45,13 @@ public class UsuarioServico {
         return usuarioMapper.toDto(usuario);
     }
 
-    /*public UsuarioDTO atualizar(UsuarioDTO usuarioDTO){
+    public UsuarioDTO atualizar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         Usuario usuarioSalvo = getUsuario(usuario.getId());
         usuario.setToken(usuarioSalvo.getToken());
         usuarioRepositorio.save(usuario);
         return usuarioMapper.toDto(usuario);
-    }*/
+    }
 
     public void deletar(Long idUsuario){
         usuarioRepositorio.deleteById(idUsuario);

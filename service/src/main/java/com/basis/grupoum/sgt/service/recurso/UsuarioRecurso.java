@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/usuario")
+@RequestMapping("/api/usuario")
 @RequiredArgsConstructor
 public class UsuarioRecurso {
 
@@ -41,10 +41,10 @@ public class UsuarioRecurso {
     }
 
     @PutMapping
-    /*public ResponseEntity<UsuarioDTO> atualizar (@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> atualizar (@RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO usuario = usuarioServico.atualizar(usuarioDTO);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
-    }*/
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar (@PathVariable("id") Long idUsuario){
