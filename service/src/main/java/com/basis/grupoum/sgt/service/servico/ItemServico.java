@@ -39,17 +39,7 @@ public class ItemServico {
         byte[] decodedString = Base64.getDecoder().decode(foto.getBytes(StandardCharsets.UTF_8));
         itemDTO.setFoto(decodedString);
 
-        Usuario u = new Usuario();
-        u.setId(itemDTO.getUsuarioDtoId());
-
-        Categoria c = new Categoria();
-        c.setId(itemDTO.getCategoriaDtoId());
-
         Item item = itemMapper.toEntity(itemDTO);
-
-        item.setUsuario(u);
-        item.setCategoria(c);
-
         itemRepositorio.save(item);
 
         return itemMapper.toDto(item);
