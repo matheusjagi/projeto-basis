@@ -23,6 +23,12 @@ public class UsuarioRecurso {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<UsuarioListagemDTO>> listar(@PathVariable("nome") String nome){
+        List<UsuarioListagemDTO> usuarios = usuarioServico.getUsuarioByNome(nome);
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> obterPorId(@PathVariable("id") Long idUsuario) {
         UsuarioDTO usuario = usuarioServico.obterPorId(idUsuario);

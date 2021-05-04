@@ -21,15 +21,19 @@ public class UsuarioServico {
     private final UsuarioMapper usuarioMapper;
     private final UsuarioListagemMapper usuarioListagemMapper;
 
-
     public List<UsuarioListagemDTO> listar (){
         List<Usuario> usuarios = usuarioRepositorio.findAll();
         return usuarioListagemMapper.toDto(usuarios);
     }
 
-    private Usuario getUsuario(Long id){
-        Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario nao encontrado"));
+    public Usuario getUsuario(Long id){
+        Usuario usuario = usuarioRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
         return usuario;
+    }
+
+    public List<UsuarioListagemDTO> getUsuarioByNome(String nome){
+        return usuarioListagemMapper.toDto(usuarioRepositorio.findByNomeContaining(nome));
     }
 
     public UsuarioDTO obterPorId(Long id){

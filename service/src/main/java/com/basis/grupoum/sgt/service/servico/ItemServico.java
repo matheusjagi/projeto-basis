@@ -8,8 +8,6 @@ import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -24,9 +22,14 @@ public class ItemServico {
         return itemMapper.toDto(itens);
     }
 
+    public List<ItemDTO> listarItensDisponiveis(){
+        List<Item> itens = itemRepositorio.findAllByDisponibilidade(true);
+        return itemMapper.toDto(itens);
+    }
+
     public ItemDTO obterPorId(Long id){
         Item item = itemRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
+                .orElseThrow(() -> new RegraNegocioException("Item não encontrado"));
 
         return itemMapper.toDto(item);
     }
