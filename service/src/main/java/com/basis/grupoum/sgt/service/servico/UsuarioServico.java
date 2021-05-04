@@ -2,6 +2,7 @@ package com.basis.grupoum.sgt.service.servico;
 
 import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
+import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioListagemDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
@@ -20,6 +21,7 @@ public class UsuarioServico {
     private final UsuarioRepositorio usuarioRepositorio;
     private final UsuarioMapper usuarioMapper;
     private final UsuarioListagemMapper usuarioListagemMapper;
+    private final EmailServico emailServico;
 
     public List<UsuarioListagemDTO> listar (){
         List<Usuario> usuarios = usuarioRepositorio.findAll();
@@ -44,7 +46,13 @@ public class UsuarioServico {
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setToken(UUID.randomUUID().toString());
+
+        //validar cpf
+        //validar email
+
         usuarioRepositorio.save(usuario);
+        emailServico.sendEmail(criarEmailUsuario(usuario));
+
         return usuarioMapper.toDto(usuario);
     }
 
@@ -58,5 +66,15 @@ public class UsuarioServico {
 
     public void deletar(Long idUsuario){
         usuarioRepositorio.deleteById(idUsuario);
+    }
+
+    private EmailDTO criarEmailUsuario(Usuario usuario){
+        EmailDTO email = new EmailDTO();
+
+        email.setAssunto("Cadastro de Usuario");
+        email.setCorpo("Você se cadastrou no SGTPM! Seu TOKEN de acesso é: "+usuario.getToken());
+        email.setDestinatario(usuario.getEmail());
+
+        return email;
     }
 }
