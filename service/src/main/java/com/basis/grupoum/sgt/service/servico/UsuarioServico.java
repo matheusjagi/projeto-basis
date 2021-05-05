@@ -8,15 +8,12 @@ import com.basis.grupoum.sgt.service.servico.dto.UsuarioListagemDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioListagemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
+import com.basis.grupoum.sgt.service.servico.util.CriptografiaSHA2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -49,11 +46,7 @@ public class UsuarioServico {
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-        usuario.setToken(criptografiaSHA2(usuario.getCpf()));
-
-        //validar cpf
-        //validar email
-
+        usuario.setToken(CriptografiaSHA2.geraCriptografia(usuario.getCpf()));
         usuarioRepositorio.save(usuario);
         emailServico.sendEmail(criarEmailUsuario(usuario));
 
@@ -80,21 +73,5 @@ public class UsuarioServico {
         email.setDestinatario(usuario.getEmail());
 
         return email;
-    }
-
-    public String criptografiaSHA2(String cpf) {
-        String msgDecode = null;
-
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-            byte messageDigest[] = algorithm.digest(cpf.getBytes("UTF-8"));
-            msgDecode  = new String(messageDigest, "UTF-8");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return msgDecode;
     }
 }

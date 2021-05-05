@@ -54,14 +54,25 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /* aceitar
     @PatchMapping("/aceitar/{id}")
     public ResponseEntity<Void> aceitarOferta (@PathVariable("id") Long idOferta){
-
+        ofertaServico.aceitaOferta(idOferta);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    /* aceitar
+    Quando aceita uma oferta, o item ofertado vai para quem ofertou
+    e os itens ofertado vai para o dono da ofertamvn
+
 
     //recusar
     @PatchMapping("/recusar/{id}")
+    public ResponseEntity<Void> recusarOferta (@PathVariable("id") Long idOferta){
+
+    }
+
+    //muda situacao
+    @PatchMapping("/situacao/{id}")
     public ResponseEntity<Void> recusarOferta (@PathVariable("id") Long idOferta){
 
     }*/

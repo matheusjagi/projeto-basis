@@ -18,7 +18,6 @@ public class OfertaServico {
     private final OfertaRepositorio ofertaRepositorio;
     private final OfertaMapper ofertaMapper;
 
-
     public List<OfertaDTO> listar (){
         List<Oferta> ofertas = ofertaRepositorio.findAll();
         return ofertaMapper.toDto(ofertas);
@@ -43,5 +42,9 @@ public class OfertaServico {
 
     public void deletar(Long idOferta){
         ofertaRepositorio.deleteById(idOferta);
+    }
+
+    public void aceitaOferta(Long idOferta){
+
     }
 }
