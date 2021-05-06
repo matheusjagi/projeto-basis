@@ -27,13 +27,9 @@ public class EmailServico {
                     applicationProperties.getNomeRemetente());
             message.setSubject(emailDTO.getAssunto());
 
-            emailDTO.getCopias().forEach(copia -> {
-                try {
-                    message.addCc(copia);
-                } catch (MessagingException e) {
-                    throw new RuntimeException();
-                }
-            });
+            for(String c: emailDTO.getCopias()){
+                message.addCc(c);
+            }
 
             message.setText(emailDTO.getCorpo(), true);
 

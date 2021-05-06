@@ -31,8 +31,7 @@ public class OfertaServico {
     }
 
     public List<OfertaListagemDTO> listarPorSitucao(Long idSituacao){
-        List<OfertaListagemDTO> ofertasPorSitucao = ofertaRepositorio.findAllBySituacao(idSituacao);
-        return ofertasPorSitucao;
+        return ofertaRepositorio.findAllBySituacao(idSituacao);
     }
 
     public OfertaDTO obterPorId(Long id){
@@ -90,7 +89,7 @@ public class OfertaServico {
 
         List<OfertaDTO> ofertas = ofertaMapper.toDto(ofertaRepositorio.findAll());
 
-        ofertas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId() == ofertaCancelada.getItemDtoId())
+        ofertas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(ofertaCancelada.getItemDtoId()))
                 .forEach(ofertaDTO -> {
                     ofertaDTO.setSituacaoDtoId(4L);
                     alteraDisponibilidadeItensOfertados(ofertaDTO, true);

@@ -49,6 +49,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     @Test
     public void salvar() throws Exception{
         Usuario usuario = usuarioBuilder.construirEntidade();
+
         getMockMvc().perform(post("/api/usuarios")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
