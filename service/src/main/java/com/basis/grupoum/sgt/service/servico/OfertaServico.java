@@ -8,13 +8,13 @@ import com.basis.grupoum.sgt.service.servico.mapper.OfertaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class OfertaServico {
+
     private final OfertaRepositorio ofertaRepositorio;
     private final OfertaMapper ofertaMapper;
 
@@ -44,7 +44,7 @@ public class OfertaServico {
         ofertaRepositorio.deleteById(idOferta);
     }
 
-    public void aceitaOferta(Long idOferta){
+    public void aceitaOferta(Long idOferta, Long idUsuarioOfertante){
 
     }
 }

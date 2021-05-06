@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 @Service
 @RequiredArgsConstructor
 public class EmailServico {
+
     private final JavaMailSender javaMailSender;
     private final ApplicationProperties applicationProperties;
 

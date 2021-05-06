@@ -11,5 +11,4 @@ public interface ItemRepositorio extends JpaRepository<Item, Long> {
     List<Item> findAllByDisponibilidade(boolean disponibilidade);
 
     List<Item> findByNomeContaining(String nome);
-
 }

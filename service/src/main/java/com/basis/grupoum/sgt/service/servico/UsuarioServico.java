@@ -12,13 +12,13 @@ import com.basis.grupoum.sgt.service.servico.util.CriptografiaSHA2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UsuarioServico {
+
     private final UsuarioRepositorio usuarioRepositorio;
     private final UsuarioMapper usuarioMapper;
     private final UsuarioListagemMapper usuarioListagemMapper;
@@ -46,6 +46,9 @@ public class UsuarioServico {
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+
+        validarCPF(usuarioDTO);
+
         usuario.setToken(CriptografiaSHA2.geraCriptografia(usuario.getCpf()));
         usuarioRepositorio.save(usuario);
         emailServico.sendEmail(criarEmailUsuario(usuario));
@@ -74,4 +77,13 @@ public class UsuarioServico {
 
         return email;
     }
+
+    private void validarCPF(UsuarioDTO usuarioDTO){
+        Usuario usuario = usuarioRepositorio.findByCpf(usuarioDTO.getCpf());
+
+        if(usuario != null && !usuario.getId().equals(usuarioDTO.getId())){
+            throw new RegraNegocioException("CPF já cadastrado.");
+        }
+    }
+
 }

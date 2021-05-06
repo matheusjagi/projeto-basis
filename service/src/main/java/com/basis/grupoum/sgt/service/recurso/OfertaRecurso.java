@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/oferta")
+@RequestMapping("/api/ofertas")
 @RequiredArgsConstructor
 public class OfertaRecurso {
 
@@ -54,9 +54,11 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/aceitar/{id}")
-    public ResponseEntity<Void> aceitarOferta (@PathVariable("id") Long idOferta){
-        ofertaServico.aceitaOferta(idOferta);
+    @PatchMapping("/aceitar/{idOferta},{idUsuarioOfertante}")
+    public ResponseEntity<Void> aceitarOferta (@PathVariable("idOferta") Long idOferta,
+             @PathVariable("idUsuarioOfertante") Long idUsuarioOfertante){
+
+        ofertaServico.aceitaOferta(idOferta, idUsuarioOfertante);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

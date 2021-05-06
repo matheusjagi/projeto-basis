@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/item")
+@RequestMapping("/api/itens")
 @RequiredArgsConstructor
 public class ItemRecurso {
     private final ItemServico itemServico;
