@@ -1,8 +1,8 @@
 application:
   appName: sgtpm
   mail:
-    endereco-remetente: jagi.matheus@gmail.com
-    nome-remetente: Matheus Jagi
+    endereco-remetente: sgtpm.basis@gmail.com
+    nome-remetente: Sistema de Gerenciamento de Trocas de Peças de Motos
 
 spring:
   application:
