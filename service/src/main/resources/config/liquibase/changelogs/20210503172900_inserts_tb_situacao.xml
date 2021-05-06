@@ -24,6 +24,11 @@
 
         <insert  tableName="SITUACAO">
             <column  name="ID"  value="4"/>
+            <column  name="DESCRICAO"  value="Cancelada"/>
+        </insert>
+
+        <insert  tableName="SITUACAO">
+            <column  name="ID"  value="5"/>
             <column  name="DESCRICAO"  value="Excluida"/>
         </insert>
 

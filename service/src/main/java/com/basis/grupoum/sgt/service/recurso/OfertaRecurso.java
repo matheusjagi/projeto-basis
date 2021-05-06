@@ -72,4 +72,10 @@ public class OfertaRecurso {
         ofertaServico.recusar(idOferta);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PatchMapping("/cancelar/{id}")
+    public ResponseEntity<Void> cancelar (@PathVariable("id") Long idOferta){
+        ofertaServico.cancelar(idOferta);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -43,6 +43,7 @@ public class OfertaServico {
     }
 
     public OfertaDTO salvar(OfertaDTO ofertaDTO){
+        ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ofertaRepositorio.save(oferta);
         return ofertaMapper.toDto(oferta);
@@ -61,25 +62,21 @@ public class OfertaServico {
     public void aceitar(Long idOferta){
         OfertaDTO ofertaDTO = obterPorId(idOferta);
 
-        //Setar a SITUAÇÃO como APROVADA
         ofertaDTO.setSituacaoDtoId(Long.valueOf(2));
 
-        //Pegar o ID do Usuario ofertante
         Long idUsuarioOfertante = ofertaDTO.getItensOfertados().get(0).getUsuarioDtoId();
 
-        //Joga o ITEM da Oferta para o USUARIO ofertante
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ItemDTO itemAuxDTO = itemMapper.toDto(oferta.getItem());
         itemAuxDTO.setUsuarioDtoId(idUsuarioOfertante);
         itemRecurso.atualizar(itemAuxDTO);
 
-        //Joga todos os ITENS oferecidos na OFERTA para o USUARIO da oferta
-        for(ItemDTO itemDTO: ofertaDTO.getItensOfertados()){
+        alteraDisponibilidadeItensOfertados(ofertaDTO, true);
+        ofertaDTO.getItensOfertados().forEach(itemDTO -> {
             itemDTO.setUsuarioDtoId(ofertaDTO.getUsuarioDtoId());
             itemRecurso.atualizar(itemDTO);
-        }
+        });
 
-        //Salvar oferta
         atualizar(ofertaDTO);
     }
 
@@ -87,5 +84,23 @@ public class OfertaServico {
         OfertaDTO ofertaDTO = obterPorId(idOferta);
         ofertaDTO.setSituacaoDtoId(Long.valueOf(3));
         atualizar(ofertaDTO);
+    }
+
+    public void cancelar(Long idOferta){
+        OfertaDTO ofertaCancelada = obterPorId(idOferta);
+
+        List<OfertaDTO> ofertas = ofertaMapper.toDto(ofertaRepositorio.findAll());
+
+        ofertas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId() == ofertaCancelada.getItemDtoId())
+                .forEach(ofertaDTO -> {
+                    ofertaDTO.setSituacaoDtoId(Long.valueOf(4));
+                    alteraDisponibilidadeItensOfertados(ofertaDTO, true);
+                });
+    }
+
+    public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
+        ofertaDTO.getItensOfertados().forEach(
+                itemDTO -> itemDTO.setDisponibilidade(disponibilidade));
+        return ofertaDTO;
     }
 }
