@@ -1,7 +1,6 @@
 package com.basis.grupoum.sgt.service.servico;
 
 import com.basis.grupoum.sgt.service.dominio.Oferta;
-import com.basis.grupoum.sgt.service.recurso.ItemRecurso;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaDTO;
@@ -23,7 +22,7 @@ public class OfertaServico {
     private final OfertaRepositorio ofertaRepositorio;
     private final OfertaMapper ofertaMapper;
     private final OfertaListagemMapper ofertaListagemMapper;
-    private final ItemRecurso itemRecurso;
+    private final ItemServico itemServico;
     private final ItemMapper itemMapper;
 
     public List<OfertaListagemDTO> listar(){
@@ -62,19 +61,19 @@ public class OfertaServico {
     public void aceitar(Long idOferta){
         OfertaDTO ofertaDTO = obterPorId(idOferta);
 
-        ofertaDTO.setSituacaoDtoId(Long.valueOf(2));
+        ofertaDTO.setSituacaoDtoId(2L);
 
         Long idUsuarioOfertante = ofertaDTO.getItensOfertados().get(0).getUsuarioDtoId();
 
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ItemDTO itemAuxDTO = itemMapper.toDto(oferta.getItem());
         itemAuxDTO.setUsuarioDtoId(idUsuarioOfertante);
-        itemRecurso.atualizar(itemAuxDTO);
+        itemServico.atualizar(itemAuxDTO);
 
         alteraDisponibilidadeItensOfertados(ofertaDTO, true);
         ofertaDTO.getItensOfertados().forEach(itemDTO -> {
             itemDTO.setUsuarioDtoId(ofertaDTO.getUsuarioDtoId());
-            itemRecurso.atualizar(itemDTO);
+            itemServico.atualizar(itemDTO);
         });
 
         atualizar(ofertaDTO);
@@ -82,7 +81,7 @@ public class OfertaServico {
 
     public void recusar(Long idOferta){
         OfertaDTO ofertaDTO = obterPorId(idOferta);
-        ofertaDTO.setSituacaoDtoId(Long.valueOf(3));
+        ofertaDTO.setSituacaoDtoId(3L);
         atualizar(ofertaDTO);
     }
 
@@ -93,7 +92,7 @@ public class OfertaServico {
 
         ofertas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId() == ofertaCancelada.getItemDtoId())
                 .forEach(ofertaDTO -> {
-                    ofertaDTO.setSituacaoDtoId(Long.valueOf(4));
+                    ofertaDTO.setSituacaoDtoId(4L);
                     alteraDisponibilidadeItensOfertados(ofertaDTO, true);
                 });
     }

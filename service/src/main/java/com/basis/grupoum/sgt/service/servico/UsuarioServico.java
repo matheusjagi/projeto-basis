@@ -50,6 +50,7 @@ public class UsuarioServico {
         validarCPF(usuarioDTO);
 
         usuario.setToken(CriptografiaSHA2.geraCriptografia(usuario.getCpf()));
+
         usuarioRepositorio.save(usuario);
         emailServico.sendEmail(criarEmailUsuario(usuario));
 
