@@ -6,21 +6,31 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="20210503172900-001" author="matheus.jagi">
+
         <insert  tableName="SITUACAO">
             <column  name="ID"  value="1"/>
             <column  name="DESCRICAO"  value="Aguardando Aprovação"/>
         </insert>
+
         <insert  tableName="SITUACAO">
             <column  name="ID"  value="2"/>
-            <column  name="DESCRICAO"  value="Aprovado"/>
+            <column  name="DESCRICAO"  value="Aprovada"/>
         </insert>
+
         <insert  tableName="SITUACAO">
             <column  name="ID"  value="3"/>
-            <column  name="DESCRICAO"  value="Recusado"/>
+            <column  name="DESCRICAO"  value="Recusada"/>
         </insert>
+
         <insert  tableName="SITUACAO">
             <column  name="ID"  value="4"/>
-            <column  name="DESCRICAO"  value="Cancelado"/>
+            <column  name="DESCRICAO"  value="Cancelada"/>
         </insert>
+
+        <insert  tableName="SITUACAO">
+            <column  name="ID"  value="5"/>
+            <column  name="DESCRICAO"  value="Excluida"/>
+        </insert>
+
     </changeSet>
 </databaseChangeLog>

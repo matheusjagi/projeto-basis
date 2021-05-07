@@ -14,6 +14,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ItemServico {
+
     private final ItemRepositorio itemRepositorio;
     private final ItemMapper itemMapper;
 
@@ -22,9 +23,14 @@ public class ItemServico {
         return itemMapper.toDto(itens);
     }
 
+    public List<ItemDTO> listarItensDisponiveis(){
+        List<Item> itens = itemRepositorio.findAllByDisponibilidade(true);
+        return itemMapper.toDto(itens);
+    }
+
     public ItemDTO obterPorId(Long id){
         Item item = itemRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
+                .orElseThrow(() -> new RegraNegocioException("Item não encontrado"));
 
         return itemMapper.toDto(item);
     }

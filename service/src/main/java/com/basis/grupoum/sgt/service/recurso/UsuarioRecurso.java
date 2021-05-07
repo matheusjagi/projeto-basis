@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuario")
+@RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
 public class UsuarioRecurso {
 
@@ -30,6 +31,12 @@ public class UsuarioRecurso {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<UsuarioListagemDTO>> listar(@PathVariable("nome") String nome){
+        List<UsuarioListagemDTO> usuarios = usuarioServico.getUsuarioByNome(nome);
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> obterPorId(@PathVariable("id") Long idUsuario) {
         UsuarioDTO usuario = usuarioServico.obterPorId(idUsuario);
@@ -37,7 +44,7 @@ public class UsuarioRecurso {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> salvar (@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> salvar (@RequestBody @Valid UsuarioDTO usuarioDTO) {
         UsuarioDTO usuario = usuarioServico.salvar(usuarioDTO);
         return new ResponseEntity<>(usuario, HttpStatus.CREATED);
     }

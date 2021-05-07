@@ -2,6 +2,7 @@ package com.basis.grupoum.sgt.service.servico.mapper;
 
 import com.basis.grupoum.sgt.service.dominio.Oferta;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaDTO;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,8 +15,6 @@ public interface OfertaMapper extends EntityMapper<OfertaDTO, Oferta> {
     Oferta toEntity(OfertaDTO dto);
 
     @Override
-    @Mapping(source = "item.id", target = "itemDtoId")
-    @Mapping(source = "usuario.id", target = "usuarioDtoId")
-    @Mapping(source = "situacao.id", target = "situacaoDtoId")
+    @InheritInverseConfiguration
     OfertaDTO toDto(Oferta entity);
 }

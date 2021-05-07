@@ -2,11 +2,13 @@ package com.basis.grupoum.sgt.service.recurso;
 
 import com.basis.grupoum.sgt.service.servico.OfertaServico;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaDTO;
+import com.basis.grupoum.sgt.service.servico.dto.OfertaListagemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,16 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/oferta")
+@RequestMapping("/api/ofertas")
 @RequiredArgsConstructor
 public class OfertaRecurso {
 
     private final OfertaServico ofertaServico;
 
     @GetMapping
-    public ResponseEntity<List<OfertaDTO>> listar(){
-        List<OfertaDTO> ofertas = ofertaServico.listar();
+    public ResponseEntity<List<OfertaListagemDTO>> listar(){
+        List<OfertaListagemDTO> ofertas = ofertaServico.listar();
         return new ResponseEntity<>(ofertas, HttpStatus.OK);
+    }
+
+    @GetMapping("/situacao/{id}")
+    public ResponseEntity<List<OfertaListagemDTO>> listarPorSituacao (@PathVariable("id") Long idSituacao){
+        List<OfertaListagemDTO> ofertasPorSitucao = ofertaServico.listarPorSitucao(idSituacao);
+        return new ResponseEntity<>(ofertasPorSitucao, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -50,6 +58,24 @@ public class OfertaRecurso {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar (@PathVariable("id") Long idOferta){
         ofertaServico.deletar(idOferta);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/aceitar/{id}")
+    public ResponseEntity<Void> aceitar (@PathVariable("id") Long idOferta){
+        ofertaServico.aceitar(idOferta);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/recusar/{id}")
+    public ResponseEntity<Void> recusar (@PathVariable("id") Long idOferta){
+        ofertaServico.recusar(idOferta);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/cancelar/{id}")
+    public ResponseEntity<Void> cancelar (@PathVariable("id") Long idOferta){
+        ofertaServico.cancelar(idOferta);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

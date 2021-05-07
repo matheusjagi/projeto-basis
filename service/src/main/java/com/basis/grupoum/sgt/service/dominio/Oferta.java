@@ -48,5 +48,4 @@ public class Oferta implements Serializable {
             {@JoinColumn(name = "ID_ITEM")})
     private List<Item> itensOfertados;
 
-
 }
