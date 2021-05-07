@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ItemRecursoIT extends IntTestComum {
 
+    private static final String URL = "/api/itens";
+
     @Autowired
     private ItemBuilder itemBuilder;
 
@@ -41,7 +43,7 @@ public class ItemRecursoIT extends IntTestComum {
     @Test
     public void listar() throws Exception{
         itemBuilder.construir();
-        getMockMvc().perform(get("/api/itens"))
+        getMockMvc().perform(get(URL))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
     }
@@ -49,7 +51,7 @@ public class ItemRecursoIT extends IntTestComum {
     @Test
     public void salvar() throws Exception{
         Item item = itemBuilder.construir();
-        getMockMvc().perform(post("/api/itens")
+        getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -60,7 +62,7 @@ public class ItemRecursoIT extends IntTestComum {
         Item item = itemBuilder.construir();
         item.setNome("Item Alterado");
 
-        getMockMvc().perform(put("/api/itens")
+        getMockMvc().perform(put(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -70,7 +72,7 @@ public class ItemRecursoIT extends IntTestComum {
     public void deletar() throws Exception{
         Item item = itemBuilder.construir();
 
-        getMockMvc().perform(delete("/api/itens/"+item.getId())
+        getMockMvc().perform(delete(URL+"/"+item.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
                 .andExpect(MockMvcResultMatchers.status().isOk());

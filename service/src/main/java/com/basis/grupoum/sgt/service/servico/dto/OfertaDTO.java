@@ -13,13 +13,17 @@ public class OfertaDTO {
 
     private Long id;
 
+    @NotNull(message = "O campo não pode ser nulo")
     private Long itemDtoId;
 
+    @NotNull(message = "O campo não pode ser nulo")
     private Long usuarioDtoId;
 
+    @NotNull(message = "O campo não pode ser nulo")
     private Long situacaoDtoId;
 
-    @NotBlank
+    @NotNull(message = "O campo não pode ser nulo")
+    @NotBlank(message = "O campo não pode ser vazio")
     private List<ItemDTO> itensOfertados;
 
 }

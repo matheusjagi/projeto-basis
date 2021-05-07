@@ -1,7 +1,10 @@
 package com.basis.grupoum.sgt.service.servico;
 
+import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Oferta;
+import com.basis.grupoum.sgt.service.dominio.Situacao;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
+import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaDTO;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaListagemDTO;
@@ -31,7 +34,10 @@ public class OfertaServico {
     }
 
     public List<OfertaListagemDTO> listarPorSitucao(Long idSituacao){
-        return ofertaRepositorio.findAllBySituacao(idSituacao);
+        Situacao situacao = new Situacao();
+        situacao.setId(idSituacao);
+        List<Oferta> ofertasPorSitucao = ofertaRepositorio.findAllBySituacao(situacao);
+        return ofertaListagemMapper.toDto(ofertasPorSitucao);
     }
 
     public OfertaDTO obterPorId(Long id){
@@ -65,7 +71,7 @@ public class OfertaServico {
         Long idUsuarioOfertante = ofertaDTO.getItensOfertados().get(0).getUsuarioDtoId();
 
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
-        ItemDTO itemAuxDTO = itemMapper.toDto(oferta.getItem());
+        ItemDTO itemAuxDTO = itemServico.obterPorId(oferta.getItem().getId());
         itemAuxDTO.setUsuarioDtoId(idUsuarioOfertante);
         itemServico.atualizar(itemAuxDTO);
 
@@ -81,24 +87,40 @@ public class OfertaServico {
     public void recusar(Long idOferta){
         OfertaDTO ofertaDTO = obterPorId(idOferta);
         ofertaDTO.setSituacaoDtoId(3L);
+        ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, true);
         atualizar(ofertaDTO);
     }
 
-    public void cancelar(Long idOferta){
-        OfertaDTO ofertaCancelada = obterPorId(idOferta);
+    public void cancelar(Long idItem){
+        Item itemCancelado = itemMapper.toEntity(itemServico.obterPorId(idItem));
 
-        List<OfertaDTO> ofertas = ofertaMapper.toDto(ofertaRepositorio.findAll());
+        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItem(itemCancelado));
 
-        ofertas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(ofertaCancelada.getItemDtoId()))
+        ofertasCanceladas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(idItem))
                 .forEach(ofertaDTO -> {
                     ofertaDTO.setSituacaoDtoId(4L);
                     alteraDisponibilidadeItensOfertados(ofertaDTO, true);
+                    atualizar(ofertaDTO);
                 });
     }
 
     public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
-        ofertaDTO.getItensOfertados().forEach(
-                itemDTO -> itemDTO.setDisponibilidade(disponibilidade));
+        ofertaDTO.getItensOfertados().forEach(itemDTO -> {
+            itemDTO = itemServico.obterPorId(itemDTO.getId());
+            itemDTO.setDisponibilidade(disponibilidade);
+            itemServico.atualizar(itemDTO);
+        });
         return ofertaDTO;
+    }
+
+    //Implementar
+    private EmailDTO criarEmailOferta(Oferta oferta){
+        EmailDTO email = new EmailDTO();
+
+        //email.setAssunto("Cadastro de Usuario");
+        //email.setCorpo("Você se cadastrou no SGTPM! Seu TOKEN de acesso é: "+usuario.getToken());
+        //email.setDestinatario(usuario.getEmail());
+
+        return email;
     }
 }

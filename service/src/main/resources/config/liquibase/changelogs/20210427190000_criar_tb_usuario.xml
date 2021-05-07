@@ -22,7 +22,7 @@
             <column name="DT_NASCIMENTO" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name="TOKEN" type="varchar(100)">
+            <column name="TOKEN" type="varchar(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>

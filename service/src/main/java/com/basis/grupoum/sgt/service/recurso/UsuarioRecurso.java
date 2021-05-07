@@ -43,6 +43,12 @@ public class UsuarioRecurso {
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
+    @GetMapping("/{token}")
+    public ResponseEntity<UsuarioDTO> obterPorId(@PathVariable("token") String token) {
+        UsuarioDTO usuario = usuarioServico.obterPorToken(token);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<UsuarioDTO> salvar (@RequestBody @Valid UsuarioDTO usuarioDTO) {
         UsuarioDTO usuario = usuarioServico.salvar(usuarioDTO);

@@ -3,6 +3,7 @@ package com.basis.grupoum.sgt.service.dominio;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +42,7 @@ public class Item implements Serializable {
     @Column(name="DISPONIBILIDADE")
     private boolean disponibilidade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ID_CATEGORIA")
     private Categoria categoria;
 

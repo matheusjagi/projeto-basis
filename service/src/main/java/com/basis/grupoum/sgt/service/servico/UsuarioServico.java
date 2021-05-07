@@ -44,6 +44,11 @@ public class UsuarioServico {
         return usuarioMapper.toDto(usuario);
     }
 
+    public UsuarioDTO obterPorToken(String token){
+        Usuario usuario = usuarioRepositorio.findByToken(token);
+        return usuarioMapper.toDto(usuario);
+    }
+
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
 

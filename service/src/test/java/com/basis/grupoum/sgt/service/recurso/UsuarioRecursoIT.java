@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UsuarioRecursoIT extends IntTestComum {
 
+    private static final String URL = "/api/usuarios";
+
     @Autowired
     private UsuarioBuilder usuarioBuilder;
 
@@ -41,7 +43,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     @Test
     public void listar() throws Exception{
         usuarioBuilder.construir();
-        getMockMvc().perform(get("/api/usuarios"))
+        getMockMvc().perform(get(URL))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
     }
@@ -50,7 +52,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void salvar() throws Exception{
         Usuario usuario = usuarioBuilder.construirEntidade();
 
-        getMockMvc().perform(post("/api/usuarios")
+        getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -61,7 +63,7 @@ public class UsuarioRecursoIT extends IntTestComum {
         Usuario usuario = usuarioBuilder.construir();
         usuario.setNome("Usuario Alterado");
 
-        getMockMvc().perform(put("/api/usuarios")
+        getMockMvc().perform(put(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -71,7 +73,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void deletar() throws Exception{
         Usuario usuario = usuarioBuilder.construir();
 
-        getMockMvc().perform(delete("/api/usuarios/"+usuario.getId())
+        getMockMvc().perform(delete(URL+"/"+usuario.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(MockMvcResultMatchers.status().isOk());

@@ -11,4 +11,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     List<Usuario> findByNomeContaining(String nome);
 
     Usuario findByCpf(String cpf);
+
+    Usuario findByToken(String token);
 }
