@@ -28,14 +28,14 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     @Override
     public Item construirEntidade() {
         Item item = new Item();
-        item.setNome("Rudeus");
-        item.setDescricao("desc1");
-        String teste = "qual";
+        item.setNome("Item teste");
+        item.setDescricao("Descricao do Item teste");
+        String teste = "foto";
         item.setFoto(Base64.getDecoder().decode(teste.getBytes(StandardCharsets.UTF_8)));
         item.setDisponibilidade(true);
         Categoria cat = new Categoria();
         cat.setId(1L);
-        cat.setDescricao("desctest");
+        cat.setDescricao("Descricao da Categoria teste");
         item.setCategoria(cat);
         item.setUsuario(usuarioBuilder.construir());
 
