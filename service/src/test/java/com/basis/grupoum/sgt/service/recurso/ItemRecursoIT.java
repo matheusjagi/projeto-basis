@@ -41,15 +41,15 @@ public class ItemRecursoIT extends IntTestComum {
     @Test
     public void listar() throws Exception{
         itemBuilder.construir();
-        getMockMvc().perform(get("/api/items"))
+        getMockMvc().perform(get("/api/itens"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
     }
 
     @Test
     public void salvar() throws Exception{
-        Item item = itemBuilder.construirEntidade();
-        getMockMvc().perform(post("/api/items")
+        Item item = itemBuilder.construir();
+        getMockMvc().perform(post("/api/itens")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -60,7 +60,7 @@ public class ItemRecursoIT extends IntTestComum {
         Item item = itemBuilder.construir();
         item.setNome("Item Alterado");
 
-        getMockMvc().perform(put("/api/items")
+        getMockMvc().perform(put("/api/itens")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -70,7 +70,7 @@ public class ItemRecursoIT extends IntTestComum {
     public void deletar() throws Exception{
         Item item = itemBuilder.construir();
 
-        getMockMvc().perform(delete("/api/items/"+item.getId())
+        getMockMvc().perform(delete("/api/itens/"+item.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
                 .andExpect(MockMvcResultMatchers.status().isOk());

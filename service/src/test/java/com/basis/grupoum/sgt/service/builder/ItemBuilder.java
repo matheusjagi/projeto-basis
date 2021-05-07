@@ -22,6 +22,9 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     @Autowired
     private ItemMapper itemMapper;
 
+    @Autowired
+    private UsuarioBuilder usuarioBuilder;
+
     @Override
     public Item construirEntidade() {
         Item item = new Item();
@@ -34,6 +37,7 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         cat.setId(1L);
         cat.setDescricao("desctest");
         item.setCategoria(cat);
+        item.setUsuario(usuarioBuilder.construir());
 
         return item;
     }
@@ -42,5 +46,10 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     public Item persistir(Item entidade) {
         ItemDTO itemDTO = itemMapper.toDto(entidade);
         return itemMapper.toEntity(itemServico.salvar(itemDTO));
+    }
+
+    @Override
+    public Item construir() {
+        return this.persistir(construirEntidade());
     }
 }
