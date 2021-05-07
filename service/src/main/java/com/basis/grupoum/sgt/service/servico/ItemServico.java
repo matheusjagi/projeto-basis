@@ -8,6 +8,9 @@ import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -23,8 +26,23 @@ public class ItemServico {
         return itemMapper.toDto(itens);
     }
 
-    public List<ItemDTO> listarItensDisponiveis(){
-        List<Item> itens = itemRepositorio.findAllByDisponibilidade(true);
+    public List<ItemDTO> listarItensDisponiveis(boolean disponibilidade){
+        List<Item> itens = itemRepositorio.findAllByDisponibilidade(disponibilidade);
+        return itemMapper.toDto(itens);
+    }
+
+    public List<ItemDTO> listarItensPorNome(String nome){
+        List<Item> itens = itemRepositorio.findByNomeContaining(nome);
+        return itemMapper.toDto(itens);
+    }
+
+    public List<ItemDTO> listarItensPorCategoria(Long categoriaDtoId){
+        List<Item> itens = itemRepositorio.findAllByCategoriaId(categoriaDtoId);
+        return itemMapper.toDto(itens);
+    }
+
+    public List<ItemDTO> listarItensPorUsuario(Long usuarioDtoId){
+        List<Item> itens = itemRepositorio.findAllByUsuarioId(usuarioDtoId);
         return itemMapper.toDto(itens);
     }
 
@@ -37,6 +55,8 @@ public class ItemServico {
 
     public ItemDTO salvar(ItemDTO itemDTO){
         Item item = itemMapper.toEntity(itemDTO);
+        String teste = "qual";
+        item.setFoto(Base64.getDecoder().decode(teste.getBytes(StandardCharsets.UTF_8)));
         itemRepositorio.save(item);
         return itemMapper.toDto(item);
     }
