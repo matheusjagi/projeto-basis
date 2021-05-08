@@ -49,12 +49,6 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
-    public Categoria obterCategoriaPorId(Long id){
-        Categoria categoria = categoriaRepositorio
-                .findById(id).orElseThrow(() -> new RegraNegocioException("Categoria não encontrada"));
-        return categoria;
-    }
-
     public OfertaDTO salvar(OfertaDTO ofertaDTO){
         ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
@@ -74,22 +68,20 @@ public class OfertaServico {
 
     public void aceitar(Long idOferta){
         OfertaDTO ofertaDTO = obterPorId(idOferta);
+        ItemDTO itemAuxDTO = itemServico.obterPorId(ofertaDTO.getItemDtoId());
 
-        ofertaDTO.setSituacaoDtoId(2L);
+        Long idUsuarioOfertado = itemAuxDTO.getUsuarioDtoId();
 
-        Long idUsuarioOfertante = ofertaDTO.getItensOfertados().get(0).getUsuarioDtoId();
-
-        Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
-        ItemDTO itemAuxDTO = itemServico.obterPorId(oferta.getItem().getId());
-        itemAuxDTO.setUsuarioDtoId(idUsuarioOfertante);
+        itemAuxDTO.setUsuarioDtoId(ofertaDTO.getUsuarioDtoId());
         itemServico.atualizar(itemAuxDTO);
 
-        alteraDisponibilidadeItensOfertados(ofertaDTO, true);
         ofertaDTO.getItensOfertados().forEach(itemDTO -> {
-            itemDTO.setUsuarioDtoId(ofertaDTO.getUsuarioDtoId());
+            itemDTO.setUsuarioDtoId(idUsuarioOfertado);
+            itemDTO.setDisponibilidade(true);
             itemServico.atualizar(itemDTO);
         });
 
+        ofertaDTO.setSituacaoDtoId(2L);
         atualizar(ofertaDTO);
     }
 

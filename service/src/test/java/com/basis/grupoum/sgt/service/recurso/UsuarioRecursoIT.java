@@ -1,6 +1,7 @@
 package com.basis.grupoum.sgt.service.recurso;
 
 import com.basis.grupoum.sgt.service.builder.UsuarioBuilder;
+import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
@@ -56,6 +57,16 @@ public class UsuarioRecursoIT extends IntTestComum {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @Test
+    public void naoSalvaCpfDuplicado() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioBuilder.construirEntidade())))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
