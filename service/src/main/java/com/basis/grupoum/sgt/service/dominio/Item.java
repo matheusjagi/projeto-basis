@@ -42,7 +42,7 @@ public class Item implements Serializable {
     @Column(name="DISPONIBILIDADE")
     private boolean disponibilidade;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CATEGORIA")
     private Categoria categoria;
 

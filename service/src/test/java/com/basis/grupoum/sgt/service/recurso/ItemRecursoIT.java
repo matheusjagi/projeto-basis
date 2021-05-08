@@ -42,7 +42,14 @@ public class ItemRecursoIT extends IntTestComum {
 
     @Test
     public void listar() throws Exception{
-        itemBuilder.construir();
+        Item item = itemBuilder.construir();
+
+        System.err.println(item.getId());
+        System.err.println(item.getDescricao());
+        System.err.println(item.getFoto());
+        System.err.println(item.getUsuario().getNome());
+        System.err.println(item.getNome());
+
         getMockMvc().perform(get(URL))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));

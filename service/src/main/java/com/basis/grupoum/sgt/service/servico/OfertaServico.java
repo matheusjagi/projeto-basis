@@ -1,8 +1,10 @@
 package com.basis.grupoum.sgt.service.servico;
 
+import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Oferta;
 import com.basis.grupoum.sgt.service.dominio.Situacao;
+import com.basis.grupoum.sgt.service.repositorio.CategoriaRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
@@ -27,6 +29,7 @@ public class OfertaServico {
     private final OfertaListagemMapper ofertaListagemMapper;
     private final ItemServico itemServico;
     private final ItemMapper itemMapper;
+    private final CategoriaRepositorio categoriaRepositorio;
 
     public List<OfertaListagemDTO> listar(){
         List<Oferta> ofertas = ofertaRepositorio.findAll();
@@ -44,6 +47,12 @@ public class OfertaServico {
         Oferta oferta = ofertaRepositorio
                 .findById(id).orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
         return ofertaMapper.toDto(oferta);
+    }
+
+    public Categoria obterCategoriaPorId(Long id){
+        Categoria categoria = categoriaRepositorio
+                .findById(id).orElseThrow(() -> new RegraNegocioException("Categoria não encontrada"));
+        return categoria;
     }
 
     public OfertaDTO salvar(OfertaDTO ofertaDTO){

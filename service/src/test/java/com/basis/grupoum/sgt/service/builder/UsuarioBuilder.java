@@ -21,9 +21,18 @@ public class UsuarioBuilder extends ConstrutorEntidade<Usuario> {
     public Usuario construirEntidade() {
         Usuario usuario = new Usuario();
         usuario.setNome("Usuario Teste");
-        usuario.setCpf("38966003036");
+        usuario.setCpf("42831450098");
         usuario.setEmail("teste@gmail.com");
         usuario.setDataNascimento(LocalDate.now().minusYears(26));
+        return usuario;
+    }
+
+    public Usuario construirEntidade(String cpf, String email) {
+        Usuario usuario = new Usuario();
+        usuario.setNome("Usuario Teste");
+        usuario.setCpf(cpf);
+        usuario.setEmail(email);
+        usuario.setDataNascimento(LocalDate.now().minusYears(20));
         return persistir(usuario);
     }
 
