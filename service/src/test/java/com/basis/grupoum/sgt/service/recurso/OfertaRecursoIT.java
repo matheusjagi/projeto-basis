@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
@@ -49,6 +50,25 @@ public class OfertaRecursoIT extends IntTestComum {
     }
 
     @Test
+    public void listarPorSitucao() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/situacao/"+oferta.getSituacao().getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void obterPorId() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/"+oferta.getId())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     public void salvar() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
         getMockMvc().perform(post(URL)
@@ -60,7 +80,6 @@ public class OfertaRecursoIT extends IntTestComum {
     @Test
     public void atualizar() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
-        //oferta.setNome("Oferta Alterada!");
 
         getMockMvc().perform(put(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -73,6 +92,36 @@ public class OfertaRecursoIT extends IntTestComum {
         Oferta oferta = ofertaBuilder.construir();
 
         getMockMvc().perform(delete(URL+"/"+oferta.getId())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void aceitar() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(patch(URL+"/aceitar/"+oferta.getId())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void recusar() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(patch(URL+"/recusar/"+oferta.getId())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void cancelar() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(patch(URL+"/cancelar/"+oferta.getItem().getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
                 .andExpect(MockMvcResultMatchers.status().isOk());

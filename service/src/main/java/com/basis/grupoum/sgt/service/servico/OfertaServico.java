@@ -81,6 +81,10 @@ public class OfertaServico {
             itemServico.atualizar(itemDTO);
         });
 
+        Item itemCancelado = itemMapper.toEntity(itemServico.obterPorId(ofertaDTO.getItemDtoId()));
+        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItem(itemCancelado));
+        cancelaDemaisOfertas(ofertasCanceladas,ofertaDTO.getItemDtoId());
+
         ofertaDTO.setSituacaoDtoId(2L);
         atualizar(ofertaDTO);
     }
@@ -94,15 +98,8 @@ public class OfertaServico {
 
     public void cancelar(Long idItem){
         Item itemCancelado = itemMapper.toEntity(itemServico.obterPorId(idItem));
-
         List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItem(itemCancelado));
-
-        ofertasCanceladas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(idItem))
-                .forEach(ofertaDTO -> {
-                    ofertaDTO.setSituacaoDtoId(4L);
-                    alteraDisponibilidadeItensOfertados(ofertaDTO, true);
-                    atualizar(ofertaDTO);
-                });
+        cancelaDemaisOfertas(ofertasCanceladas,idItem);
     }
 
     public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
@@ -114,7 +111,15 @@ public class OfertaServico {
         return ofertaDTO;
     }
 
-    //Implementar
+    public void cancelaDemaisOfertas(List<OfertaDTO> ofertasCanceladas, Long idItemCancelado){
+        ofertasCanceladas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(idItemCancelado))
+                .forEach(ofertaDTO -> {
+                    ofertaDTO.setSituacaoDtoId(4l);
+                    alteraDisponibilidadeItensOfertados(ofertaDTO, true);
+                    atualizar(ofertaDTO);
+                });
+    }
+
     private EmailDTO criarEmailOferta(Oferta oferta){
         EmailDTO email = new EmailDTO();
 
