@@ -21,18 +21,18 @@ public class UsuarioDTO {
     private Long id;
 
     @NotNull(message = "O campo não pode ser nulo")
-    @NotEmpty
+    @NotEmpty(message = "O campo está vazio")
     private String nome;
 
-    @NotNull
+    @NotNull(message = "O campo não pode ser nulo")
     @Email
     private String email;
 
-    @NotNull
+    @NotNull(message = "O campo não pode ser nulo")
     @CPF
     private String cpf;
 
-    @NotNull
+    @NotNull(message = "O campo não pode ser nulo")
     @Past
     private LocalDate dataNascimento;
 

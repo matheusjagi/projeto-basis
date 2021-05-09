@@ -39,21 +39,22 @@ public class UsuarioServico {
         return usuarioListagemMapper.toDto(usuarioRepositorio.findByNomeContaining(nome));
     }
 
-    public UsuarioDTO obterPorId(Long id){
+    public UsuarioDTO getById(Long id){
         Usuario usuario = getUsuario(id);
+        return usuarioMapper.toDto(usuario);
+    }
+
+    public UsuarioDTO getByToken(String token){
+        Usuario usuario = usuarioRepositorio.findByToken(token);
         return usuarioMapper.toDto(usuario);
     }
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-
         validarCPF(usuarioDTO);
-
         usuario.setToken(CriptografiaSHA2.geraCriptografia(usuario.getCpf()));
-
         usuarioRepositorio.save(usuario);
         emailServico.sendEmail(criarEmailUsuario(usuario));
-
         return usuarioMapper.toDto(usuario);
     }
 

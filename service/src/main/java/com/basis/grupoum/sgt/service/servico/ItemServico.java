@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -55,16 +53,14 @@ public class ItemServico {
 
     public ItemDTO salvar(ItemDTO itemDTO){
         Item item = itemMapper.toEntity(itemDTO);
-        String teste = "qual";
-        item.setFoto(Base64.getDecoder().decode(teste.getBytes(StandardCharsets.UTF_8)));
         itemRepositorio.save(item);
         return itemMapper.toDto(item);
     }
 
-    public ItemDTO atualizar(ItemDTO itemDTO){
-        Item item = itemMapper.toEntity(itemDTO);
-        itemRepositorio.save(item);
-        return itemMapper.toDto(item);
+    public List<ItemDTO> atualizarTodos(List<ItemDTO> itensDTO){
+        List<Item> itens = itemMapper.toEntity(itensDTO);
+        itemRepositorio.saveAll(itens);
+        return itemMapper.toDto(itens);
     }
 
     public void deletar(Long idItem){

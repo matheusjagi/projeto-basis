@@ -2,11 +2,11 @@ package com.basis.grupoum.sgt.service.servico;
 
 import com.basis.grupoum.sgt.service.configuracao.ApplicationProperties;
 import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
+import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
@@ -35,7 +35,7 @@ public class EmailServico {
 
             javaMailSender.send(mimeMessage);
         }catch (MessagingException | UnsupportedEncodingException e){
-            throw new RuntimeException();
+            throw new RegraNegocioException("Falha ao enviar o email");
         }
     }
 

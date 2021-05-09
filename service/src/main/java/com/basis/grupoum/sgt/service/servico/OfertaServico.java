@@ -1,7 +1,10 @@
 package com.basis.grupoum.sgt.service.servico;
 
+import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Oferta;
+import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
+import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaDTO;
 import com.basis.grupoum.sgt.service.servico.dto.OfertaListagemDTO;
@@ -9,9 +12,11 @@ import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.OfertaListagemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.OfertaMapper;
+import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +29,9 @@ public class OfertaServico {
     private final OfertaListagemMapper ofertaListagemMapper;
     private final ItemServico itemServico;
     private final ItemMapper itemMapper;
+    private final UsuarioServico usuarioServico;
+    private final UsuarioMapper usuarioMapper;
+    private final EmailServico emailServico;
 
     public List<OfertaListagemDTO> listar(){
         List<Oferta> ofertas = ofertaRepositorio.findAll();
@@ -31,7 +39,8 @@ public class OfertaServico {
     }
 
     public List<OfertaListagemDTO> listarPorSitucao(Long idSituacao){
-        return ofertaRepositorio.findAllBySituacao(idSituacao);
+        List<Oferta> ofertasPorSitucao = ofertaRepositorio.findAllBySituacaoId(idSituacao);
+        return ofertaListagemMapper.toDto(ofertasPorSitucao);
     }
 
     public OfertaDTO obterPorId(Long id){
@@ -44,6 +53,8 @@ public class OfertaServico {
         ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ofertaRepositorio.save(oferta);
+
+        emailServico.sendEmail(criarEmailOferta(oferta));
         return ofertaMapper.toDto(oferta);
     }
 
@@ -53,52 +64,77 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
+    public void atualizarTodas(List<OfertaDTO> ofertas){
+        List<Oferta> ofertasAtualizaveis = ofertaMapper.toEntity(ofertas);
+        ofertaRepositorio.saveAll(ofertasAtualizaveis);
+    }
+
     public void deletar(Long idOferta){
         ofertaRepositorio.deleteById(idOferta);
     }
 
     public void aceitar(Long idOferta){
-        OfertaDTO ofertaDTO = obterPorId(idOferta);
+        OfertaDTO oferta = obterPorId(idOferta);
+        ItemDTO itemQueRecebeuAOferta = itemServico.obterPorId(oferta.getItemDtoId());
+        List<ItemDTO> itensOfertados = oferta.getItensOfertados();
+        itensOfertados.forEach(item -> item.setUsuarioDtoId(itemQueRecebeuAOferta.getUsuarioDtoId()));
+        itemQueRecebeuAOferta.setUsuarioDtoId(oferta.getUsuarioDtoId());
 
-        ofertaDTO.setSituacaoDtoId(2L);
-
-        Long idUsuarioOfertante = ofertaDTO.getItensOfertados().get(0).getUsuarioDtoId();
-
-        Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
-        ItemDTO itemAuxDTO = itemMapper.toDto(oferta.getItem());
-        itemAuxDTO.setUsuarioDtoId(idUsuarioOfertante);
-        itemServico.atualizar(itemAuxDTO);
-
-        alteraDisponibilidadeItensOfertados(ofertaDTO, true);
-        ofertaDTO.getItensOfertados().forEach(itemDTO -> {
-            itemDTO.setUsuarioDtoId(ofertaDTO.getUsuarioDtoId());
-            itemServico.atualizar(itemDTO);
-        });
-
-        atualizar(ofertaDTO);
+        itemServico.salvar(itemQueRecebeuAOferta);
+        itemServico.atualizarTodos(itensOfertados);
+        oferta.setSituacaoDtoId(2L);
+        atualizar(oferta);
     }
 
     public void recusar(Long idOferta){
         OfertaDTO ofertaDTO = obterPorId(idOferta);
         ofertaDTO.setSituacaoDtoId(3L);
+        ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, true);
         atualizar(ofertaDTO);
     }
 
-    public void cancelar(Long idOferta){
-        OfertaDTO ofertaCancelada = obterPorId(idOferta);
+    public void cancelar(Long idItem){
+        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItemId(idItem));
+        cancelaDemaisOfertas(ofertasCanceladas,idItem);
+    }
 
-        List<OfertaDTO> ofertas = ofertaMapper.toDto(ofertaRepositorio.findAll());
+    public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
+        List<ItemDTO> itens = ofertaDTO.getItensOfertados();
+        itens.forEach(itemDTO -> {
+            itemDTO = itemServico.obterPorId(itemDTO.getId());
+            itemDTO.setDisponibilidade(disponibilidade);
+        });
+        itemServico.atualizarTodos(itens);
+        return ofertaDTO;
+    }
 
-        ofertas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(ofertaCancelada.getItemDtoId()))
+    public void cancelaDemaisOfertas(List<OfertaDTO> ofertasCanceladas, Long idItemCancelado){
+        ofertasCanceladas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(idItemCancelado))
                 .forEach(ofertaDTO -> {
                     ofertaDTO.setSituacaoDtoId(4L);
                     alteraDisponibilidadeItensOfertados(ofertaDTO, true);
                 });
+        atualizarTodas(ofertasCanceladas);
     }
 
-    public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
-        ofertaDTO.getItensOfertados().forEach(
-                itemDTO -> itemDTO.setDisponibilidade(disponibilidade));
-        return ofertaDTO;
+    private EmailDTO criarEmailOferta(Oferta oferta){
+        EmailDTO email = new EmailDTO();
+
+        Item itemAux = itemMapper.toEntity(itemServico.obterPorId(oferta.getItem().getId()));
+        Usuario usuarioAux = usuarioMapper.toEntity(usuarioServico.getById(itemAux.getUsuario().getId()));
+
+        List<String> produtosOferecidos = new ArrayList<>();
+
+        oferta.getItensOfertados().forEach(item -> {
+            item = itemMapper.toEntity(itemServico.obterPorId(item.getId()));
+            produtosOferecidos.add("- " + item.getNome());
+        });
+
+        email.setAssunto("Nova oferta feita no produto: "+itemAux.getNome());
+        email.setCorpo("Você recebeu uma proposta de troca para um de seus produtos disponiveis!" +
+                "<br><br> Os itens oferecidos foram: <br>" + String.join("<br>",produtosOferecidos));
+        email.setDestinatario(usuarioAux.getEmail());
+
+        return email;
     }
 }

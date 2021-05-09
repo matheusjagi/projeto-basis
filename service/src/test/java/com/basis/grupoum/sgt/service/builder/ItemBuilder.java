@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.util.Base64;
 
 @Component
@@ -28,28 +27,37 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     @Override
     public Item construirEntidade() {
         Item item = new Item();
-        item.setNome("Rudeus");
-        item.setDescricao("desc1");
-        String teste = "qual";
+        item.setNome("Item teste");
+        item.setDescricao("Descricao do Item teste");
+        String teste = "foto";
         item.setFoto(Base64.getDecoder().decode(teste.getBytes(StandardCharsets.UTF_8)));
         item.setDisponibilidade(true);
         Categoria cat = new Categoria();
         cat.setId(1L);
-        cat.setDescricao("desctest");
+        cat.setDescricao("TESTE");
         item.setCategoria(cat);
-        item.setUsuario(usuarioBuilder.construir());
-
+        Usuario usuario = usuarioBuilder.construir();
+        item.setUsuario(usuario);
         return item;
+    }
+
+    public Item construirEntidade(String cpfUsuario, String emailUsuario) {
+        Item item = new Item();
+        item.setNome("Item teste");
+        item.setDescricao("Descricao do Item teste");
+        String teste = "foto";
+        item.setFoto(Base64.getDecoder().decode(teste.getBytes(StandardCharsets.UTF_8)));
+        item.setDisponibilidade(true);
+        Categoria cat = new Categoria();
+        cat.setId(1L);
+        item.setCategoria(cat);
+        item.setUsuario(usuarioBuilder.construirEntidade(cpfUsuario,emailUsuario));
+        return persistir(item);
     }
 
     @Override
     public Item persistir(Item entidade) {
         ItemDTO itemDTO = itemMapper.toDto(entidade);
         return itemMapper.toEntity(itemServico.salvar(itemDTO));
-    }
-
-    @Override
-    public Item construir() {
-        return this.persistir(construirEntidade());
     }
 }
