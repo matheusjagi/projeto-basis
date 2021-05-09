@@ -10,6 +10,7 @@ import com.basis.grupoum.sgt.service.servico.mapper.UsuarioListagemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import com.basis.grupoum.sgt.service.servico.util.CriptografiaSHA2;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -51,14 +52,10 @@ public class UsuarioServico {
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-
         validarCPF(usuarioDTO);
-
         usuario.setToken(CriptografiaSHA2.geraCriptografia(usuario.getCpf()));
-
         usuarioRepositorio.save(usuario);
         emailServico.sendEmail(criarEmailUsuario(usuario));
-
         return usuarioMapper.toDto(usuario);
     }
 

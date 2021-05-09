@@ -3,6 +3,8 @@ package com.basis.grupoum.sgt.service.recurso;
 import com.basis.grupoum.sgt.service.builder.ItemBuilder;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
+import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
+import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import com.basis.grupoum.sgt.service.util.IntTestComum;
 import com.basis.grupoum.sgt.service.util.TestUtil;
@@ -34,25 +36,71 @@ public class ItemRecursoIT extends IntTestComum {
     @Autowired
     private ItemRepositorio itemRepositorio;
 
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private OfertaRepositorio ofertaRepositorio;
+
     @BeforeEach
     public void inicializar(){
+        ofertaRepositorio.deleteAll();
         itemRepositorio.deleteAll();
         itemBuilder.setCustomizacao(null);
     }
 
     @Test
     public void listar() throws Exception{
-        Item item = itemBuilder.construir();
-
-        System.err.println(item.getId());
-        System.err.println(item.getDescricao());
-        System.err.println(item.getFoto());
-        System.err.println(item.getUsuario().getNome());
-        System.err.println(item.getNome());
+        itemBuilder.construir();
 
         getMockMvc().perform(get(URL))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void listarItensDisponiveis() throws Exception{
+        Item item = itemBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/disponibilidade/"+item.isDisponibilidade()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void listarItensPorNome() throws Exception{
+        Item item = itemBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/nome/"+item.getNome()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void listarItensPorCategoria() throws Exception{
+        Item item = itemBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/categoria/"+item.getCategoria().getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void listarItensPorUsuario() throws Exception{
+        Item item = itemBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/usuario/"+item.getUsuario().getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void obterPorId() throws Exception{
+        Item item = itemBuilder.construir();
+        getMockMvc().perform(get(URL+"/"+item.getId())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(item))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

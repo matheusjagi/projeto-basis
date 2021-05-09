@@ -1,8 +1,9 @@
 package com.basis.grupoum.sgt.service.recurso;
 
 import com.basis.grupoum.sgt.service.builder.UsuarioBuilder;
-import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Usuario;
+import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
+import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import com.basis.grupoum.sgt.service.util.IntTestComum;
@@ -35,8 +36,16 @@ public class UsuarioRecursoIT extends IntTestComum {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
+    @Autowired
+    private ItemRepositorio itemRepositorio;
+
+    @Autowired
+    private OfertaRepositorio ofertaRepositorio;
+
     @BeforeEach
     public void inicializar(){
+        ofertaRepositorio.deleteAll();
+        itemRepositorio.deleteAll();
         usuarioRepositorio.deleteAll();
         usuarioBuilder.setCustomizacao(null);
     }
@@ -50,8 +59,36 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
+    public void listarPorNome() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+        getMockMvc().perform(get(URL+"/nome/"+usuario.getNome()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void obterPorId() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/"+usuario.getId())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void obterPorToken() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/token/"+usuario.getToken())
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     public void salvar() throws Exception{
-        Usuario usuario = usuarioBuilder.construirEntidade();
+        Usuario usuario = usuarioBuilder.construir();
 
         getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

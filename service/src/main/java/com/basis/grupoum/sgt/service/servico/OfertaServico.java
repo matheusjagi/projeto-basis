@@ -1,10 +1,9 @@
 package com.basis.grupoum.sgt.service.servico;
 
-import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Oferta;
 import com.basis.grupoum.sgt.service.dominio.Situacao;
-import com.basis.grupoum.sgt.service.repositorio.CategoriaRepositorio;
+import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
@@ -14,9 +13,11 @@ import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.OfertaListagemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.OfertaMapper;
+import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,7 +30,9 @@ public class OfertaServico {
     private final OfertaListagemMapper ofertaListagemMapper;
     private final ItemServico itemServico;
     private final ItemMapper itemMapper;
-    private final CategoriaRepositorio categoriaRepositorio;
+    private final UsuarioServico usuarioServico;
+    private final UsuarioMapper usuarioMapper;
+    private final EmailServico emailServico;
 
     public List<OfertaListagemDTO> listar(){
         List<Oferta> ofertas = ofertaRepositorio.findAll();
@@ -53,6 +56,8 @@ public class OfertaServico {
         ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ofertaRepositorio.save(oferta);
+
+        emailServico.sendEmail(criarEmailOferta(oferta));
         return ofertaMapper.toDto(oferta);
     }
 
@@ -123,9 +128,20 @@ public class OfertaServico {
     private EmailDTO criarEmailOferta(Oferta oferta){
         EmailDTO email = new EmailDTO();
 
-        //email.setAssunto("Cadastro de Usuario");
-        //email.setCorpo("Você se cadastrou no SGTPM! Seu TOKEN de acesso é: "+usuario.getToken());
-        //email.setDestinatario(usuario.getEmail());
+        Item itemAux = itemMapper.toEntity(itemServico.obterPorId(oferta.getItem().getId()));
+        Usuario usuarioAux = usuarioMapper.toEntity(usuarioServico.obterPorId(itemAux.getUsuario().getId()));
+
+        List<String> produtosOferecidos = new ArrayList<>();
+
+        oferta.getItensOfertados().forEach(item -> {
+            item = itemMapper.toEntity(itemServico.obterPorId(item.getId()));
+            produtosOferecidos.add(new String("- " + item.getNome()));
+        });
+
+        email.setAssunto("Nova oferta feita no produto: "+itemAux.getNome());
+        email.setCorpo("Você recebeu uma proposta de troca para um de seus produtos disponiveis!" +
+                "<br><br> Os itens oferecidos foram: <br>" + String.join("<br>",produtosOferecidos));
+        email.setDestinatario(usuarioAux.getEmail());
 
         return email;
     }

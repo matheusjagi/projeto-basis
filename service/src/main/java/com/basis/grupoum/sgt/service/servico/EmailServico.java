@@ -3,10 +3,10 @@ package com.basis.grupoum.sgt.service.servico;
 import com.basis.grupoum.sgt.service.configuracao.ApplicationProperties;
 import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;

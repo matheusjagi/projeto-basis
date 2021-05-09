@@ -56,12 +56,6 @@ public class ItemServico {
         return itemMapper.toDto(item);
     }
 
-    public Categoria obterCategoriaPorId(Long id){
-        Categoria categoria = categoriaRepositorio
-                .findById(id).orElseThrow(() -> new RegraNegocioException("Categoria não encontrada"));
-        return categoria;
-    }
-
     public ItemDTO salvar(ItemDTO itemDTO){
         Item item = itemMapper.toEntity(itemDTO);
         String teste = "qual";
