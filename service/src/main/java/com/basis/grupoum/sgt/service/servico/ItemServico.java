@@ -57,12 +57,6 @@ public class ItemServico {
         return itemMapper.toDto(item);
     }
 
-    public ItemDTO atualizar(ItemDTO itemDTO){
-        Item item = itemMapper.toEntity(itemDTO);
-        itemRepositorio.save(item);
-        return itemMapper.toDto(item);
-    }
-
     public List<ItemDTO> atualizarTodos(List<ItemDTO> itensDTO){
         List<Item> itens = itemMapper.toEntity(itensDTO);
         itemRepositorio.saveAll(itens);

@@ -80,7 +80,7 @@ public class OfertaServico {
         itensOfertados.forEach(item -> item.setUsuarioDtoId(itemQueRecebeuAOferta.getUsuarioDtoId()));
         itemQueRecebeuAOferta.setUsuarioDtoId(oferta.getUsuarioDtoId());
 
-        itemServico.atualizar(itemQueRecebeuAOferta);
+        itemServico.salvar(itemQueRecebeuAOferta);
         itemServico.atualizarTodos(itensOfertados);
         oferta.setSituacaoDtoId(2L);
         atualizar(oferta);
@@ -111,10 +111,10 @@ public class OfertaServico {
     public void cancelaDemaisOfertas(List<OfertaDTO> ofertasCanceladas, Long idItemCancelado){
         ofertasCanceladas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(idItemCancelado))
                 .forEach(ofertaDTO -> {
-                    ofertaDTO.setSituacaoDtoId(4l);
+                    ofertaDTO.setSituacaoDtoId(4L);
                     alteraDisponibilidadeItensOfertados(ofertaDTO, true);
-                    atualizar(ofertaDTO);
                 });
+        atualizarTodas(ofertasCanceladas);
     }
 
     private EmailDTO criarEmailOferta(Oferta oferta){
@@ -127,7 +127,7 @@ public class OfertaServico {
 
         oferta.getItensOfertados().forEach(item -> {
             item = itemMapper.toEntity(itemServico.obterPorId(item.getId()));
-            produtosOferecidos.add(new String("- " + item.getNome()));
+            produtosOferecidos.add("- " + item.getNome());
         });
 
         email.setAssunto("Nova oferta feita no produto: "+itemAux.getNome());
