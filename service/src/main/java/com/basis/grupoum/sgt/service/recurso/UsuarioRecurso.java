@@ -4,9 +4,6 @@ import com.basis.grupoum.sgt.service.servico.UsuarioServico;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioListagemDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,13 +38,13 @@ public class UsuarioRecurso {
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> obterPorId(@PathVariable("id") Long idUsuario) {
-        UsuarioDTO usuario = usuarioServico.obterPorId(idUsuario);
+        UsuarioDTO usuario = usuarioServico.getById(idUsuario);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @GetMapping("/token/{token}")
     public ResponseEntity<UsuarioDTO> obterPorToken(@PathVariable("token") String token) {
-        UsuarioDTO usuario = usuarioServico.obterPorToken(token);
+        UsuarioDTO usuario = usuarioServico.getByToken(token);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 

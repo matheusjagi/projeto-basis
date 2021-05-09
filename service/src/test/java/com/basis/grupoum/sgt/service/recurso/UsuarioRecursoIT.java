@@ -98,7 +98,7 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void naoSalvaCpfDuplicado() throws Exception{
-        Usuario usuario = usuarioBuilder.construir();
+        usuarioBuilder.construir();
 
         getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

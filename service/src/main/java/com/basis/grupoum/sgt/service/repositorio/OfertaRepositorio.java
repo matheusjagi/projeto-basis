@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface OfertaRepositorio extends JpaRepository<Oferta, Long> {
-    List<Oferta> findAllBySituacao(Situacao situacao);
-    List<Oferta> findAllByItem(Item item);
+
+    List<Oferta> findAllBySituacaoId(Long id);
+
+    List<Oferta> findAllByItemId(Long id);
+
 }

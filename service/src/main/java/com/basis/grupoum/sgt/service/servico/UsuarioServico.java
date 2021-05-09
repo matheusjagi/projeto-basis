@@ -10,7 +10,6 @@ import com.basis.grupoum.sgt.service.servico.mapper.UsuarioListagemMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import com.basis.grupoum.sgt.service.servico.util.CriptografiaSHA2;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -40,12 +39,12 @@ public class UsuarioServico {
         return usuarioListagemMapper.toDto(usuarioRepositorio.findByNomeContaining(nome));
     }
 
-    public UsuarioDTO obterPorId(Long id){
+    public UsuarioDTO getById(Long id){
         Usuario usuario = getUsuario(id);
         return usuarioMapper.toDto(usuario);
     }
 
-    public UsuarioDTO obterPorToken(String token){
+    public UsuarioDTO getByToken(String token){
         Usuario usuario = usuarioRepositorio.findByToken(token);
         return usuarioMapper.toDto(usuario);
     }

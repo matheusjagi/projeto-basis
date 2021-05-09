@@ -4,14 +4,12 @@ import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.servico.ItemServico;
-import com.basis.grupoum.sgt.service.servico.OfertaServico;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.util.Base64;
 
 @Component
@@ -25,9 +23,6 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
-
-    @Autowired
-    private OfertaServico ofertaServico;
 
     @Override
     public Item construirEntidade() {
@@ -55,18 +50,8 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         item.setDisponibilidade(true);
         Categoria cat = new Categoria();
         cat.setId(1L);
-        //cat.setDescricao("TESTE");
-
-        //cat.setDescricao("cat dejc");
         item.setCategoria(cat);
         item.setUsuario(usuarioBuilder.construirEntidade(cpfUsuario,emailUsuario));
-
-        /*Usuario user = usuarioBuilder.customizar(entidade -> {
-            entidade.setCpf(cpfUsuario);
-            entidade.setEmail(emailUsuario);
-        }).construir();
-
-        item.setUsuario(user);*/
         return persistir(item);
     }
 

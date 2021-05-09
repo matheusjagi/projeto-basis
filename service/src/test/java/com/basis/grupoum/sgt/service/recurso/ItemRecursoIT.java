@@ -4,7 +4,6 @@ import com.basis.grupoum.sgt.service.builder.ItemBuilder;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
-import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import com.basis.grupoum.sgt.service.util.IntTestComum;
 import com.basis.grupoum.sgt.service.util.TestUtil;
@@ -35,9 +34,6 @@ public class ItemRecursoIT extends IntTestComum {
 
     @Autowired
     private ItemRepositorio itemRepositorio;
-
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
     private OfertaRepositorio ofertaRepositorio;

@@ -1,8 +1,6 @@
 package com.basis.grupoum.sgt.service.servico;
 
-import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
-import com.basis.grupoum.sgt.service.repositorio.CategoriaRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
@@ -11,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -22,7 +18,6 @@ public class ItemServico {
 
     private final ItemRepositorio itemRepositorio;
     private final ItemMapper itemMapper;
-    private final CategoriaRepositorio categoriaRepositorio;
 
     public List<ItemDTO> listar(){
         List<Item> itens = itemRepositorio.findAll();
@@ -58,8 +53,6 @@ public class ItemServico {
 
     public ItemDTO salvar(ItemDTO itemDTO){
         Item item = itemMapper.toEntity(itemDTO);
-        String teste = "qual";
-        item.setFoto(Base64.getDecoder().decode(teste.getBytes(StandardCharsets.UTF_8)));
         itemRepositorio.save(item);
         return itemMapper.toDto(item);
     }
@@ -68,6 +61,12 @@ public class ItemServico {
         Item item = itemMapper.toEntity(itemDTO);
         itemRepositorio.save(item);
         return itemMapper.toDto(item);
+    }
+
+    public List<ItemDTO> atualizarTodos(List<ItemDTO> itensDTO){
+        List<Item> itens = itemMapper.toEntity(itensDTO);
+        itemRepositorio.saveAll(itens);
+        return itemMapper.toDto(itens);
     }
 
     public void deletar(Long idItem){

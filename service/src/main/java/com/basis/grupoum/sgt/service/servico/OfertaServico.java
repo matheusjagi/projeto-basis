@@ -2,7 +2,6 @@ package com.basis.grupoum.sgt.service.servico;
 
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Oferta;
-import com.basis.grupoum.sgt.service.dominio.Situacao;
 import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
@@ -40,9 +39,7 @@ public class OfertaServico {
     }
 
     public List<OfertaListagemDTO> listarPorSitucao(Long idSituacao){
-        Situacao situacao = new Situacao();
-        situacao.setId(idSituacao);
-        List<Oferta> ofertasPorSitucao = ofertaRepositorio.findAllBySituacao(situacao);
+        List<Oferta> ofertasPorSitucao = ofertaRepositorio.findAllBySituacaoId(idSituacao);
         return ofertaListagemMapper.toDto(ofertasPorSitucao);
     }
 
@@ -67,31 +64,26 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
+    public void atualizarTodas(List<OfertaDTO> ofertas){
+        List<Oferta> ofertasAtualizaveis = ofertaMapper.toEntity(ofertas);
+        ofertaRepositorio.saveAll(ofertasAtualizaveis);
+    }
+
     public void deletar(Long idOferta){
         ofertaRepositorio.deleteById(idOferta);
     }
 
     public void aceitar(Long idOferta){
-        OfertaDTO ofertaDTO = obterPorId(idOferta);
-        ItemDTO itemAuxDTO = itemServico.obterPorId(ofertaDTO.getItemDtoId());
+        OfertaDTO oferta = obterPorId(idOferta);
+        ItemDTO itemQueRecebeuAOferta = itemServico.obterPorId(oferta.getItemDtoId());
+        List<ItemDTO> itensOfertados = oferta.getItensOfertados();
+        itensOfertados.forEach(item -> item.setUsuarioDtoId(itemQueRecebeuAOferta.getUsuarioDtoId()));
+        itemQueRecebeuAOferta.setUsuarioDtoId(oferta.getUsuarioDtoId());
 
-        Long idUsuarioOfertado = itemAuxDTO.getUsuarioDtoId();
-
-        itemAuxDTO.setUsuarioDtoId(ofertaDTO.getUsuarioDtoId());
-        itemServico.atualizar(itemAuxDTO);
-
-        ofertaDTO.getItensOfertados().forEach(itemDTO -> {
-            itemDTO.setUsuarioDtoId(idUsuarioOfertado);
-            itemDTO.setDisponibilidade(true);
-            itemServico.atualizar(itemDTO);
-        });
-
-        Item itemCancelado = itemMapper.toEntity(itemServico.obterPorId(ofertaDTO.getItemDtoId()));
-        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItem(itemCancelado));
-        cancelaDemaisOfertas(ofertasCanceladas,ofertaDTO.getItemDtoId());
-
-        ofertaDTO.setSituacaoDtoId(2L);
-        atualizar(ofertaDTO);
+        itemServico.atualizar(itemQueRecebeuAOferta);
+        itemServico.atualizarTodos(itensOfertados);
+        oferta.setSituacaoDtoId(2L);
+        atualizar(oferta);
     }
 
     public void recusar(Long idOferta){
@@ -102,17 +94,17 @@ public class OfertaServico {
     }
 
     public void cancelar(Long idItem){
-        Item itemCancelado = itemMapper.toEntity(itemServico.obterPorId(idItem));
-        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItem(itemCancelado));
+        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItemId(idItem));
         cancelaDemaisOfertas(ofertasCanceladas,idItem);
     }
 
     public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
-        ofertaDTO.getItensOfertados().forEach(itemDTO -> {
+        List<ItemDTO> itens = ofertaDTO.getItensOfertados();
+        itens.forEach(itemDTO -> {
             itemDTO = itemServico.obterPorId(itemDTO.getId());
             itemDTO.setDisponibilidade(disponibilidade);
-            itemServico.atualizar(itemDTO);
         });
+        itemServico.atualizarTodos(itens);
         return ofertaDTO;
     }
 
@@ -129,7 +121,7 @@ public class OfertaServico {
         EmailDTO email = new EmailDTO();
 
         Item itemAux = itemMapper.toEntity(itemServico.obterPorId(oferta.getItem().getId()));
-        Usuario usuarioAux = usuarioMapper.toEntity(usuarioServico.obterPorId(itemAux.getUsuario().getId()));
+        Usuario usuarioAux = usuarioMapper.toEntity(usuarioServico.getById(itemAux.getUsuario().getId()));
 
         List<String> produtosOferecidos = new ArrayList<>();
 
