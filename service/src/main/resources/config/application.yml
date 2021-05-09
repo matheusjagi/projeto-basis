@@ -1,14 +1,19 @@
 application:
-  appName: sgt
+  appName: sgtpm
+  mail:
+    endereco-remetente: sgtpm.basis@gmail.com
+    nome-remetente: Sistema de Gerenciamento de Trocas de Peças de Motos
 
 spring:
   application:
-    name: sgtservice
+    name: sgtpmservice
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: sgt
-    password: sgt
+    url: jdbc:postgresql://localhost:5432/sgtpm
+    username: sgtpm
+    password: sgtpm
+    hikari:
+      auto-commit: false
   jackson:
     date-format: yyyy-MM-dd
     deserialization:
@@ -26,6 +31,19 @@ spring:
       hibernate.generate_statistics: false
   liquibase:
     change-log: classpath:/config/liquibase/master.xml
-    drop-first: true
+    #drop-first: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sgtpm.basis@gmail.com
+    password: sgtpmb@sis01
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          quitwait: false
 server:
   port: 8080
