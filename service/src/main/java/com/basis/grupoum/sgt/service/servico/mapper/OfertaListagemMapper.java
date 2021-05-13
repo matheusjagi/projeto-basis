@@ -14,6 +14,7 @@ public interface OfertaListagemMapper extends EntityMapper<OfertaListagemDTO, Of
     @Mapping(source = "descricaoItem", target = "item.descricao")
     @Mapping(source = "foto", target = "item.foto")
     @Mapping(source = "nomeUsuario", target = "usuario.nome")
+    @Mapping(source = "situacaoDtoId", target = "situacao.id")
     Oferta toEntity(OfertaListagemDTO dto);
 
     @Override

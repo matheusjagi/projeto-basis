@@ -6,7 +6,6 @@ import com.basis.grupoum.sgt.service.servico.dto.UsuarioDTO;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 
 @Component
@@ -22,10 +21,19 @@ public class UsuarioBuilder extends ConstrutorEntidade<Usuario> {
     public Usuario construirEntidade() {
         Usuario usuario = new Usuario();
         usuario.setNome("Usuario Teste");
-        usuario.setCpf("10339035072");
+        usuario.setCpf("42831450098");
         usuario.setEmail("teste@gmail.com");
-        usuario.setDataNascimento(LocalDate.now());
+        usuario.setDataNascimento(LocalDate.now().minusYears(26));
         return usuario;
+    }
+
+    public Usuario construirEntidade(String cpf, String email) {
+        Usuario usuario = new Usuario();
+        usuario.setNome("Usuario Teste");
+        usuario.setCpf(cpf);
+        usuario.setEmail(email);
+        usuario.setDataNascimento(LocalDate.now().minusYears(20));
+        return persistir(usuario);
     }
 
     @Override

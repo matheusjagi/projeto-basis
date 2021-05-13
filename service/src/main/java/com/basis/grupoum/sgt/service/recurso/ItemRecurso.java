@@ -66,7 +66,7 @@ public class ItemRecurso {
 
     @PutMapping
     public ResponseEntity<ItemDTO> atualizar(@RequestBody ItemDTO itemDTO){
-        ItemDTO item = itemServico.atualizar(itemDTO);
+        ItemDTO item = itemServico.salvar(itemDTO);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 

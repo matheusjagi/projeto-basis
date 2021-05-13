@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -39,7 +38,13 @@ public class UsuarioRecurso {
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> obterPorId(@PathVariable("id") Long idUsuario) {
-        UsuarioDTO usuario = usuarioServico.obterPorId(idUsuario);
+        UsuarioDTO usuario = usuarioServico.getById(idUsuario);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
+    @GetMapping("/token/{token}")
+    public ResponseEntity<UsuarioDTO> obterPorToken(@PathVariable("token") String token) {
+        UsuarioDTO usuario = usuarioServico.getByToken(token);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
