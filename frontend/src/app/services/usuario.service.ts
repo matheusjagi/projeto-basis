@@ -15,6 +15,10 @@ export class UsuarioService {
     return this.http.get<any[]>(`api/usuarios`);
   }
 
+  buscarPorId (idUsuario) {
+    return this.http.get<any>(`api/usuarios/${idUsuario}`);
+  }
+
   salvar (usuario) {
     return this.http.post(`api/usuarios`, usuario);
   }
