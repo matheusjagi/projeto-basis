@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListagemPageComponent } from './listagem-page/listagem-page.component';
+import { ListagemPageComponent } from './listagem-page-usuario/listagem-page.component';
 
 
 const routes: Routes = [

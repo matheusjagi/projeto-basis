@@ -1,0 +1,60 @@
+<div class="card">
+    <p-dataView #dv [value]="itens" [paginator]="true" [rows]="5" paginatorPosition="both" filterBy="nome"
+    [sortField]="sortField" [sortOrder]="sortOrder">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-4">
+                    <p-dropdown [options]="sortCategoria" [(ngModel)]="sortKey" placeholder="Pesquisar por Categoria" optionLabel="descricao" [style]="{'min-width':'140px'}"></p-dropdown>
+                </div>
+                <div class="p-col-6 p-md-4 filter-container">
+                    <div style="position:relative">
+                        <input type="search" pInputText placeholder="Pesquisar por Nome" (input)="dv.filter($event.target.value)">
+                    </div>
+                </div>
+                <div class="p-col-6 p-md-4" style="text-align:right">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </div>
+        </div>
+    </p-header>
+
+    <ng-template let-item pTemplate="listItem">
+        <div id="item-linha" class="p-col-12">
+            <div class="p-grid">
+                <div class="p-col-8">
+                    <img src="">
+                    <div class="p-grid">
+                        <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
+                        <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
+                    </div>
+                </div>
+                <div id="botao-item" class="p-col-4">
+                    <button pButton type="button" icon="pi pi-plus" (click)="$event"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template let-item pTemplate="gridItem">
+        <div [style]="{'padding': '.5em', 'margin': '1em -1em 1em 1em'}" class="p-col-12 p-md-3">
+            <p-panel [header]="" [style]="{'text-align':'center'}">
+                <img src="" width="60">
+                <div class="car-detail">
+                    <strong>Item:</strong> {{ item.nome }} <br>
+                    <strong>Descrição:</strong> {{ item.descricao }}</div>
+                <hr>
+                <button pButton type="button" icon="pi pi-plus" (click)="$event" style="margin-top:0"></button>
+            </p-panel>
+        </div>
+    </ng-template>
+</p-dataView>
+
+<!-- <p-dialog header="Car Details" [(visible)]="displayDialog" [minY]="70" showEffect="fade" [modal]="true"
+    [style]="{width: '225px'}" (onAfterHide)="onDialogHide()" [contentStyle]="{padding: '2em', textAlign: 'center'}">
+    <div *ngIf="selectedCar">
+        <img src="">
+        <strong>{{selectedCar.vin}} - {{selectedCar.year}}</strong>
+    </div>
+</p-dialog> -->
+</div>

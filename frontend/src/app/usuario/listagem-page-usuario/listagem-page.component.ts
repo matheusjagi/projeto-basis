@@ -1,4 +1,4 @@
-import { UsuarioService } from './../../services/usuario.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';

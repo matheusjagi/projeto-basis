@@ -27,8 +27,8 @@ export class UsuarioService {
     return this.http.put(`api/usuarios`, usuario);
   }
 
-  excluir (id) {
-    return this.http.delete(`api/usuarios/${id}`);
+  excluir (idUsuario) {
+    return this.http.delete(`api/usuarios/${idUsuario}`);
   }
 
 }
