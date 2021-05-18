@@ -51,31 +51,16 @@ export class ListagemPageItemComponent implements OnInit {
     }
 
     imageUpload(event){
-        let fa = null;
-
         let reader = new FileReader();
-        //get the selected file from event
+
         let file = event.target.files[0];
 
         reader.onloadend = () => {
-          //Assign the result to variable for setting the src of image element
             this.imageUrl = reader.result;
 
-            fetch(this.imageUrl).then(
-               // res => this.form.patchValue({foto: res.blob()})
-               res => res.blob()
-            ).then(console.log)
-
-
-          //console.log("Blob:  "+ blob);
-
-
+            let blob = this.imageUrl.split(",");
+            this.form.patchValue({foto: blob[1]});
         }
-        //let fotoAux = new Blob([new Uint8Array(file)], {type: "image/png"});
-
-        //console.log('FOTO BLOB: '+file.);
-
-        //this.form.patchValue({foto: fotoAux});
 
         reader.readAsDataURL(file);
     }
@@ -111,7 +96,17 @@ export class ListagemPageItemComponent implements OnInit {
             )
 
         } else {
+            this.form.patchValue({disponibilidade: true});
             this.form.patchValue({usuarioDtoId: 435});
+
+            // let fd = new FormData();
+            // fd.append('id', this.form.get('id').value);
+            // fd.append('nome', this.form.get('nome').value);
+            // fd.append('descricao', this.form.get('descricao').value);
+            // fd.append('foto', this.form.get('foto').value);
+            // fd.append('disponibilidade', this.form.get('disponibilidade').value);
+            // fd.append('usuarioDtoId', this.form.get('usuarioDtoId').value);
+            // fd.append('categoriaDtoId', this.form.get('categoriaDtoId').value);
 
             this.itemService.salvar(this.form.value).pipe(
                 finalize(() => {

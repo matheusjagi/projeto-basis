@@ -10,16 +10,17 @@
                 <label for="descricao">Descrição</label>
                 <input id="descricao" type="text" pInputText formControlName="descricao">
             </div>
-            <div class="p-field">
-                <input type="file" name="foto" (change)="imageUpload($event)" >
-                <!-- <p-fileUpload mode="basic" name="foto" accept="image/*"
-                maxFileSize="1000000" (change)="imageUpload($event)" formControlName="foto"></p-fileUpload> -->
+            <div class="p-field p-grid">
+                <div class="p-col-6" [style]="{'margin-top':'5%'}">
+                    <input type="file" name="foto" (change)="imageUpload($event)">
+                </div>
+                <div class="container p-col-6">
+                    <img [src]="imageUrl"/>
+                </div>
             </div>
             <div class="p-field">
                 <p-dropdown [options]="categorias" placeholder="Selecione uma Categoria" formControlName="categoriaDtoId"></p-dropdown>
             </div>
-            <br><br>
-            <img [src]="imageUrl" />
         </div>
 
         <p-footer>

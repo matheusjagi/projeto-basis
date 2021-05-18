@@ -28,7 +28,9 @@ export class ItemService {
     }
 
     salvar (item) {
-      return this.http.post(`api/itens`, item);
+        console.log("entrouuuuuuu: ",item);
+
+        return this.http.post(`api/itens`, item);
     }
 
     atualizar (item) {
