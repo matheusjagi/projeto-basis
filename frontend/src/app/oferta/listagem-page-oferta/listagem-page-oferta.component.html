@@ -20,13 +20,17 @@
     </p-header>
 
     <ng-template let-item pTemplate="listItem">
-        <div id="item-linha" class="p-col-12">
+        <div id="item-linha" class="p-col-12" (change)="acrescentarBase64()">
             <div class="p-grid">
                 <div class="p-col-8">
-                    <img src="">
                     <div class="p-grid">
-                        <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
-                        <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
+                        <div class="container p-col-4">
+                            <img [src]="item.foto">
+                        </div>
+                        <div class="p-col-8">
+                            <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
+                            <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
+                        </div>
                     </div>
                 </div>
                 <div id="botao-item" class="p-col-4">
@@ -39,7 +43,7 @@
     <ng-template let-item pTemplate="gridItem">
         <div [style]="{'padding': '.5em', 'margin': '1em -1em 1em 1em'}" class="p-col-12 p-md-3">
             <p-panel [header]="" [style]="{'text-align':'center'}">
-                <img src="" width="60">
+                <img [src]="item.foto" width="80" height="80">
                 <div class="car-detail">
                     <strong>Item:</strong> {{ item.nome }} <br>
                     <strong>Descrição:</strong> {{ item.descricao }}</div>

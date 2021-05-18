@@ -11,15 +11,15 @@
                 <input id="descricao" type="text" pInputText formControlName="descricao">
             </div>
             <div class="p-field p-grid">
-                <div class="p-col-6" [style]="{'margin-top':'5%'}">
+                <div id="id-file" class="p-col-10" [style]="{'margin-top':'5%'}">
                     <input type="file" name="foto" (change)="imageUpload($event)">
                 </div>
-                <div class="container p-col-6">
+                <div class="container p-col-2">
                     <img [src]="imageUrl"/>
                 </div>
             </div>
             <div class="p-field">
-                <p-dropdown [options]="categorias" placeholder="Selecione uma Categoria" formControlName="categoriaDtoId"></p-dropdown>
+                <p-dropdown [options]="categorias" placeholder="Selecione uma Categoria" formControlName="categoriaDtoId" [style]="{'margin-top': '1em'}"></p-dropdown>
             </div>
         </div>
 

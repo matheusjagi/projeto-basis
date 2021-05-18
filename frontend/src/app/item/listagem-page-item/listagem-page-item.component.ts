@@ -1,5 +1,5 @@
 import { ItemService } from './../../services/item.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { finalize } from 'rxjs/operators';
@@ -99,15 +99,6 @@ export class ListagemPageItemComponent implements OnInit {
             this.form.patchValue({disponibilidade: true});
             this.form.patchValue({usuarioDtoId: 435});
 
-            // let fd = new FormData();
-            // fd.append('id', this.form.get('id').value);
-            // fd.append('nome', this.form.get('nome').value);
-            // fd.append('descricao', this.form.get('descricao').value);
-            // fd.append('foto', this.form.get('foto').value);
-            // fd.append('disponibilidade', this.form.get('disponibilidade').value);
-            // fd.append('usuarioDtoId', this.form.get('usuarioDtoId').value);
-            // fd.append('categoriaDtoId', this.form.get('categoriaDtoId').value);
-
             this.itemService.salvar(this.form.value).pipe(
                 finalize(() => {
                     this.fecharModal();
@@ -147,8 +138,14 @@ export class ListagemPageItemComponent implements OnInit {
     }
 
     fecharModal(){
+        //this.clearInputFile();
         this.form.reset();
         this.isEditing = false;
+    }
+
+    clearInputFile(){
+        let componentFile = document.getElementById('id-file');
+        componentFile.innerHTML = '<input type="file" name="foto" (change)="imageUpload($event)">';
     }
 
 }

@@ -34,7 +34,17 @@ export class ListagemPageOfertaComponent implements OnInit {
     this.itemService.buscarPorSituacao(situacao).subscribe(
         (itens) => {
             this.itens = itens;
+
+            this.itens.forEach(item => {
+                let montandoBase64 = 'data:image/png;base64,';
+                let novaString = montandoBase64.concat(item.foto);
+                item.foto = novaString;
+            });
         }
     )
+  }
+
+  acrescentarBase64(){
+      console.log('teste');
   }
 }
