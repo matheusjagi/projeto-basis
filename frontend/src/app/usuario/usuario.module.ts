@@ -18,4 +18,5 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ]
 })
+
 export class UsuarioModule { }

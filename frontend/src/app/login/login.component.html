@@ -1,0 +1,16 @@
+<form [formGroup]=form (ngSubmit)="logar()">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="email">email</label>
+            <input id="email" type="text" formControlName="email" pInputText> 
+        </div>
+        <div class="p-field">
+            <label for="token">token</label>
+            <input id="token" type="password" formControlName="token" pInputText> 
+        </div>
+    </div>
+    <button pButton type="submit" label="Logar" [disabled]="form.invalid || submit"></button>
+</form>
+
+
+

@@ -92,16 +92,11 @@ export class ListagemPageComponent implements OnInit {
         (usuario) => {
             this.displayModal = true;
             this.form.patchValue(usuario);
-            /*this.form.patchValue({
-                ...usuario,
-                dataNascimento: new Date(usuario.dataNascimento)
-            })*/
         }
       )
   }
 
   excluir(idUsuario){
-    console.log(idUsuario);
     this.usuarioService.excluir(idUsuario).subscribe(
         () => {
             this.notification.addSuccessMessage("Usuário excluido com sucesso!");

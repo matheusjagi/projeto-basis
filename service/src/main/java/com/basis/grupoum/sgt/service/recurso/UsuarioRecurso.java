@@ -3,6 +3,7 @@ package com.basis.grupoum.sgt.service.recurso;
 import com.basis.grupoum.sgt.service.servico.UsuarioServico;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioListagemDTO;
+import com.basis.grupoum.sgt.service.servico.dto.UsuarioLoginDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,16 @@ import java.util.List;
 public class UsuarioRecurso {
 
     private final UsuarioServico usuarioServico;
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioLoginDTO> autenticacao(@RequestBody UsuarioLoginDTO usuarioLogin){
+        UsuarioLoginDTO usuario = usuarioServico.autenticacao(usuarioLogin);
+        if(usuario != null){
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(usuario, HttpStatus.UNAUTHORIZED);
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<UsuarioListagemDTO>> listar(){
