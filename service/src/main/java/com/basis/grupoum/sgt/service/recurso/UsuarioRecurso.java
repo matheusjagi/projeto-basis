@@ -28,15 +28,11 @@ public class UsuarioRecurso {
     @PostMapping("/login")
     public ResponseEntity<UsuarioLoginDTO> autenticacao(@RequestBody UsuarioLoginDTO usuarioLogin){
         UsuarioLoginDTO usuario = usuarioServico.autenticacao(usuarioLogin);
-
-        ResponseEntity resposta;
-
         if(usuario != null){
-            resposta = new ResponseEntity<>(usuario, HttpStatus.OK);
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
         }else{
-            resposta = new ResponseEntity<>(usuario, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(usuario, HttpStatus.UNAUTHORIZED);
         }
-        return resposta;
     }
 
     @GetMapping
