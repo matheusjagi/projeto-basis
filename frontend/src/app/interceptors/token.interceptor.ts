@@ -21,11 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
       let req = request.clone({ setHeaders: {
         Token: `${token}`
       }});
-      return next.handle(req).pipe(
-        tap(() => {
-          console.log('')
-        })
-      );
+      return next.handle(req);
     }
     return next.handle(request);
   }

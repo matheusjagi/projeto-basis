@@ -5,8 +5,10 @@ import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.EmailDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioDTO;
 import com.basis.grupoum.sgt.service.servico.dto.UsuarioListagemDTO;
+import com.basis.grupoum.sgt.service.servico.dto.UsuarioLoginDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioListagemMapper;
+import com.basis.grupoum.sgt.service.servico.mapper.UsuarioLoginMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
 import com.basis.grupoum.sgt.service.servico.util.CriptografiaSHA2;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,13 @@ public class UsuarioServico {
     private final UsuarioRepositorio usuarioRepositorio;
     private final UsuarioMapper usuarioMapper;
     private final UsuarioListagemMapper usuarioListagemMapper;
+    private final UsuarioLoginMapper usuarioLoginMapper;
     private final EmailServico emailServico;
+
+    public UsuarioLoginDTO autenticacao(UsuarioLoginDTO usuarioLoginDTO){
+        UsuarioLoginDTO usuLoginDTO = usuarioLoginMapper.toDto(usuarioRepositorio.findByEmailAndToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getToken()));
+        return usuLoginDTO;
+    }
 
     public List<UsuarioListagemDTO> listar (){
         List<Usuario> usuarios = usuarioRepositorio.findAll();

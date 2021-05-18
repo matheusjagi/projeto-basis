@@ -3,13 +3,13 @@ import { ScrollPanel } from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
 
-  layoutCompact = true;
+    layoutCompact = true;
 
     darkMenu = false;
 
@@ -53,8 +53,8 @@ export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
         this.menuService.itens = [
             { label: 'Dashboard', icon: 'dashboard', routerLink: ['./'] },
             { label: 'Usuarios', icon: 'person', routerLink: ['./usuarios'] },
-            { label: 'Itens', icon: 'person', routerLink: ['/itens'] },
-            { label: 'Minhas Ofertas', icon: 'person', routerLink: ['/ofertas'] }
+            { label: 'Itens', icon: 'person', routerLink: ['./itens'] },
+            { label: 'Minhas Ofertas', icon: 'person', routerLink: ['./ofertas'] }
         ];
     }
 

@@ -9,6 +9,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(credentials){
-    return this.http.post<any>('api/autenticacao/login', credentials);
+    return this.http.post('api/usuarios/login', credentials);
   }
 }

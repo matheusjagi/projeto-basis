@@ -26,12 +26,12 @@ export class LoginComponent implements OnInit {
 
   iniciarForm () {
     this.form = this.fb.group({
-      email: [null,[Validators.required,Validators.email]],
-      token: [null,[Validators.required]],    
+      email: [null, [Validators.required, Validators.email]],
+      token: [null, [Validators.required]],    
     });
   }
 
-  login(){
+  logar(){
     this.submit = true;
     this.loginService.login(this.form.value).pipe(
       finalize(() => {
@@ -43,6 +43,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', this.form.get('token').value);
         localStorage.setItem('usuario', JSON.stringify(data));
         this.router.navigate(['admin']);
+      },
+      () => {
+        //fazer erro
       }
     )
   }

@@ -35,9 +35,9 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
         ErrorStackModule,
         ErrorModule,
         VersionTagModule,
-        SecurityModule.forRoot(environment.auth),
         MenuModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        // SecurityModule.forRoot(environment.auth),
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

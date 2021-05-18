@@ -8,14 +8,14 @@ import { AdminComponent } from 'src/app/admin/admin.component';
 })
 export class AppTopbarComponent {
 
-    constructor(public app: AdminComponent, private readonly _authentication: Authentication<User>) {
+    constructor(public app: AdminComponent) {
     }
 
-    get usuario() {
-        return this._authentication.getUser();
-    }
+    // get usuario() {
+    //     return this._authentication.getUser();
+    // }
 
-    isAuthenticated() {
-        return this._authentication.isAuthenticated();
-    }
+    // isAuthenticated() {
+    //     return this._authentication.isAuthenticated();
+    // }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '@nuvem/angular-base';
+import { AuthGuard } from '../guard/auth.guard';
 import { ListagemPageComponent } from './listagem-page/listagem-page.component';
 
 
