@@ -1,6 +1,8 @@
 package com.basis.grupoum.sgt.service.servico;
 
+import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
+import com.basis.grupoum.sgt.service.repositorio.CategoriaRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
@@ -8,6 +10,10 @@ import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -17,6 +23,12 @@ public class ItemServico {
 
     private final ItemRepositorio itemRepositorio;
     private final ItemMapper itemMapper;
+    private final CategoriaRepositorio categoriaRepositorio;
+
+    public List<Categoria> listarCategoria(){
+        List<Categoria> categorias = categoriaRepositorio.findAll();
+        return categorias;
+    }
 
     public List<ItemDTO> listar(){
         List<Item> itens = itemRepositorio.findAll();
