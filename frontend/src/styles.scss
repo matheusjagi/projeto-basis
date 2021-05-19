@@ -109,3 +109,21 @@ body .ui-paginator .ui-paginator-pages a.ui-state-active {
     color: #9e9e9e;
     border-radius: 3px;
 }
+
+body .ui-widget-overlay {
+    opacity: 0.95;
+}
+
+body .ui-dialog .ui-dialog-footer .ui-button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    width: auto;
+    border-radius: 5px;
+}
+
+body .ui-dialog .ui-dialog-footer .ui-button .ui-button-icon-left {
+    color: #ffffff;
+}

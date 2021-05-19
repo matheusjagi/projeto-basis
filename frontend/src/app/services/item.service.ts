@@ -23,13 +23,15 @@ export class ItemService {
       return this.http.get<any>(`api/itens/${idItem}`);
     }
 
+    buscarPorUsuario(idUsuario: number){
+        return this.http.get<any>(`api/itens/usuario/${idUsuario}`);
+    }
+
     buscarPorSituacao (situacao: boolean) {
         return this.http.get<any>(`api/itens/disponibilidade/${situacao}`);
     }
 
     salvar (item) {
-        console.log("entrouuuuuuu: ",item);
-
         return this.http.post(`api/itens`, item);
     }
 
