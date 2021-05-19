@@ -1,4 +1,4 @@
-<p-dataView #dv [value]="itens" [paginator]="true" [rows]="5" paginatorPosition="both" filterBy="nome"
+<p-dataView #dv [value]="itens" [paginator]="true" [rows]="12" paginatorPosition="both" filterBy="nome"
     [sortField]="sortField" [sortOrder]="sortOrder">
     <p-header>
         <div class="ui-helper-clearfix">
@@ -28,7 +28,7 @@
                 <div class="car-details">
                     <div class="p-col-10">
                         <div class="p-grid">
-                            <div class="container p-col-4 card">
+                            <div class="container p-col-4 card showCard" (click)="mostrarItem(item)">
                                 <img [src]="item.foto">
                             </div>
                             <div class="p-col-8">
@@ -38,8 +38,8 @@
                         </div>
                     </div>
                     <div id="botao-item" class="p-col-2">
-                        <button pButton type="button" icon="fa fa-exchange" (click)="$event"
-                            [style]="{'border-radius': '5px'}"></button>
+                        <button class="ui-button-success" pButton type="button" icon="fa fa-exchange" (click)="$event"
+                            [style]="{'border-radius': '5px'}" label="Ofertar"></button>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
         <div class="p-col-12 p-md-3 ng-star-inserted">
             <p-panel [header]="" [style]="{'text-align':'center'}">
                 <img [src]="item.foto" width="100" height="100">
-                <div id="showCard" class="car-detail card ellipsis">
+                <div class="car-detail card ellipsis showCard" (click)="mostrarItem(item)">
                     <span>
                         <strong>Item:</strong> {{ item.nome }} <br>
                     </span>
@@ -59,17 +59,23 @@
                     </span>
                 </div>
                 <hr>
-                <button pButton type="button" icon="fa fa-exchange" (click)="$event"
-                    [style]="{'border-radius': '5px'}"></button>
+                <button pButton class="ui-button-success" type="button" icon="fa fa-exchange" (click)="$event"
+                    label="Ofertar" [style]="{'border-radius': '5px'}"></button>
             </p-panel>
         </div>
     </ng-template>
 </p-dataView>
 
-<!-- <p-dialog header="Car Details" [(visible)]="displayDialog" [minY]="70" showEffect="fade" [modal]="true"
-    [style]="{width: '225px'}" (onAfterHide)="onDialogHide()" [contentStyle]="{padding: '2em', textAlign: 'center'}">
-    <div *ngIf="selectedCar">
-        <img src="">
-        <strong>{{selectedCar.vin}} - {{selectedCar.year}}</strong>
+<p-dialog header="Detalhes da Peça" [(visible)]="displayDetalhesItem" showEffect="fade" [style]="{'width': '50vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}">
+    <div>
+        <img [src]="selectedItem.foto" width="200" height="200">
+        <div>
+            <span>
+                <strong>Item:</strong> {{ selectedItem.nome }} <br>
+            </span>
+            <span>
+                <strong>Descrição:</strong> {{ selectedItem.descricao }}
+            </span>
+        </div>
     </div>
-</p-dialog> -->
+</p-dialog>

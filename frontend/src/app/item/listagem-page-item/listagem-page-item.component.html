@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="salvar()">
-    <p-card [header]="!this.isEditing ? 'Cadastro de Item' : 'Editar Dados'">
+    <p-card [header]="!this.isEditing ? 'Cadastro de Peças' : 'Editar Dados'">
         <hr><br>
         <div class="ui-fluid">
             <div class="p-field">
@@ -14,7 +14,7 @@
                 <div class="p-col-10" [style]="{'margin-top':'5%'}">
                     <input #inputFile type="file" name="foto" accept="image/png" (change)="imageUpload($event)">
                 </div>
-                <div class="container p-col-2">
+                <div class="container p-col-2 card">
                     <img [src]="imageUrl" *ngIf="imageUrl" />
                 </div>
             </div>
@@ -25,7 +25,7 @@
         </div>
 
         <p-footer>
-            <button type="submit" pButton icon="pi pi-plus" [label]="isEditing ? 'Salvar' : 'Criar'"
+            <button class="ui-button-success" type="submit" pButton icon="pi pi-plus" [label]="isEditing ? 'Salvar' : 'Criar'"
                 [style]="{'margin-right':'1em'}"></button>
         </p-footer>
     </p-card>

@@ -97,7 +97,7 @@ export class ListagemPageItemComponent implements OnInit {
 
         } else {
             this.form.patchValue({disponibilidade: true});
-            this.form.patchValue({usuarioDtoId: 435});
+            this.form.patchValue({usuarioDtoId: JSON.parse(localStorage.getItem('usuario')).id});
 
             this.itemService.salvar(this.form.value).pipe(
                 finalize(() => {

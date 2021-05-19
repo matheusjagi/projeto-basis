@@ -23,6 +23,6 @@ hr
     box-sizing: border-box;
 }
 
-#showCard{
+.showCard{
     cursor: pointer;
 }

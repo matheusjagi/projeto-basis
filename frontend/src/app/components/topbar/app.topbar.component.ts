@@ -8,13 +8,13 @@ import { AdminComponent } from 'src/app/admin/admin.component';
 })
 export class AppTopbarComponent {
 
-    loginUsuario = JSON.parse(localStorage.getItem('usuario')).email;
+    loginUsuario = JSON.parse(localStorage.getItem('usuario')).nome;
 
     constructor(public app: AdminComponent, private router: Router) {
     }
 
     logout(){
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
         this.router.navigate(['login']);
     }
 

@@ -11,6 +11,8 @@ export class ListagemPageOfertaComponent implements OnInit {
 
   itens: any[] = [];
   sortCategoria: any[] = [];
+  displayDetalhesItem: boolean = false;
+  selectedItem: any[] = [];
 
   constructor(
       private itemService: ItemService,
@@ -42,5 +44,10 @@ export class ListagemPageOfertaComponent implements OnInit {
             });
         }
     )
+  }
+
+  mostrarItem(item){
+    this.selectedItem = item;
+      this.displayDetalhesItem = true;
   }
 }

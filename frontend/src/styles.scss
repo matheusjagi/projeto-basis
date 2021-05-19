@@ -104,4 +104,8 @@ body .ui-dataview .ui-dataview-content {
     text-overflow: ellipsis;
 }
 
-
+body .ui-paginator .ui-paginator-pages a.ui-state-active {
+    background-color: #3e464c;
+    color: #9e9e9e;
+    border-radius: 3px;
+}
