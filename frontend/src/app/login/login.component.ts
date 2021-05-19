@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   submit = false;
+  displayModal = false;
   
   constructor(
     private fb: FormBuilder,
@@ -48,4 +49,13 @@ export class LoginComponent implements OnInit {
       }
     )
   }
+
+  abrirModal(){
+    this.displayModal = true;
+  }
+  
+  fecharModal(valor : boolean){
+    this.displayModal = valor;
+  }
+
 }
