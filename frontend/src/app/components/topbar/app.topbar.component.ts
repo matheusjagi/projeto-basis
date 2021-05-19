@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminComponent } from 'src/app/admin/admin.component';
 
 @Component({
@@ -7,7 +8,14 @@ import { AdminComponent } from 'src/app/admin/admin.component';
 })
 export class AppTopbarComponent {
 
-    constructor(public app: AdminComponent) {
+    loginUsuario = JSON.parse(localStorage.getItem('usuario')).email;
+
+    constructor(public app: AdminComponent, private router: Router) {
+    }
+
+    logout(){
+        localStorage.removeItem("token");
+        this.router.navigate(['login']);
     }
 
 }

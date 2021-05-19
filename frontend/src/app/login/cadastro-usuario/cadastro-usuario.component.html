@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="salvar()">
+    <p-dialog header="Cadastro de Usuario" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false" (onHide)="fecharModal()">
+        <div class="ui-fluid">
+            <div class="p-field">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" pInputText formControlName="nome">
+            </div>
+            <div class="p-field">
+                <label for="email">Email</label>
+                <input id="email" type="text" pInputText formControlName="email">
+            </div>
+            <div class="p-field">
+                <label for="cpf">CPF</label>
+                <p-inputMask mask="999.999.999-99" formControlName="cpf" unmask="true"></p-inputMask>
+            </div>
+            <div class="p-field">
+                <label for="dataNascimento">Data de Nascimento</label>
+                <input id="data" type="date" formControlName="dataNascimento">
+            </div>
+        </div>
+
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-refresh" label="Criar" [disabled]="form.invalid || submit"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar" class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+</form>

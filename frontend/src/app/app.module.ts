@@ -14,12 +14,14 @@ import { BlockUIModule } from 'ng-block-ui';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { CadastroUsuarioComponent } from './login/cadastro-usuario/cadastro-usuario.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         DiarioErrosComponent,
-        LoginComponent
+        LoginComponent,
+        CadastroUsuarioComponent
     ],
     imports: [
         BlockUIModule.forRoot({
