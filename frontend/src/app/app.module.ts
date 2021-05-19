@@ -1,25 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { AppTopbarComponent } from './components/topbar/app.topbar.component';
-import { AppFooterComponent } from './components/footer/app.footer.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { environment } from '../environments/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PageNotificationModule, BreadcrumbModule, MenuModule, ErrorStackModule } from '@nuvem/primeng-components';
 import { ErrorModule, SecurityModule, VersionTagModule } from '@nuvem/angular-base';
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
     declarations: [
         AppComponent,
-        AppTopbarComponent,
-        AppFooterComponent,
-        DiarioErrosComponent
+        DiarioErrosComponent,
+        LoginComponent
     ],
     imports: [
         BlockUIModule.forRoot({
@@ -35,11 +35,14 @@ import { BlockUIModule } from 'ng-block-ui';
         ErrorStackModule,
         ErrorModule,
         VersionTagModule,
-        SecurityModule.forRoot(environment.auth),
-        MenuModule
+        MenuModule,
+        ReactiveFormsModule,
+        // SecurityModule.forRoot(environment.auth),
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: LOCALE_ID, useValue: 'pt-BR'},
+        { provide: HTTP_INTERCEPTORS, multi: true, useClass: TokenInterceptor}
     ],
     bootstrap: [AppComponent]
 })

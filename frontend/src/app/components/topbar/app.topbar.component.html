@@ -26,7 +26,7 @@
                     </li>
                 </ul>
             </li>
-            <li #user [ngClass]="{'active-top-menu':app.activeTopbarItem === user}" *ngIf="isAuthenticated">
+            <li #user [ngClass]="{'active-top-menu':app.activeTopbarItem === user}">
                 <a href="#" (click)="app.onTopbarItemClick($event,user)">
                     <i class="topbar-icon material-icons">person</i>
                     <span class="topbar-item-name">Usuário</span>
