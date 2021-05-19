@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class ListagemPageItemComponent implements OnInit {
 
+    @ViewChild('inputFile', {static:false}) inputFile: ElementRef;
     itens: any[] = [];
     categorias: any[] = [];
     form: FormGroup;
@@ -52,7 +53,6 @@ export class ListagemPageItemComponent implements OnInit {
 
     imageUpload(event){
         let reader = new FileReader();
-
         let file = event.target.files[0];
 
         reader.onloadend = () => {
@@ -84,7 +84,7 @@ export class ListagemPageItemComponent implements OnInit {
             .pipe(
                 finalize(() => {
                     this.submit = false;
-                    this.fecharModal();
+                    this.limparForm();
                 })
             ).subscribe(
                 () => {
@@ -101,7 +101,7 @@ export class ListagemPageItemComponent implements OnInit {
 
             this.itemService.salvar(this.form.value).pipe(
                 finalize(() => {
-                    this.fecharModal();
+                    this.limparForm();
                     this.submit = false;
                 })
             ).subscribe(
@@ -137,15 +137,10 @@ export class ListagemPageItemComponent implements OnInit {
         )
     }
 
-    fecharModal(){
-        //this.clearInputFile();
+    limparForm(){
         this.form.reset();
-        this.isEditing = false;
-    }
-
-    clearInputFile(){
-        let componentFile = document.getElementById('id-file');
-        componentFile.innerHTML = '<input type="file" name="foto" (change)="imageUpload($event)">';
+        this.imageUrl = '';
+        this.inputFile.nativeElement.value = '';
     }
 
 }

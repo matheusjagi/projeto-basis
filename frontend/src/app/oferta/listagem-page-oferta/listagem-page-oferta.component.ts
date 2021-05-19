@@ -43,8 +43,4 @@ export class ListagemPageOfertaComponent implements OnInit {
         }
     )
   }
-
-  acrescentarBase64(){
-      console.log('teste');
-  }
 }

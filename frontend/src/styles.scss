@@ -1,1 +1,107 @@
-/* You can add global styles to this file, and also import other style files */
+.layout-container .layout-breadcrumb .layout-breadcrumb-options {
+    display: none;
+}
+
+body .ui-widget-header{
+    background-color: #f4f4f4;
+}
+
+body .ui-panel .ui-panel-titlebar {
+    border-bottom: 1px solid #abc3d6;
+}
+
+body .ui-selectbutton .ui-button.ui-state-active:not(.ui-state-disabled):hover {
+    background-color: #116fbf;
+    border-color: #116fbf;
+    color: #ffffff;
+}
+
+body .ui-selectbutton .ui-button:last-child {
+    border-radius: 0 3px 3px 0;
+}
+
+body .ui-selectbutton .ui-button:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+body .ui-dropdown {
+    background: #ffffff;
+    border: 1px solid #a6a6a6;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+    display: inline-flex;
+    position: relative;
+    cursor: pointer;
+    min-width: 140px;
+}
+
+body .ui-inputtext {
+    font-size: 14px;
+    color: #333333;
+    background: #ffffff;
+    padding: 0.429em;
+    border: 1px solid #a6a6a6;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    border-radius: 5px;
+}
+
+body .ui-inputtext:enabled:focus:not(.ui-state-error) {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2em #8dcdff;
+    border-color: #007ad9;
+}
+
+body .ui-dataview .ui-dataview-header {
+    background-color: #f4f4f4;
+    color: #333333;
+    border: 1px solid #c8c8c8;
+    padding: 0.571em 1em;
+    font-weight: 700;
+    border-bottom: 0 none;
+}
+
+body .ui-paginator {
+    background-color: #f4f4f4;
+    border: 1px solid #c8c8c8;
+}
+
+body .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-prev, body .ui-paginator .ui-paginator-next, body .ui-paginator .ui-paginator-last {
+    color: #5c5959;
+}
+
+body .ui-dataview .ui-dataview-content {
+    padding: 0.571em 1em;
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 0.571em 1em;
+}
+
+.car-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
+    border-bottom: 1px solid #d9dad9;
+    width: 100%;
+}
+
+.p-grid {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -.5em;
+    margin-left: -.5em;
+    margin-top: -.5em;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+

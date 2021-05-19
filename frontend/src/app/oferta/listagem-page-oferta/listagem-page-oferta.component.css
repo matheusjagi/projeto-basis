@@ -4,10 +4,6 @@
     justify-content: center;
 }
 
-#item-linha{
-    margin: 1em;
-}
-
 hr
 {
     border: 1px solid #e0e0e0;
@@ -19,9 +15,14 @@ hr
 }
 
 .container{
-    max-width:200px;
-    max-height:200px;
-    border-radius: 0.5em;
-    border-style: solid;
-    border-color: #607D8B;
+    max-width:150px;
+    max-height:150px;
+}
+
+#drop-style{
+    box-sizing: border-box;
+}
+
+#showCard{
+    cursor: pointer;
 }
