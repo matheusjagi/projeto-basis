@@ -1,18 +1,18 @@
-<form [formGroup]=form (ngSubmit)="logar()">
-    <div class="p-fluid">
-        <div class="p-field">
-            <label for="email">email</label>
-            <input id="email" type="text" formControlName="email" pInputText> 
+<p-card class="ui-g-4 ui-sm-8 ui-g-offset-4 ui-sm-offset-2 login">
+  <img src="./assets/layout/images/SGTPM.png" id="logo">
+    <form [formGroup]=form (ngSubmit)="logar()" class="login-form card">
+        <div class="p-fluid">
+            <div class="p-field ui-g-12">
+                <div class = "lblEmail"><label for="email">Email</label></div>
+                <input class="ui-g-12" id="email" type="text" formControlName="email" pInputText> 
+            </div>
+            <div class="p-field ui-g-12">
+                <div class = "lblToken"><label for="token">Token</label></div>
+                <input class="ui-g-12" id="token" type="password" formControlName="token" pInputText> 
+            </div>
         </div>
-        <div class="p-field">
-            <label for="token">token</label>
-            <input id="token" type="password" formControlName="token" pInputText> 
-        </div>
-    </div>
-    <button pButton type="submit" label="Logar" [disabled]="form.invalid || submit"></button>
-    <button pButton type="button" label="Criar Novo Usuário" class="ui-button-success" (click)="abrirModal()"></button>
-</form>
-
+        <button class="ui-g-12" id="btnLogar" pButton type="submit" label="Logar" [disabled]="form.invalid || submit"></button>
+        <a href="#" (click)="abrirModal()" class="ui-g-12" id="msgNovoUsuario">Criar Novo Usuário</a>
+    </form>
+</p-card>
 <app-cadastro-usuario [displayModal]="displayModal" (fechar)="fecharModal($event)"></app-cadastro-usuario>
-
-

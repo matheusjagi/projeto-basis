@@ -1,8 +1,8 @@
 import { UsuarioService } from './../../services/usuario.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PageNotificationService } from '@nuvem/primeng-components';
 import { finalize } from 'rxjs/operators';
+import { MessageService } from 'primeng';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -16,11 +16,12 @@ export class CadastroUsuarioComponent implements OnInit {
   @Output() fechar = new EventEmitter;
   form: FormGroup;
   submit: boolean = false;
+  cadastrar: boolean = true;
 
   constructor(
       private usuarioService: UsuarioService,
       private fb: FormBuilder,
-      private notification: PageNotificationService) { }
+      private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.iniciarForm();
@@ -37,18 +38,19 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   salvar(){
+    this.cadastrarUsuario();
     this.usuarioService.salvar(this.form.value).pipe(
     finalize(() => {
       this.fecharModal();
       this.submit = false;
     })).subscribe(
       (usuario) => {
-        this.notification.addSuccessMessage("Usuário criado com sucesso!");
+        this.messageService.add({severity:'success', summary:'Sucesso', detail:'Usuário criado com sucesso!'});
       },
-      () => {
-        this.notification.addErrorMessage("Falha ao realizar cadastro.");
-        }
-      )
+    () => {
+        this.messageService.add({severity:'error', summary:'Falha', detail:'Falha ao cadastrar'});
+      }
+    )
     
   }
 
@@ -58,4 +60,8 @@ export class CadastroUsuarioComponent implements OnInit {
     this.fechar.emit(false);
   }
 
+  cadastrarUsuario(){
+    this.cadastrar = false;
+    return this.cadastrar;
+  }
 }
