@@ -1,3 +1,4 @@
+import { OfertaModule } from './../oferta/oferta.module';
 import { OfertaModel } from './../models/oferta-model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -12,23 +13,31 @@ export class OfertaService {
 
     constructor(private http: HttpClient) { }
 
-    buscarTodos () {
-    return this.http.get<OfertaModel[]>(`${this.api}`);
+    aceitarOferta(idOferta){
+        return this.http.patch(`${this.api}/aceitar/${idOferta}`, {});
     }
 
-    buscarPorId (idOferta) {
-    return this.http.get<OfertaModel>(`${this.api}/${idOferta}`);
+    buscarTodos() {
+        return this.http.get<OfertaModel[]>(`${this.api}`);
     }
 
-    salvar (oferta) {
+    buscarPorId(idOferta) {
+        return this.http.get<OfertaModel>(`${this.api}/${idOferta}`);
+    }
+
+    buscarPorItem(idItem) {
+        return this.http.get<OfertaModule[]>(`${this.api}/item/${idItem}`);
+    }
+
+    salvar(oferta) {
         return this.http.post(`${this.api}`, oferta);
     }
 
-    atualizar (oferta) {
-    return this.http.put(`${this.api}`, oferta);
+    atualizar(oferta) {
+        return this.http.put(`${this.api}`, oferta);
     }
 
-    excluir (idOferta) {
-    return this.http.delete(`${this.api}/${idOferta}`);
+    excluir(idOferta) {
+        return this.http.delete(`${this.api}/${idOferta}`);
     }
 }

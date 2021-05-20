@@ -31,13 +31,13 @@ import { CadastroUsuarioComponent } from './login/cadastro-usuario/cadastro-usua
         AppRoutingModule,
         SharedModule,
         HttpClientModule,
-        PageNotificationModule,
         BreadcrumbModule,
         ErrorStackModule,
         ErrorModule,
         VersionTagModule,
         MenuModule,
         ReactiveFormsModule,
+        PageNotificationModule
         // SecurityModule.forRoot(environment.auth),
     ],
     providers: [

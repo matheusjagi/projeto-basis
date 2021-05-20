@@ -20,7 +20,8 @@ import { AppFooterComponent } from '../components/footer/app.footer.component';
         SharedModule,
         BreadcrumbModule,
         MenuModule,
-        VersionTagModule
+        VersionTagModule,
+        PageNotificationModule
     ]
 })
 export class AdminModule { }

@@ -1,9 +1,11 @@
+import { TabViewModule } from 'primeng/tabview';
 import { MinhasOfertasRoutingModule } from './minhas-ofertas-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListagemPageMinhasOfertasComponent } from './listagem-page-minhas-ofertas/listagem-page-minhas-ofertas.component';
 import { VirtualScrollerModule } from 'primeng';
 import { SharedModule } from '../shared/shared.module';
+import { PageNotificationService } from '@nuvem/primeng-components';
 
 @NgModule({
   declarations: [ListagemPageMinhasOfertasComponent],
@@ -11,7 +13,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     MinhasOfertasRoutingModule,
     SharedModule,
-    VirtualScrollerModule
+    VirtualScrollerModule,
+    TabViewModule
   ]
 })
 export class MinhasOfertasModule { }

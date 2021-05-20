@@ -49,6 +49,11 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
+    public List<OfertaDTO> obterOfertasPorItem(Long idItem){
+        List<Oferta> ofertas = ofertaRepositorio.findAllByItemId(idItem);
+        return ofertaMapper.toDto(ofertas);
+    }
+
     public OfertaDTO salvar(OfertaDTO ofertaDTO){
         ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);

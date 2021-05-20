@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GuestGuard } from '../guard/guest.guard';
-import { LoginComponent } from '../login/login.component';
 import { AdminComponent } from './admin.component';
 
 
