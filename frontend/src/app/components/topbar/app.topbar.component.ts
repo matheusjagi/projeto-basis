@@ -1,4 +1,6 @@
+import { LocalstorageService } from './../../services/localstorage.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminComponent } from 'src/app/admin/admin.component';
 
 @Component({
@@ -7,7 +9,17 @@ import { AdminComponent } from 'src/app/admin/admin.component';
 })
 export class AppTopbarComponent {
 
-    constructor(public app: AdminComponent) {
+    loginUsuario = this.localstorageService.getNome();
+
+    constructor(
+        private localstorageService: LocalstorageService,
+        public app: AdminComponent,
+        private router: Router
+    ) {}
+
+    logout(){
+        localStorage.removeItem('token');
+        this.router.navigate(['login']);
     }
 
 }

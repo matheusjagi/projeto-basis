@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="salvar()">
+    <p-card header="Cadastro de Peças">
+        <hr><br>
+        <div class="ui-fluid">
+            <div class="p-field">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" pInputText formControlName="nome">
+            </div>
+            <div class="p-field">
+                <label for="descricao">Descrição</label>
+                <input id="descricao" type="text" pInputText formControlName="descricao">
+            </div>
+            <div class="p-field p-grid">
+                <div #inputFile class="p-col-10">
+                    <input type="file" name="foto" accept="image/png" (change)="imageUpload($event)">
+                </div>
+                <div class="container p-col-2 card" *ngIf="imageUrl" >
+                    <img [src]="imageUrl" />
+                </div>
+            </div>
+            <div class="p-field">
+                <p-dropdown [options]="categorias" placeholder="Selecione uma Categoria"
+                    formControlName="categoriaDtoId"></p-dropdown>
+            </div>
+        </div>
+
+        <p-footer>
+            <button class="ui-button-success botaoStyle" type="submit" pButton icon="pi pi-plus" label="Criar"></button>
+        </p-footer>
+    </p-card>
+</form>

@@ -10,6 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioLoginDTO {
+
+    private Long id;
+
+    private String nome;
+
     private String email;
 
     private String token;

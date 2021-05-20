@@ -1,0 +1,89 @@
+#botao-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+hr
+{
+    border: 1px solid #e0e0e0;
+}
+
+.container img {
+    width: 100%;
+    height: 100%;
+}
+
+.container{
+    max-width:150px;
+    max-height:150px;
+}
+
+#drop-style{
+    box-sizing: border-box;
+}
+
+.showCard{
+    cursor: pointer;
+}
+
+
+:host ::ng-deep .drag-column {
+    padding-right: .5em;
+}
+
+:host ::ng-deep .drop-column {
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
+}
+
+.p-grid li {
+    list-style-type: none;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
+}
+
+[pDraggable] {
+    cursor: move;
+}
+
+.positionContainer{
+    position: relative;
+}
+
+.positionDvl{
+    text-align: right;
+}
+
+.botaoRealizaTroca{
+    border-radius: 5px;
+}
+
+.pPanelStyle{
+    text-align: center;
+}
+
+.styleUl{
+    margin: 0;
+    padding: 0;
+}
+
+.styleDivNome{
+    margin: 8px 0 0 8px;
+    float: center;
+}
+
+.styleIcon{
+    float: right;
+    font-size: 32px;
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.dropCategoria{
+    display: none;
+}

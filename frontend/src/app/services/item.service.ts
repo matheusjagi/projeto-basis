@@ -1,9 +1,47 @@
+import { CategoriaModel } from './../models/categoria-model';
+import { environment } from './../../environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ItemModel } from '../models/item-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  constructor() { }
+    private api: string = environment.apiUrl + '/itens';
+
+    constructor(private http: HttpClient) { }
+
+    buscarCategorias(){
+      return this.http.get<CategoriaModel[]>(`${this.api}/categorias`);
+    }
+
+    buscarTodos () {
+      return this.http.get<ItemModel[]>(`${this.api}`);
+    }
+
+    buscarPorId (idItem) {
+      return this.http.get<ItemModel>(`${this.api}/${idItem}`);
+    }
+
+    buscarPorUsuario(idUsuario: number){
+        return this.http.get<ItemModel[]>(`${this.api}/usuario/${idUsuario}`);
+    }
+
+    buscarPorSituacao (situacao: boolean) {
+        return this.http.get<ItemModel[]>(`${this.api}/disponibilidade/${situacao}`);
+    }
+
+    salvar (item) {
+        return this.http.post(`${this.api}`, item);
+    }
+
+    atualizar (item) {
+      return this.http.put(`${this.api}`, item);
+    }
+
+    excluir (idItem) {
+      return this.http.delete(`${this.api}/${idItem}`);
+    }
 }
