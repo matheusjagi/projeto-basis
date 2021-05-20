@@ -16,7 +16,6 @@ export class CadastroUsuarioComponent implements OnInit {
   @Output() fechar = new EventEmitter;
   form: FormGroup;
   submit: boolean = false;
-  cadastrar: boolean = true;
 
   constructor(
       private usuarioService: UsuarioService,
