@@ -48,3 +48,42 @@ hr
 [pDraggable] {
     cursor: move;
 }
+
+.positionContainer{
+    position: relative;
+}
+
+.positionDvl{
+    text-align: right;
+}
+
+.botaoRealizaTroca{
+    border-radius: 5px;
+}
+
+.pPanelStyle{
+    text-align: center;
+}
+
+.styleUl{
+    margin: 0;
+    padding: 0;
+}
+
+.styleDivNome{
+    margin: 8px 0 0 8px;
+    float: center;
+}
+
+.styleIcon{
+    float: right;
+    font-size: 32px;
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.dropCategoria{
+    display: none;
+}

@@ -1,3 +1,4 @@
+import { UsuarioModel } from './../models/usuario-model';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
@@ -12,11 +13,11 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   buscarTodos () {
-    return this.http.get<any[]>(`api/usuarios`);
+    return this.http.get<UsuarioModel[]>(`api/usuarios`);
   }
 
   buscarPorId (idUsuario) {
-    return this.http.get<any>(`api/usuarios/${idUsuario}`);
+    return this.http.get<UsuarioModel>(`api/usuarios/${idUsuario}`);
   }
 
   salvar (usuario) {

@@ -53,7 +53,6 @@ public class OfertaServico {
         ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ofertaRepositorio.save(oferta);
-
         emailServico.sendEmail(criarEmailOferta(oferta));
         return ofertaMapper.toDto(oferta);
     }
@@ -100,11 +99,21 @@ public class OfertaServico {
 
     public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){
         List<ItemDTO> itens = ofertaDTO.getItensOfertados();
+        List<Long> itensPorId = new ArrayList<>();
+        List<ItemDTO> itensCompletos = new ArrayList<>();
+
         itens.forEach(itemDTO -> {
-            itemDTO = itemServico.obterPorId(itemDTO.getId());
-            itemDTO.setDisponibilidade(disponibilidade);
+            itensPorId.add(itemDTO.getId());
         });
-        itemServico.atualizarTodos(itens);
+
+        itens = itemServico.obterPorTodosId(itensPorId);
+
+        itens.forEach(itemDTO -> {
+            itemDTO.setDisponibilidade(disponibilidade);
+            itensCompletos.add(itemDTO);
+        });
+
+        itemServico.atualizarTodos(itensCompletos);
         return ofertaDTO;
     }
 

@@ -1,0 +1,29 @@
+<p-virtualScroller [value]="meusItens" scrollHeight="450px" [rows]="100"
+        [lazy]="true" (onLazyLoad)="loadCarsLazy($event)">
+    <p-header [style]="{'color': '#333333'}">
+       <h2 > Minhas Peças </h2>
+    </p-header>
+
+    <ng-template let-item pTemplate="listItem">
+        <div id="item-linha" class="p-col-12">
+            <div class="p-grid">
+                <div class="car-details">
+                    <div class="p-col-10">
+                        <div class="p-grid">
+                            <div class="container p-col-4 card showCard" (click)="mostrarItem(item)">
+                                <img [src]="item.foto">
+                            </div>
+                            <div class="p-col-8">
+                                <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
+                                <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="botao-item" class="p-col-2">
+                        <button class="ui-button-raised botaoVerOfertas" pButton type="button" icon="pi pi-search"                            (click)="realizaTroca(item)" label="Ver Ofertas"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-virtualScroller>

@@ -10,10 +10,6 @@ import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -59,6 +55,11 @@ public class ItemServico {
         Item item = itemRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Item não encontrado"));
 
+        return itemMapper.toDto(item);
+    }
+
+    public List<ItemDTO> obterPorTodosId(List<Long> ids){
+        List<Item> item = itemRepositorio.findAllById(ids);
         return itemMapper.toDto(item);
     }
 

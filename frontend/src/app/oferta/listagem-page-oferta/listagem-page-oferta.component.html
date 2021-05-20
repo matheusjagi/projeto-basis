@@ -1,20 +1,19 @@
-<p-dataView #dv [value]="itens" [paginator]="true" [rows]="12" paginatorPosition="both" filterBy="nome"
-    [sortField]="sortField" [sortOrder]="sortOrder">
+<p-dataView #dv [value]="itens" [paginator]="true" [rows]="12" paginatorPosition="both" filterBy="nome" [loading]="loading">
     <p-header>
         <div class="ui-helper-clearfix">
             <div class="p-grid">
                 <div class="p-col-12 p-md-4">
-                    <p-dropdown class="ng-tns-c3-4 ng-pristine ng-valid ng-touched" [options]="sortCategoria"
-                        placeholder="Pesquisar por Categoria" optionLabel="descricao">
+                    <p-dropdown class="ng-tns-c3-4 ng-pristine ng-valid ng-touched dropCategoria" [options]="sortCategoria"
+                        placeholder="Pesquisar por Categoria" [showClear]="true" (onChange)="filterCategoria($event.value)">
                     </p-dropdown>
                 </div>
                 <div class="p-col-6 p-md-4 filter-container">
-                    <div style="position:relative">
+                    <div class="positionContainer">
                         <input type="search" pInputText placeholder="Pesquisar por Nome"
                             (input)="dv.filter($event.target.value)">
                     </div>
                 </div>
-                <div class="p-col-6 p-md-4" style="text-align:right">
+                <div class="p-col-6 p-md-4 positionDvl">
                     <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
                 </div>
             </div>
@@ -38,8 +37,7 @@
                         </div>
                     </div>
                     <div id="botao-item" class="p-col-2">
-                        <button class="ui-button-success" pButton type="button" icon="fa fa-exchange"
-                            (click)="realizaTroca(item)" [style]="{'border-radius': '5px'}" label="Ofertar"></button>
+                        <button class="ui-button-success botaoRealizaTroca" pButton type="button" icon="fa fa-exchange"                            (click)="realizaTroca(item)" label="Ofertar"></button>
                     </div>
                 </div>
             </div>
@@ -48,7 +46,7 @@
 
     <ng-template let-item pTemplate="gridItem">
         <div class="p-col-12 p-md-3 ng-star-inserted">
-            <p-panel [header]="" [style]="{'text-align':'center'}">
+            <p-panel [header]="" class="pPanelStyle">
                 <img [src]="item.foto" width="100" height="100">
                 <div class="car-detail card ellipsis showCard" (click)="mostrarItem(item)">
                     <span>
@@ -59,15 +57,13 @@
                     </span>
                 </div>
                 <hr>
-                <button pButton class="ui-button-success" type="button" icon="fa fa-exchange"
-                    (click)="realizaTroca(item)" label="Ofertar" [style]="{'border-radius': '5px'}"></button>
+                <button pButton class="ui-button-success botaoRealizaTroca" type="button" icon="fa fa-exchange" (click)="realizaTroca(item)" label="Ofertar"></button>
             </p-panel>
         </div>
     </ng-template>
 </p-dataView>
 
-<p-dialog header="Detalhes da Peça" [(visible)]="displayDetalhesItem" showEffect="fade" [modal]="true"
-    [style]="{'width': '50vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}">
+<p-dialog header="Detalhes da Peça" [(visible)]="displayDetalhesItem" showEffect="fade" [modal]="true" [style]="{'width': '50vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}">
     <div>
         <img [src]="selectedItem.foto" width="200" height="200">
         <div>
@@ -84,17 +80,16 @@
 <p-dialog header="Faça sua Oferta! Arraste as Peças que deseja ofertar" [(visible)]="displayTroca" showEffect="fade" [style]="{'width': '70vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}">
     <div class="p-grid">
         <div class="p-col-12 p-md-6 p-col-nogutter drag-column">
-            <ul style="margin:0;padding:0">
+            <ul class="styleUl">
                 <li *ngFor="let itensOferta of availableItens" class="ui-helper-clearfix" pDraggable="itens"
                     (onDragStart)="dragStart($event,itensOferta)" (onDragEnd)="dragEnd($event)">
-                    <i class="pi pi-plus" style="float:right;font-size: 32px;"></i>
+                    <i class="pi pi-plus styleIcon"></i>
                     <img [src]="itensOferta.foto" style="float:left" draggable="false" width="50" height="50">
-                    <div style="margin:8px 0 0 8px;float:center;">{{ itensOferta.nome }}</div>
+                    <div class="styleDivNome">{{ itensOferta.nome }}</div>
                 </li>
             </ul>
         </div>
-        <div class="p-col-12 p-md-6 drop-column" pDroppable="itens" (onDrop)="drop($event)"
-            [ngClass]="{'ui-highlight-car':draggedItem}">
+        <div class="p-col-12 p-md-6 drop-column" pDroppable="itens" (onDrop)="drop($event)" [ngClass]="{'ui-highlight-car':draggedItem}">
             <p-table [value]="selectedItensOfertados">
                 <ng-template pTemplate="header">
                     <tr>
@@ -103,7 +98,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-itensOferta>
-                    <tr [style]="{'cursor': 'pointer'}" (click)="removeItem(itensOferta)">
+                    <tr class="cursorPointer" (click)="removeItem(itensOferta)">
                         <td>{{ itensOferta.nome }}</td>
                         <td>{{ itensOferta.descricao }}</td>
                     </tr>
@@ -113,6 +108,6 @@
     </div>
 
     <p-footer>
-        <button class="ui-button-success" type="button" pButton icon="pi pi-check" (click)="$event" label="Ofertar" [style]="{'color': '#ffffff'}"></button>
+        <button class="ui-button-success" type="submit" pButton icon="pi pi-check" (click)="criarOferta()" label="Ofertar" [style]="{'color': '#ffffff'}"></button>
     </p-footer>
 </p-dialog>

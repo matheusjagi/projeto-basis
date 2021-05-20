@@ -15,8 +15,8 @@ export class GuestGuard implements CanActivate {
       if(!token){
         return true;
       }
-      this.router.navigate(['./']);
+      this.router.navigate(['./admin']);
       return false;
   }
-  
+
 }

@@ -1,9 +1,13 @@
+import { LocalstorageService } from './../../services/localstorage.service';
+import { CategoriaModel } from './../../models/categoria-model';
 import { ItemService } from './../../services/item.service';
 import { Component, OnInit } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfertaService } from 'src/app/services/oferta.service';
 import { finalize } from 'rxjs/operators';
+import { ItemModel } from 'src/app/models/item-model';
+import { SelectItem } from 'primeng';
 
 @Component({
     selector: 'app-listagem-page-oferta',
@@ -14,20 +18,20 @@ export class ListagemPageOfertaComponent implements OnInit {
 
     idItemOferta: number = null;
     form: FormGroup;
-    itens: any[] = [];
-    sortCategoria: any[] = [];
-    selectedItem: any[] = [];
-    selectedRemoveItem: any[] = [];
-    selectedItensOfertados: any[] = [];
-    availableItens: any[] = [];
-    draggedItem: any = null;
+    itens: ItemModel[] = [];
+    sortCategoria: SelectItem[] = [];
+    selectedItem: ItemModel[] = [];
+    selectedRemoveItem: ItemModel[] = [];
+    selectedItensOfertados: ItemModel[] = [];
+    availableItens: ItemModel[] = [];
+    draggedItem: ItemModel = null;
     displayDetalhesItem: boolean = false;
     displayTroca: boolean = false;
-    isEditing: boolean = false;
 
     constructor(
         private itemService: ItemService,
         private ofertaService: OfertaService,
+        private localstorageService: LocalstorageService,
         private fb: FormBuilder,
         private notification: PageNotificationService
     ) { }
@@ -51,7 +55,11 @@ export class ListagemPageOfertaComponent implements OnInit {
     buscarCategorias() {
         this.itemService.buscarCategorias().subscribe(
             (categorias) => {
-                this.sortCategoria = categorias;
+                this.sortCategoria = categorias.map(categoria => {
+                    return {label: categoria.descricao, value: categoria.id}
+                });
+
+                this.sortCategoria.unshift({label: 'Pesquisar por Categoria', value: null});
             }
         )
     }
@@ -59,10 +67,18 @@ export class ListagemPageOfertaComponent implements OnInit {
     buscarPorSituacao(situacao: boolean) {
         this.itemService.buscarPorSituacao(situacao).subscribe(
             (itens) => {
-                this.itens = itens;
+                this.itens = this.removerItensUsuarioLogado(itens);
                 this.montaImagem(this.itens);
             }
         )
+    }
+
+    removerItensUsuarioLogado(itens: ItemModel[]){
+        let itensUsuario = itens.filter(item => {
+            return item.usuarioDtoId != this.localstorageService.getId();
+        })
+
+        return itensUsuario;
     }
 
     mostrarItem(item) {
@@ -75,10 +91,12 @@ export class ListagemPageOfertaComponent implements OnInit {
         this.selectedItensOfertados = [];
         this.idItemOferta = item.id;
 
-        this.itemService.buscarPorUsuario(JSON.parse(localStorage.getItem('usuario')).id)
+        this.itemService.buscarPorUsuario(this.localstorageService.getId())
         .subscribe(
             (itens) => {
-                this.availableItens = itens;
+                this.availableItens = itens.filter(item => {
+                    return item.disponibilidade;
+                });
                 this.montaImagem(this.availableItens);
             }
         )
@@ -127,46 +145,36 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     criarOferta(){
-
-        if(this.isEditing){
-
-            this.ofertaService.atualizar(this.form.value)
-            .pipe(
-                finalize(() => {
-                    this.limparForm();
-                })
-            ).subscribe(
-                () => {
-                    this.notification.addSuccessMessage("Oferta atualizada com sucesso!");
-                },
-                () => {
-                    this.notification.addErrorMessage("Falha ao atualizar a oferta.");
+        this.form.patchValue({itemDtoId: this.idItemOferta});
+        this.form.patchValue({situacaoDtoId: 1});
+        this.form.patchValue({usuarioDtoId: this.localstorageService.getId()});
+        this.form.patchValue({itensOfertados: this.selectedItensOfertados.map(item =>
+            {
+                return{
+                    id: item.id, categoriaDtoId: item.categoriaDtoId, usuarioDtoId: item.usuarioDtoId
                 }
-            )
+            })});
 
-        } else {
-            this.form.patchValue({itemDtoId: this.idItemOferta});
-            this.form.patchValue({situacaoDtoId: 1});
-            this.form.patchValue({usuarioDtoId: JSON.parse(localStorage.getItem('usuario')).id});
-            // pegar os itens ofertados
-
-
-            this.ofertaService.salvar(this.form.value).pipe(
-                finalize(() => {
-                    this.limparForm();
-                })
-            ).subscribe(
-                (oferta) => {
-                    this.notification.addSuccessMessage("Oferta criada com sucesso!");
-                },
-                () => {
-                    this.notification.addErrorMessage("Falha ao realizar a oferta.");
-                }
-            )
-        }
+        this.ofertaService.salvar(this.form.value).pipe(
+            finalize(() => {
+                this.limparForm();
+            })
+        ).subscribe(
+            (oferta) => {
+                this.displayTroca = false;
+                this.notification.addSuccessMessage("Oferta criada com sucesso!");
+            },
+            () => { this.notification.addErrorMessage("Falha ao realizar a oferta."); }
+        )
     }
 
     limparForm(){
         this.form.reset();
+    }
+
+    filterCategoria(idCategoria){
+        this.itens = this.itens.filter(item => {
+            return item.categoriaDtoId == idCategoria
+        })
     }
 }

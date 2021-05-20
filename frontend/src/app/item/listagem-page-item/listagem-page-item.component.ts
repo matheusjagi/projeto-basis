@@ -1,8 +1,12 @@
+import { CategoriaModel } from './../../models/categoria-model';
+import { ItemModel } from 'src/app/models/item-model';
+import { LocalstorageService } from './../../services/localstorage.service';
 import { ItemService } from './../../services/item.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { finalize } from 'rxjs/operators';
+import { SelectItem } from 'primeng';
 
 @Component({
   selector: 'app-listagem-page-item',
@@ -12,15 +16,15 @@ import { finalize } from 'rxjs/operators';
 export class ListagemPageItemComponent implements OnInit {
 
     @ViewChild('inputFile', {static:false}) inputFile: ElementRef;
-    itens: any[] = [];
-    categorias: any[] = [];
+    itens: ItemModel[] = [];
+    categorias: SelectItem[] = [];
     form: FormGroup;
     submit: boolean = false;
-    isEditing: boolean = false;
     imageUrl: any;
 
     constructor(
         private itemService: ItemService,
+        private localstorageService: LocalstorageService,
         private fb: FormBuilder,
         private notification: PageNotificationService
     ) { }
@@ -57,7 +61,6 @@ export class ListagemPageItemComponent implements OnInit {
 
         reader.onloadend = () => {
             this.imageUrl = reader.result;
-
             let blob = this.imageUrl.split(",");
             this.form.patchValue({foto: blob[1]});
         }
@@ -77,47 +80,21 @@ export class ListagemPageItemComponent implements OnInit {
 
     salvar(){
         this.submit = true;
+        this.form.patchValue({disponibilidade: true});
+        this.form.patchValue({usuarioDtoId: this.localstorageService.getId()});
 
-        if(this.isEditing){
-
-            this.itemService.atualizar(this.form.value)
-            .pipe(
-                finalize(() => {
-                    this.submit = false;
-                    this.limparForm();
-                })
-            ).subscribe(
-                () => {
-                    this.notification.addSuccessMessage("Item atualizado com sucesso!");
-                },
-                () => {
-                    this.notification.addErrorMessage("Falha ao atualizar o cadastro.");
-                }
-            )
-
-        } else {
-            this.form.patchValue({disponibilidade: true});
-            this.form.patchValue({usuarioDtoId: JSON.parse(localStorage.getItem('usuario')).id});
-
-            this.itemService.salvar(this.form.value).pipe(
-                finalize(() => {
-                    this.limparForm();
-                    this.submit = false;
-                })
-            ).subscribe(
-                (item) => {
-                    this.notification.addSuccessMessage("Item criado com sucesso!");
-                },
-                () => {
-                    this.notification.addErrorMessage("Falha ao realizar o cadastro.");
-                }
-            )
-        }
+        this.itemService.salvar(this.form.value).pipe(
+            finalize(() => {
+                this.limparForm();
+                this.submit = false;
+            })
+        ).subscribe(
+            (item) => { this.notification.addSuccessMessage("Item criado com sucesso!") },
+            () => { this.notification.addErrorMessage("Falha ao realizar o cadastro.") }
+        )
     }
 
     editar(idItem){
-        this.isEditing = true;
-
         this.itemService.buscarPorId(idItem).subscribe(
           (item) => {
               this.form.patchValue(item);
@@ -126,14 +103,9 @@ export class ListagemPageItemComponent implements OnInit {
     }
 
     excluir(idItem){
-        console.log(idItem);
         this.itemService.excluir(idItem).subscribe(
-            () => {
-                this.notification.addSuccessMessage("Item excluido com sucesso!");
-            },
-            () => {
-                this.notification.addErrorMessage("Falha ao excluir item.");
-            }
+            () => { this.notification.addSuccessMessage("Item excluido com sucesso!") },
+            () => { this.notification.addErrorMessage("Falha ao excluir item.") }
         )
     }
 

@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="salvar()">
-    <p-card [header]="!this.isEditing ? 'Cadastro de Peças' : 'Editar Dados'">
+    <p-card header="Cadastro de Peças">
         <hr><br>
         <div class="ui-fluid">
             <div class="p-field">
@@ -11,22 +11,21 @@
                 <input id="descricao" type="text" pInputText formControlName="descricao">
             </div>
             <div class="p-field p-grid">
-                <div class="p-col-10" [style]="{'margin-top':'5%'}">
-                    <input #inputFile type="file" name="foto" accept="image/png" (change)="imageUpload($event)">
+                <div #inputFile class="p-col-10">
+                    <input type="file" name="foto" accept="image/png" (change)="imageUpload($event)">
                 </div>
-                <div class="container p-col-2 card">
-                    <img [src]="imageUrl" *ngIf="imageUrl" />
+                <div class="container p-col-2 card" *ngIf="imageUrl" >
+                    <img [src]="imageUrl" />
                 </div>
             </div>
             <div class="p-field">
                 <p-dropdown [options]="categorias" placeholder="Selecione uma Categoria"
-                    formControlName="categoriaDtoId" [style]="{'margin-top': '1em'}"></p-dropdown>
+                    formControlName="categoriaDtoId"></p-dropdown>
             </div>
         </div>
 
         <p-footer>
-            <button class="ui-button-success" type="submit" pButton icon="pi pi-plus" [label]="isEditing ? 'Salvar' : 'Criar'"
-                [style]="{'margin-right':'1em'}"></button>
+            <button class="ui-button-success botaoStyle" type="submit" pButton icon="pi pi-plus" label="Criar"></button>
         </p-footer>
     </p-card>
 </form>

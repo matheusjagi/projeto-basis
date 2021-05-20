@@ -1,3 +1,4 @@
+import { OfertaModel } from './../models/oferta-model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment.prod';
@@ -12,11 +13,11 @@ export class OfertaService {
     constructor(private http: HttpClient) { }
 
     buscarTodos () {
-    return this.http.get<any[]>(`api/ofertas`);
+    return this.http.get<OfertaModel[]>(`api/ofertas`);
     }
 
     buscarPorId (idOferta) {
-    return this.http.get<any>(`api/ofertas/${idOferta}`);
+    return this.http.get<OfertaModel>(`api/ofertas/${idOferta}`);
     }
 
     salvar (oferta) {

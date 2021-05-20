@@ -1,3 +1,4 @@
+import { UsuarioModel } from './../../models/usuario-model';
 import { UsuarioService } from './../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +12,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class ListagemPageComponent implements OnInit {
 
-  usuarios: any[] = [];
+  usuarios: UsuarioModel[] = [];
   displayModal: boolean = false;
   form: FormGroup;
   submit: boolean = false;
@@ -49,7 +50,6 @@ export class ListagemPageComponent implements OnInit {
     this.submit = true;
 
     if(this.isEditing){
-
         this.usuarioService.atualizar(this.form.value)
         .pipe(
             finalize(() => {
@@ -61,13 +61,9 @@ export class ListagemPageComponent implements OnInit {
                 this.notification.addSuccessMessage("Usuário atualizado com sucesso!");
                 this.buscarTodos();
             },
-            () => {
-                this.notification.addErrorMessage("Falha ao atualizar cadastro.");
-            }
+            () => { this.notification.addErrorMessage("Falha ao atualizar cadastro."); }
         )
-
     } else {
-
         this.usuarioService.salvar(this.form.value).pipe(
             finalize(() => {
                 this.fecharModal();
@@ -78,9 +74,7 @@ export class ListagemPageComponent implements OnInit {
                 this.notification.addSuccessMessage("Usuário criado com sucesso!");
                 this.buscarTodos();
             },
-            () => {
-                this.notification.addErrorMessage("Falha ao realizar cadastro.");
-            }
+            () => { this.notification.addErrorMessage("Falha ao realizar cadastro."); }
         )
     }
   }
@@ -102,9 +96,7 @@ export class ListagemPageComponent implements OnInit {
             this.notification.addSuccessMessage("Usuário excluido com sucesso!");
             this.buscarTodos();
         },
-        () => {
-            this.notification.addErrorMessage("Falha ao excluir usuário.");
-        }
+        () => { this.notification.addErrorMessage("Falha ao excluir usuário."); }
     )
   }
 

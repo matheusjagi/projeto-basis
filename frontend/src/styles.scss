@@ -127,3 +127,17 @@ body .ui-dialog .ui-dialog-footer .ui-button {
 body .ui-dialog .ui-dialog-footer .ui-button .ui-button-icon-left {
     color: #ffffff;
 }
+
+.layout-container .topbar .topbar-right #menu-button {
+    background-color: #fde66c;
+}
+
+@media (min-width: 1025px){
+    .layout-container .topbar-items > li .topbar-icon {
+        color: #fde66c;
+    }
+}
+
+body .ui-button, body .ui-datepicker-buttonpane > button {
+    background-color: #007ad9;
+}
