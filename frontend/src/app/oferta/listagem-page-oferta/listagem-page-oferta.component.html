@@ -24,7 +24,7 @@
     <ng-template let-item pTemplate="listItem">
         <div id="item-linha" class="p-col-12">
             <div class="p-grid">
-                <div class="car-details">
+                <div class="item-details">
                     <div class="p-col-10">
                         <div class="p-grid">
                             <div class="container p-col-4 card showCard" (click)="mostrarItem(item)">
@@ -48,7 +48,7 @@
         <div class="p-col-12 p-md-3 ng-star-inserted">
             <p-panel [header]="" class="pPanelStyle">
                 <img [src]="item.foto" width="100" height="100">
-                <div class="car-detail card ellipsis showCard" (click)="mostrarItem(item)">
+                <div class="item-detail card ellipsis showCard" (click)="mostrarItem(item)">
                     <span>
                         <strong>Item:</strong> {{ item.nome }} <br>
                     </span>

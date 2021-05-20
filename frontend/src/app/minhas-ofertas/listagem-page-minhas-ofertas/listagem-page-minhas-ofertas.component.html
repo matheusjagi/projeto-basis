@@ -7,7 +7,7 @@
     <ng-template let-item pTemplate="listItem">
         <div id="item-linha" class="p-col-12">
             <div class="p-grid">
-                <div class="car-details">
+                <div class="item-details">
                     <div class="p-col-10">
                         <div class="p-grid">
                             <div class="container p-col-4 card showCard" (click)="mostrarItem(item)">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div id="botao-item" class="p-col-2">
-                        <button class="ui-button-raised botaoVerOfertas" pButton type="button" icon="pi pi-search"                            (click)="realizaTroca(item)" label="Ver Ofertas"></button>
+                        <button class="ui-button-raised botaoVerOfertas" pButton type="button" icon="pi pi-search" (click)="realizaTroca(item)" label="Ver Ofertas"></button>
                     </div>
                 </div>
             </div>

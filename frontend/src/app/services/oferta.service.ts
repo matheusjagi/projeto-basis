@@ -8,27 +8,27 @@ import { environment } from './../../environments/environment.prod';
 })
 export class OfertaService {
 
-    private api = environment.apiUrl;
+    private api: string = environment.apiUrl + "/ofertas";
 
     constructor(private http: HttpClient) { }
 
     buscarTodos () {
-    return this.http.get<OfertaModel[]>(`api/ofertas`);
+    return this.http.get<OfertaModel[]>(`${this.api}`);
     }
 
     buscarPorId (idOferta) {
-    return this.http.get<OfertaModel>(`api/ofertas/${idOferta}`);
+    return this.http.get<OfertaModel>(`${this.api}/${idOferta}`);
     }
 
     salvar (oferta) {
-        return this.http.post(`api/ofertas`, oferta);
+        return this.http.post(`${this.api}`, oferta);
     }
 
     atualizar (oferta) {
-    return this.http.put(`api/ofertas`, oferta);
+    return this.http.put(`${this.api}`, oferta);
     }
 
     excluir (idOferta) {
-    return this.http.delete(`api/ofertas/${idOferta}`);
+    return this.http.delete(`${this.api}/${idOferta}`);
     }
 }

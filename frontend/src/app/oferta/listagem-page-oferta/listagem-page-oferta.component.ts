@@ -1,5 +1,4 @@
 import { LocalstorageService } from './../../services/localstorage.service';
-import { CategoriaModel } from './../../models/categoria-model';
 import { ItemService } from './../../services/item.service';
 import { Component, OnInit } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
@@ -118,7 +117,7 @@ export class ListagemPageOfertaComponent implements OnInit {
         if (this.draggedItem) {
             let draggedItemIndex = this.findIndex(this.draggedItem, this.availableItens);
             this.selectedItensOfertados = [...this.selectedItensOfertados, this.draggedItem];
-            this.availableItens = this.availableItens.filter((val,i) => i!=draggedItemIndex);
+            this.availableItens = this.availableItens.filter((item,index) => index!=draggedItemIndex);
             this.draggedItem = null;
         }
     }
@@ -127,15 +126,8 @@ export class ListagemPageOfertaComponent implements OnInit {
         this.draggedItem = null;
     }
 
-    findIndex(item, listaItens) {
-        let index = -1;
-        for(let i = 0; i < listaItens.length; i++) {
-            if (item.id === listaItens[i].id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
+    findIndex(item: ItemModel, listaItens: ItemModel[]) {
+        return listaItens.indexOf(item);
     }
 
     removeItem(itensOferta){

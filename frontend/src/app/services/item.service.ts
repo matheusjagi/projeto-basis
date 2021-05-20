@@ -9,39 +9,39 @@ import { ItemModel } from '../models/item-model';
 })
 export class ItemService {
 
-    private api = environment.apiUrl;
+    private api: string = environment.apiUrl + '/itens';
 
     constructor(private http: HttpClient) { }
 
     buscarCategorias(){
-      return this.http.get<CategoriaModel[]>('api/itens/categorias');
+      return this.http.get<CategoriaModel[]>(`${this.api}/categorias`);
     }
 
     buscarTodos () {
-      return this.http.get<ItemModel[]>(`api/itens`);
+      return this.http.get<ItemModel[]>(`${this.api}`);
     }
 
     buscarPorId (idItem) {
-      return this.http.get<ItemModel>(`api/itens/${idItem}`);
+      return this.http.get<ItemModel>(`${this.api}/${idItem}`);
     }
 
     buscarPorUsuario(idUsuario: number){
-        return this.http.get<ItemModel[]>(`api/itens/usuario/${idUsuario}`);
+        return this.http.get<ItemModel[]>(`${this.api}/usuario/${idUsuario}`);
     }
 
     buscarPorSituacao (situacao: boolean) {
-        return this.http.get<ItemModel[]>(`api/itens/disponibilidade/${situacao}`);
+        return this.http.get<ItemModel[]>(`${this.api}/disponibilidade/${situacao}`);
     }
 
     salvar (item) {
-        return this.http.post(`api/itens`, item);
+        return this.http.post(`${this.api}`, item);
     }
 
     atualizar (item) {
-      return this.http.put(`api/itens`, item);
+      return this.http.put(`${this.api}`, item);
     }
 
     excluir (idItem) {
-      return this.http.delete(`api/itens/${idItem}`);
+      return this.http.delete(`${this.api}/${idItem}`);
     }
 }
