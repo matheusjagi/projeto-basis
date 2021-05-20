@@ -1,3 +1,5 @@
+import { UsuarioModel } from './../../models/usuario-model';
+import { LocalstorageService } from './../../services/localstorage.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class ListagemPageComponent implements OnInit {
 
-  usuarios: any[] = [];
+  usuario: UsuarioModel;
   displayModal: boolean = false;
   form: FormGroup;
   submit: boolean = false;
@@ -19,11 +21,11 @@ export class ListagemPageComponent implements OnInit {
 
   constructor(
       private usuarioService: UsuarioService,
+      private localstorageService: LocalstorageService,
       private fb: FormBuilder,
       private notification: PageNotificationService) { }
 
   ngOnInit(): void {
-    this.buscarTodos();
     this.iniciarForm();
   }
 
@@ -35,14 +37,13 @@ export class ListagemPageComponent implements OnInit {
       cpf: [null,[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       dataNascimento: [null,[Validators.required]]
     });
+
+    this.buscarUsuario();
   }
 
-  buscarTodos () {
-    this.usuarioService.buscarTodos().subscribe(
-      (usuarios) => {
-        this.usuarios = usuarios;
-      }
-    )
+  buscarUsuario () {
+    this.usuario = this.localstorageService.getUsuario();
+    this.form.patchValue(this.usuario);
   }
 
   salvar(){
@@ -59,7 +60,6 @@ export class ListagemPageComponent implements OnInit {
         ).subscribe(
             () => {
                 this.notification.addSuccessMessage("Usuário atualizado com sucesso!");
-                this.buscarTodos();
             },
             () => {
                 this.notification.addErrorMessage("Falha ao atualizar cadastro.");
@@ -76,7 +76,6 @@ export class ListagemPageComponent implements OnInit {
         ).subscribe(
             (usuario) => {
                 this.notification.addSuccessMessage("Usuário criado com sucesso!");
-                this.buscarTodos();
             },
             () => {
                 this.notification.addErrorMessage("Falha ao realizar cadastro.");
@@ -92,10 +91,6 @@ export class ListagemPageComponent implements OnInit {
         (usuario) => {
             this.displayModal = true;
             this.form.patchValue(usuario);
-            /*this.form.patchValue({
-                ...usuario,
-                dataNascimento: new Date(usuario.dataNascimento)
-            })*/
         }
       )
   }
@@ -105,7 +100,6 @@ export class ListagemPageComponent implements OnInit {
     this.usuarioService.excluir(idUsuario).subscribe(
         () => {
             this.notification.addSuccessMessage("Usuário excluido com sucesso!");
-            this.buscarTodos();
         },
         () => {
             this.notification.addErrorMessage("Falha ao excluir usuário.");
