@@ -1,8 +1,11 @@
+import { OfertaModel } from './../../models/oferta-model';
+import { ItemModel } from './../../models/item-model';
+import { OfertaService } from './../../services/oferta.service';
 import { LocalstorageService } from './../../services/localstorage.service';
 import { ItemService } from './../../services/item.service';
-import { ItemModel } from 'src/app/models/item-model';
 import { Component, OnInit } from '@angular/core';
-import { OfertaService } from 'src/app/services/oferta.service';
+import { SelectItem } from 'primeng';
+import { PageNotificationService } from '@nuvem/primeng-components';
 
 @Component({
     selector: 'app-listagem-page-minhas-ofertas',
@@ -11,12 +14,19 @@ import { OfertaService } from 'src/app/services/oferta.service';
 })
 export class ListagemPageMinhasOfertasComponent implements OnInit {
 
+    minhasOfertas: OfertaModel[] = [];
     meusItens: ItemModel[] = [];
+    itensOfertados: ItemModel[] = [];
+    displayVerOfertas: boolean = false;
+    selectedItem: ItemModel;
+    selectedOferta: OfertaModel;
+    sortOferta: SelectItem[] = [];
 
     constructor(
         private itemService: ItemService,
         private ofertaService: OfertaService,
         private localstorageService: LocalstorageService,
+        private notification: PageNotificationService
     ) { }
 
     ngOnInit(): void {
@@ -39,5 +49,61 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
             let novaString = montandoBase64.concat(item.foto);
             item.foto = novaString;
         });
+    }
+
+    mostraOfertas(item: ItemModel){
+        this.selectedItem = item;
+
+        this.ofertaService.buscarPorItem(item.id)
+            .subscribe(
+                (ofertas) => {
+                    if(!Object.values(ofertas).length){
+                        console.log("Oferta: ",ofertas);
+                        this.notification.addWarnMessage("Não existem ofertas para essa peça!");
+                    }
+                    else{
+                        this.displayVerOfertas = true;
+                        this.minhasOfertas = ofertas;
+
+                        this.minhasOfertas.forEach(oferta => {
+                            this.montaImagem(oferta.itensOfertados);
+                        })
+
+                        this.sortOferta = this.minhasOfertas.map(oferta => {
+                            let index = this.minhasOfertas.indexOf(oferta) + 1;
+                            return {label: `${index}`, value: oferta.id}
+                        });
+                    }
+                },
+                () => {
+                    this.notification.addErrorMessage("Falha ao carregar as ofertas.");
+                }
+            )
+
+        this.minhasOfertas.forEach(oferta => {
+            this.meusItens.push.apply(this.meusItens, oferta.itensOfertados);
+        })
+
+    }
+
+    aceitarOferta(){
+        this.ofertaService.aceitarOferta(this.selectedOferta.id)
+            .subscribe(
+                () => {
+                    this.displayVerOfertas = false;
+                    this.notification.addSuccessMessage("Oferta aceita com sucesso!");
+                    this.buscarMeusItens();
+                },
+                () => { this.notification.addErrorMessage("Falha ao aceitar a oferta.") }
+            )
+    }
+
+    adicionaOfertaClicada(idOferta){
+        this.selectedOferta = new OfertaModel();
+        this.selectedOferta.id = idOferta;
+    }
+
+    incrementaIndex(index){
+        return index + 1;
     }
 }
