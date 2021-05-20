@@ -38,7 +38,7 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   salvar(){
-    this.cadastrarUsuario();
+    this.submit = true;
     this.usuarioService.salvar(this.form.value).pipe(
     finalize(() => {
       this.fecharModal();
@@ -61,7 +61,6 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   cadastrarUsuario(){
-    this.cadastrar = false;
-    return this.cadastrar;
+    return this.form.invalid || this.submit;
   }
 }

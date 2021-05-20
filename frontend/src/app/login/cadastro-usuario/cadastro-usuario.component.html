@@ -22,7 +22,7 @@
         </div>
 
         <p-footer>
-            <button type="submit" pButton icon="pi pi-refresh" label="Criar" [disabled]="this.form.invalid || this.submit"></button>
+            <button type="submit" pButton icon="pi pi-refresh" label="Criar" [disabled]="cadastrarUsuario()"></button>
             <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar" class="ui-button-secondary"></button>
         </p-footer>
     </p-dialog>
