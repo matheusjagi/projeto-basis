@@ -1,3 +1,4 @@
+import { LocalstorageService } from './../../services/localstorage.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminComponent } from 'src/app/admin/admin.component';
@@ -8,13 +9,16 @@ import { AdminComponent } from 'src/app/admin/admin.component';
 })
 export class AppTopbarComponent {
 
-    loginUsuario = JSON.parse(localStorage.getItem('usuario')).email;
+    loginUsuario = this.localstorageService.getNome();
 
-    constructor(public app: AdminComponent, private router: Router) {
-    }
+    constructor(
+        private localstorageService: LocalstorageService,
+        public app: AdminComponent,
+        private router: Router
+    ) {}
 
     logout(){
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
         this.router.navigate(['login']);
     }
 

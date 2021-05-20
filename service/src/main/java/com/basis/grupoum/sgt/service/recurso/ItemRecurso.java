@@ -1,5 +1,6 @@
 package com.basis.grupoum.sgt.service.recurso;
 
+import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.servico.ItemServico;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemRecurso {
     private final ItemServico itemServico;
+
+    @GetMapping("/categorias")
+    public ResponseEntity<List<Categoria>> listarCategoria(){
+        List<Categoria> categorias = itemServico.listarCategoria();
+        return new ResponseEntity<>(categorias, HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<List<ItemDTO>> listar(){

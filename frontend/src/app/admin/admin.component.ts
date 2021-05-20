@@ -51,10 +51,9 @@ export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
         this.zone.runOutsideAngular(() => { this.bindRipple(); });
 
         this.menuService.itens = [
-            { label: 'Dashboard', icon: 'dashboard', routerLink: ['./'] },
-            { label: 'Usuarios', icon: 'person', routerLink: ['./usuarios'] },
-            { label: 'Itens', icon: 'person', routerLink: ['./itens'] },
-            { label: 'Minhas Ofertas', icon: 'person', routerLink: ['./ofertas'] }
+            { label: 'Home', icon: 'home', routerLink: ['./ofertas'] },
+            { label: 'Cadastro de Peças', icon: 'motorcycle', routerLink: ['./itens'] },
+            { label: 'Minhas Ofertas', icon: 'edit', routerLink: ['./minhas-ofertas'] }
         ];
     }
 
@@ -74,7 +73,6 @@ export class AdminComponent implements AfterViewInit, OnDestroy, OnInit {
                 continue;
             }
 
-            // Element.matches() -> https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
             if (this.selectorMatches(target, '.ripplelink, .ui-button')) {
                 const element = target;
                 this.rippleEffect(element, e);

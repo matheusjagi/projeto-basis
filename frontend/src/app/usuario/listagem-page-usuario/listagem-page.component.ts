@@ -1,5 +1,4 @@
-import { UsuarioModel } from './../../models/usuario-model';
-import { UsuarioService } from './../../services/usuario.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
@@ -12,7 +11,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class ListagemPageComponent implements OnInit {
 
-  usuarios: UsuarioModel[] = [];
+  usuarios: any[] = [];
   displayModal: boolean = false;
   form: FormGroup;
   submit: boolean = false;
@@ -50,6 +49,7 @@ export class ListagemPageComponent implements OnInit {
     this.submit = true;
 
     if(this.isEditing){
+
         this.usuarioService.atualizar(this.form.value)
         .pipe(
             finalize(() => {
@@ -61,9 +61,13 @@ export class ListagemPageComponent implements OnInit {
                 this.notification.addSuccessMessage("Usuário atualizado com sucesso!");
                 this.buscarTodos();
             },
-            () => { this.notification.addErrorMessage("Falha ao atualizar cadastro."); }
+            () => {
+                this.notification.addErrorMessage("Falha ao atualizar cadastro.");
+            }
         )
+
     } else {
+
         this.usuarioService.salvar(this.form.value).pipe(
             finalize(() => {
                 this.fecharModal();
@@ -74,7 +78,9 @@ export class ListagemPageComponent implements OnInit {
                 this.notification.addSuccessMessage("Usuário criado com sucesso!");
                 this.buscarTodos();
             },
-            () => { this.notification.addErrorMessage("Falha ao realizar cadastro."); }
+            () => {
+                this.notification.addErrorMessage("Falha ao realizar cadastro.");
+            }
         )
     }
   }
@@ -86,17 +92,24 @@ export class ListagemPageComponent implements OnInit {
         (usuario) => {
             this.displayModal = true;
             this.form.patchValue(usuario);
+            /*this.form.patchValue({
+                ...usuario,
+                dataNascimento: new Date(usuario.dataNascimento)
+            })*/
         }
       )
   }
 
   excluir(idUsuario){
+    console.log(idUsuario);
     this.usuarioService.excluir(idUsuario).subscribe(
         () => {
             this.notification.addSuccessMessage("Usuário excluido com sucesso!");
             this.buscarTodos();
         },
-        () => { this.notification.addErrorMessage("Falha ao excluir usuário."); }
+        () => {
+            this.notification.addErrorMessage("Falha ao excluir usuário.");
+        }
     )
   }
 

@@ -1,34 +1,47 @@
-import { environment } from './../../environments/environment';
-import { HttpClient } from '@angular/common/http'
+import { CategoriaModel } from './../models/categoria-model';
+import { environment } from './../../environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ItemModel } from '../models/item-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  private api = environment.apiUrl;
+    private api: string = environment.apiUrl + '/itens';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  buscarTodos () {
-    return this.http.get<any[]>(`api/itens`);
-  }
+    buscarCategorias(){
+      return this.http.get<CategoriaModel[]>(`${this.api}/categorias`);
+    }
 
-  buscarPorId (idItem) {
-    return this.http.get<any>(`api/itens/${idItem}`);
-  }
+    buscarTodos () {
+      return this.http.get<ItemModel[]>(`${this.api}`);
+    }
 
-  salvar (item) {
-    return this.http.post(`api/itens`, item);
-  }
+    buscarPorId (idItem) {
+      return this.http.get<ItemModel>(`${this.api}/${idItem}`);
+    }
 
-  atualizar (item) {
-    return this.http.put(`api/itens`, item);
-  }
+    buscarPorUsuario(idUsuario: number){
+        return this.http.get<ItemModel[]>(`${this.api}/usuario/${idUsuario}`);
+    }
 
-  excluir (id) {
-    return this.http.delete(`api/itens/${id}`);
-  }
+    buscarPorSituacao (situacao: boolean) {
+        return this.http.get<ItemModel[]>(`${this.api}/disponibilidade/${situacao}`);
+    }
 
+    salvar (item) {
+        return this.http.post(`${this.api}`, item);
+    }
+
+    atualizar (item) {
+      return this.http.put(`${this.api}`, item);
+    }
+
+    excluir (idItem) {
+      return this.http.delete(`${this.api}/${idItem}`);
+    }
 }
