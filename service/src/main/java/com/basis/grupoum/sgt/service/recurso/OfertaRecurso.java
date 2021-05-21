@@ -43,6 +43,12 @@ public class OfertaRecurso {
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
+    @GetMapping("/item/{id}")
+    public ResponseEntity<List<OfertaDTO>> obterOfertasPorItem(@PathVariable("id") Long idItem) {
+        List<OfertaDTO> ofertas = ofertaServico.obterOfertasPorItem(idItem);
+        return new ResponseEntity<>(ofertas, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<OfertaDTO> salvar (@RequestBody OfertaDTO ofertaDTO) {
         OfertaDTO oferta = ofertaServico.salvar(ofertaDTO);

@@ -22,7 +22,7 @@
                             <i class="material-icons">person</i>
                             <span>Minha Conta</span>
                         </a>
-                        <a logout (click)="logout()">
+                        <a logout (click)="logout()" [style]="{'cursor': 'pointer'}">
                             <i class="material-icons">power_settings_new</i>
                             <span>Sair</span>
                         </a>
@@ -37,7 +37,7 @@
                 <ul class="ultima-menu animated fadeInDown">
                     <li role="menuitem">
                         <a>
-                            <span><strong>Usuário: {{ loginUsuario }}</strong></span>
+                            <span><strong>Usuário: {{ nome }}</strong></span>
                         </a>
                     </li>
                 </ul>

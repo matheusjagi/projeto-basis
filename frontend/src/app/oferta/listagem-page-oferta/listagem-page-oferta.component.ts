@@ -26,6 +26,8 @@ export class ListagemPageOfertaComponent implements OnInit {
     draggedItem: ItemModel = null;
     displayDetalhesItem: boolean = false;
     displayTroca: boolean = false;
+    criandoOferta: boolean = false;
+    isProgress: boolean = false;
 
     constructor(
         private itemService: ItemService,
@@ -86,7 +88,6 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     realizaTroca(item){
-        this.displayTroca = true;
         this.selectedItensOfertados = [];
         this.idItemOferta = item.id;
 
@@ -96,7 +97,13 @@ export class ListagemPageOfertaComponent implements OnInit {
                 this.availableItens = itens.filter(item => {
                     return item.disponibilidade;
                 });
-                this.montaImagem(this.availableItens);
+
+                if(!Object.values(this.availableItens).length){
+                    this.notification.addWarnMessage("Você não possui itens disponíveis para realizar ofertas.");
+                }else{
+                    this.displayTroca = true;
+                    this.montaImagem(this.availableItens);
+                }
             }
         )
     }
@@ -137,6 +144,8 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     criarOferta(){
+        this.criandoOferta = true;
+        this.isProgress = true;
         this.form.patchValue({itemDtoId: this.idItemOferta});
         this.form.patchValue({situacaoDtoId: 1});
         this.form.patchValue({usuarioDtoId: this.localstorageService.getId()});
@@ -154,9 +163,14 @@ export class ListagemPageOfertaComponent implements OnInit {
         ).subscribe(
             (oferta) => {
                 this.displayTroca = false;
+                this.isProgress = false;
                 this.notification.addSuccessMessage("Oferta criada com sucesso!");
+                this.criandoOferta = false;
             },
-            () => { this.notification.addErrorMessage("Falha ao realizar a oferta."); }
+            () => {
+                this.notification.addErrorMessage("Falha ao realizar a oferta.");
+                this.criandoOferta = false;
+            }
         )
     }
 
@@ -164,9 +178,7 @@ export class ListagemPageOfertaComponent implements OnInit {
         this.form.reset();
     }
 
-    filterCategoria(idCategoria){
-        this.itens = this.itens.filter(item => {
-            return item.categoriaDtoId == idCategoria
-        })
+    desabilitaBotaoOfertar(){
+       return (!Object.values(this.selectedItensOfertados).length) ? true : false;
     }
 }

@@ -16,7 +16,6 @@ import { SelectItem } from 'primeng';
 export class ListagemPageItemComponent implements OnInit {
 
     @ViewChild('inputFile', {static:false}) inputFile: ElementRef;
-    itens: ItemModel[] = [];
     categorias: SelectItem[] = [];
     form: FormGroup;
     submit: boolean = false;
@@ -32,15 +31,6 @@ export class ListagemPageItemComponent implements OnInit {
     ngOnInit(): void {
         this.iniciarForm();
         this.buscarCategorias();
-        this.buscarItens();
-    }
-
-    buscarItens(){
-        this.itemService.buscarTodos().subscribe(
-            (itens) => {
-                this.itens = itens;
-            }
-        )
     }
 
     iniciarForm () {

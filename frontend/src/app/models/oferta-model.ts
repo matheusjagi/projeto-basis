@@ -4,6 +4,7 @@ export class OfertaModel {
     id?: number;
     itemDtoId?: number;
     usuarioDtoId?: number;
+    nomeUsuarioOfertante?: string;
     situacaoDtoId?: number;
     itensOfertados?: ItemModel[];
 }

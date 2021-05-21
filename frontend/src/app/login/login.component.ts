@@ -1,3 +1,4 @@
+import { LocalstorageService } from './../services/localstorage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,10 +15,11 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   submit = false;
   displayModal = false;
-  
+
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
+    private localStorage: LocalstorageService,
     private router: Router
     ) { }
 
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
   iniciarForm () {
     this.form = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
-      token: [null, [Validators.required]],    
+      token: [null, [Validators.required]],
     });
   }
 
@@ -43,6 +45,7 @@ export class LoginComponent implements OnInit {
       (data) => {
         localStorage.setItem('token', this.form.get('token').value);
         localStorage.setItem('usuario', JSON.stringify(data));
+        this.localStorage.setUsuario(data)
         this.router.navigate(['admin']);
       },
       () => {
@@ -53,7 +56,7 @@ export class LoginComponent implements OnInit {
   abrirModal(){
     this.displayModal = true;
   }
-  
+
   fecharModal(valor : boolean){
     this.displayModal = valor;
   }

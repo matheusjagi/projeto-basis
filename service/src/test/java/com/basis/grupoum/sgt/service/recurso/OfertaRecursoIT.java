@@ -59,6 +59,15 @@ public class OfertaRecursoIT extends IntTestComum {
     }
 
     @Test
+    public void obterOfertasPorItem() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/item/"+oferta.getItem().getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
     public void obterPorId() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
 

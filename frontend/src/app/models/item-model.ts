@@ -5,5 +5,6 @@ export class ItemModel {
     foto?: any;
     disponibilidade?: boolean;
     usuarioDtoId?: number;
+    nomeUsuarioProprietario?: string;
     categoriaDtoId?: number;
 }

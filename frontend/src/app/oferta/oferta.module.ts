@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OfertaRoutingModule } from './oferta-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ListagemPageOfertaComponent } from './listagem-page-oferta/listagem-page-oferta.component';
-import { DragDropModule } from 'primeng';
+import { DragDropModule, ProgressSpinnerModule } from 'primeng';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,8 @@ import { DragDropModule } from 'primeng';
     CommonModule,
     OfertaRoutingModule,
     SharedModule,
-    DragDropModule
+    DragDropModule,
+    ProgressSpinnerModule
   ]
 })
 export class OfertaModule { }

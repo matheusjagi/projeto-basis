@@ -10,12 +10,24 @@ export class LocalstorageService {
 
     usuarioLogado: UsuarioModel = JSON.parse(localStorage.getItem('usuario'));
 
+    setUsuario (usuario) {
+        this.usuarioLogado = usuario;
+    }
+
+    getUsuario(){
+        return this.usuarioLogado;
+    }
+
     getId() {
         return this.usuarioLogado.id;
     }
 
     getNome() {
         return this.usuarioLogado.nome;
+    }
+
+    getCpf(){
+        return this.usuarioLogado.cpf;
     }
 
     getEmail() {

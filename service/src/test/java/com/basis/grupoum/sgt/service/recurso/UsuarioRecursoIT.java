@@ -5,7 +5,10 @@ import com.basis.grupoum.sgt.service.dominio.Usuario;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.UsuarioRepositorio;
+import com.basis.grupoum.sgt.service.servico.dto.UsuarioLoginDTO;
+import com.basis.grupoum.sgt.service.servico.mapper.UsuarioLoginMapper;
 import com.basis.grupoum.sgt.service.servico.mapper.UsuarioMapper;
+import com.basis.grupoum.sgt.service.servico.util.CriptografiaSHA2;
 import com.basis.grupoum.sgt.service.util.IntTestComum;
 import com.basis.grupoum.sgt.service.util.TestUtil;
 import org.hamcrest.Matchers;
@@ -34,6 +37,9 @@ public class UsuarioRecursoIT extends IntTestComum {
     private UsuarioMapper usuarioMapper;
 
     @Autowired
+    private UsuarioLoginMapper usuarioLoginMapper;
+
+    @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
@@ -48,6 +54,28 @@ public class UsuarioRecursoIT extends IntTestComum {
         itemRepositorio.deleteAll();
         usuarioRepositorio.deleteAll();
         usuarioBuilder.setCustomizacao(null);
+    }
+
+    @Test
+    public void autenticacao() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+
+        usuario.setToken(CriptografiaSHA2.geraCriptografia(usuario.getCpf()));
+
+        getMockMvc().perform(post(URL+"/login", usuario)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioLoginMapper.toDto(usuario))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void autenticacaoFalha() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+
+        getMockMvc().perform(post(URL+"/login", usuario)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioLoginMapper.toDto(usuario))))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test

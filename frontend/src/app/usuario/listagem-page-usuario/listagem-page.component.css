@@ -1,0 +1,9 @@
+.container{
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 0.5em;
+}
+
+.botaoStyle{
+    margin-right: 1em;
+}

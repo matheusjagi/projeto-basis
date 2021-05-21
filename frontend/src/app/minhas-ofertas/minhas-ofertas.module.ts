@@ -1,3 +1,4 @@
+import { TabViewModule } from 'primeng/tabview';
 import { MinhasOfertasRoutingModule } from './minhas-ofertas-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     MinhasOfertasRoutingModule,
     SharedModule,
-    VirtualScrollerModule
+    VirtualScrollerModule,
+    TabViewModule
   ]
 })
 export class MinhasOfertasModule { }

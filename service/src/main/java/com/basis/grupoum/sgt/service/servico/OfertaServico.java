@@ -49,6 +49,11 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
+    public List<OfertaDTO> obterOfertasPorItem(Long idItem){
+        List<Oferta> ofertas = ofertaRepositorio.findAllByItemId(idItem);
+        return ofertaMapper.toDto(ofertas);
+    }
+
     public OfertaDTO salvar(OfertaDTO ofertaDTO){
         ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, false);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
@@ -76,9 +81,11 @@ public class OfertaServico {
         OfertaDTO oferta = obterPorId(idOferta);
         ItemDTO itemQueRecebeuAOferta = itemServico.obterPorId(oferta.getItemDtoId());
         List<ItemDTO> itensOfertados = oferta.getItensOfertados();
-        itensOfertados.forEach(item -> item.setUsuarioDtoId(itemQueRecebeuAOferta.getUsuarioDtoId()));
+        itensOfertados.forEach(item -> {
+            item.setUsuarioDtoId(itemQueRecebeuAOferta.getUsuarioDtoId());
+            item.setDisponibilidade(true);
+        });
         itemQueRecebeuAOferta.setUsuarioDtoId(oferta.getUsuarioDtoId());
-
         itemServico.salvar(itemQueRecebeuAOferta);
         itemServico.atualizarTodos(itensOfertados);
         oferta.setSituacaoDtoId(2L);
