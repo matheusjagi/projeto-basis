@@ -15,8 +15,7 @@ public class CategoriaServico {
     private final CategoriaRepositorio categoriaRepositorio;
 
     public List<Categoria> buscarTodasCategorias(){
-        List<Categoria> categorias = categoriaRepositorio.findAll();
-        return categorias;
+        return categoriaRepositorio.findAll();
     }
 
 }

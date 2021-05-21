@@ -63,8 +63,6 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
                     this.minhasOfertas = ofertas;
                     this.minhasOfertas = this.minhasOfertas.filter(oferta => { return oferta.situacaoDtoId == 1 });
 
-                    console.log("Minhas Ofertas: ",this.minhasOfertas);
-
                     if(!Object.values(this.minhasOfertas).length){
                         this.notification.addWarnMessage("Não existem ofertas para essa peça!");
                     }

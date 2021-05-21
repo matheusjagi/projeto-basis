@@ -46,15 +46,6 @@ public class ItemRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void listarCategorias() throws Exception{
-        itemBuilder.buscarCategorias();
-
-        getMockMvc().perform(get(URL+"/categorias"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
-    }
-
-    @Test
     public void listar() throws Exception{
         itemBuilder.construir();
 
