@@ -7,7 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PageNotificationModule, BreadcrumbModule, MenuModule, ErrorStackModule } from '@nuvem/primeng-components';
-import { ErrorModule, SecurityModule, VersionTagModule } from '@nuvem/angular-base';
+import { ErrorModule, VersionTagModule } from '@nuvem/angular-base';
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { LoginComponent } from './login/login.component';
@@ -40,7 +40,6 @@ import { ProgressSpinnerModule } from 'primeng';
         ReactiveFormsModule,
         PageNotificationModule,
         ProgressSpinnerModule
-        // SecurityModule.forRoot(environment.auth),
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -23,7 +23,7 @@
     </p-header>
 
 
-    <ng-template let-item pTemplate="listItem">
+    <ng-template let-item let-i pTemplate="listItem">
         <div id="item-linha" class="p-col-12">
             <div class="p-grid">
                 <div class="item-details">
@@ -33,7 +33,12 @@
                                 <img [src]="item.foto">
                             </div>
                             <div class="p-col-8">
-                                <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
+                                <div class="p-col-12 margemBaixo">
+                                    <span class="card cardUsuarioProprietario">
+                                        Usuário Proprietário: <b>{{ item.nomeUsuarioProprietario }}</b>
+                                    </span>
+                                </div>
+                                <div class="p-col-12">Peça: <b>{{item.nome}}</b></div>
                                 <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
                             </div>
                         </div>
@@ -50,10 +55,15 @@
     <ng-template let-item pTemplate="gridItem">
         <div class="p-col-12 p-md-3 ng-star-inserted">
             <p-panel [header]="" class="pPanelStyle">
+                <div class="p-col-12 margemBaixo ellipsis card cardUsuarioProprietario">
+                    <span>
+                        Usuário Proprietário: <b>{{ item.nomeUsuarioProprietario }}</b>
+                    </span>
+                </div>
                 <img [src]="item.foto" width="100" height="100">
                 <div class="item-detail card ellipsis showCard" (click)="mostrarItem(item)">
                     <span>
-                        <strong>Item:</strong> {{ item.nome }} <br>
+                        <strong>Peça:</strong> {{ item.nome }} <br>
                     </span>
                     <span>
                         <strong>Descrição:</strong> {{ item.descricao }}
@@ -70,10 +80,15 @@
 <p-dialog header="Detalhes da Peça" [(visible)]="displayDetalhesItem" showEffect="fade" [modal]="true"
     [style]="{'width': '50vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}">
     <div>
-        <img [src]="selectedItem.foto" width="200" height="200">
+        <div class="p-col-12 margemBaixo">
+            <span class="card cardUsuarioProprietario">
+                Usuário Proprietário: <b>{{ selectedItem.nomeUsuarioProprietario }}</b>
+            </span>
+        </div>
+        <img [src]="selectedItem.foto" width="200" height="200" class="card">
         <div>
             <span>
-                <strong>Item:</strong> {{ selectedItem.nome }} <br>
+                <strong>Peça:</strong> {{ selectedItem.nome }} <br>
             </span>
             <span>
                 <strong>Descrição:</strong> {{ selectedItem.descricao }}
@@ -121,6 +136,6 @@
 
     <p-footer>
         <button class="ui-button-success" type="submit" pButton icon="pi pi-check" (click)="criarOferta()"
-            label="Ofertar" [disabled]="criandoOferta" [style]="{'color': '#ffffff'}"></button>
+            label="Ofertar" [disabled]="desabilitaBotaoOfertar()" [style]="{'color': '#ffffff'}"></button>
     </p-footer>
 </p-dialog>

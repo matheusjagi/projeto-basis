@@ -100,3 +100,16 @@ hr
     bottom: 0;
     right: 0;
 }
+
+.cardUsuarioProprietario{
+    background-color: #e8e1e1;
+
+}
+
+.margemBaixo{
+    margin-bottom: 1em;
+}
+
+.pPanelStyle .estiloMiniPanel{
+    color: black;
+}

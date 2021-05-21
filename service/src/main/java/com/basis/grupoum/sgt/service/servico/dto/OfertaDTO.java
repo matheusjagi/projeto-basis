@@ -19,6 +19,8 @@ public class OfertaDTO {
     @NotNull(message = "O campo não pode ser nulo")
     private Long usuarioDtoId;
 
+    private String nomeUsuarioOfertante;
+
     @NotNull(message = "O campo não pode ser nulo")
     private Long situacaoDtoId;
 

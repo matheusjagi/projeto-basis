@@ -1,10 +1,11 @@
+import { UsuarioService } from './../../services/usuario.service';
+import { UsuarioModel } from './../../models/usuario-model';
 import { OfertaModel } from './../../models/oferta-model';
 import { ItemModel } from './../../models/item-model';
 import { OfertaService } from './../../services/oferta.service';
 import { LocalstorageService } from './../../services/localstorage.service';
 import { ItemService } from './../../services/item.service';
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng';
 import { PageNotificationService } from '@nuvem/primeng-components';
 
 @Component({
@@ -21,10 +22,12 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
     selectedItem: ItemModel;
     selectedOferta: OfertaModel = null;
     isProgress: boolean = false;
+    usuarioOfertante: UsuarioModel = null;
 
     constructor(
         private itemService: ItemService,
         private ofertaService: OfertaService,
+        private usuarioService: UsuarioService,
         private localstorageService: LocalstorageService,
         private notification: PageNotificationService
     ) { }
@@ -59,6 +62,8 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
                 (ofertas) => {
                     this.minhasOfertas = ofertas;
                     this.minhasOfertas = this.minhasOfertas.filter(oferta => { return oferta.situacaoDtoId == 1 });
+
+                    console.log("Minhas Ofertas: ",this.minhasOfertas);
 
                     if(!Object.values(this.minhasOfertas).length){
                         this.notification.addWarnMessage("Não existem ofertas para essa peça!");

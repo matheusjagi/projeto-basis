@@ -3,6 +3,7 @@ package com.basis.grupoum.sgt.service.builder;
 import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Usuario;
+import com.basis.grupoum.sgt.service.servico.CategoriaServico;
 import com.basis.grupoum.sgt.service.servico.ItemServico;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 @Component
 public class ItemBuilder extends ConstrutorEntidade<Item> {
@@ -18,10 +20,17 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     private ItemServico itemServico;
 
     @Autowired
+    private CategoriaServico categoriaServico;
+
+    @Autowired
     private ItemMapper itemMapper;
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
+
+    public List<Categoria> buscarCategorias(){
+        return categoriaServico.buscarTodasCategorias();
+    }
 
     @Override
     public Item construirEntidade() {

@@ -51,6 +51,16 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
+    public void autenticacao() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+
+        getMockMvc().perform(post(URL+"/login", usuario)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     public void listar() throws Exception{
         usuarioBuilder.construir();
         getMockMvc().perform(get(URL))

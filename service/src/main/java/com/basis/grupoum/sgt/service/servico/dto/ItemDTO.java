@@ -32,6 +32,8 @@ public class ItemDTO {
     @NotEmpty(message = "O campo não pode ser vazio")
     private Long usuarioDtoId;
 
+    private String nomeUsuarioProprietario;
+
     @NotNull(message = "O campo não pode ser nulo")
     @NotEmpty(message = "O campo não pode ser vazio")
     private Long categoriaDtoId;

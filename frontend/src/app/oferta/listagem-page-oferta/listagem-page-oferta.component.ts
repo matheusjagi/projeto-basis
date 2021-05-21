@@ -88,7 +88,6 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     realizaTroca(item){
-        this.displayTroca = true;
         this.selectedItensOfertados = [];
         this.idItemOferta = item.id;
 
@@ -98,7 +97,13 @@ export class ListagemPageOfertaComponent implements OnInit {
                 this.availableItens = itens.filter(item => {
                     return item.disponibilidade;
                 });
-                this.montaImagem(this.availableItens);
+
+                if(!Object.values(this.availableItens).length){
+                    this.notification.addWarnMessage("Você não possui itens disponíveis para realizar ofertas.");
+                }else{
+                    this.displayTroca = true;
+                    this.montaImagem(this.availableItens);
+                }
             }
         )
     }
@@ -173,9 +178,7 @@ export class ListagemPageOfertaComponent implements OnInit {
         this.form.reset();
     }
 
-    filterCategoria(idCategoria){
-        this.itens = this.itens.filter(item => {
-            return item.categoriaDtoId == idCategoria
-        })
+    desabilitaBotaoOfertar(){
+       return (!Object.values(this.selectedItensOfertados).length) ? true : false;
     }
 }

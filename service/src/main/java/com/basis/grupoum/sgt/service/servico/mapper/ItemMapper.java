@@ -11,6 +11,7 @@ public interface ItemMapper extends EntityMapper<ItemDTO, Item> {
 
     @Override
     @Mapping(source = "usuarioDtoId", target = "usuario.id")
+    @Mapping(source = "nomeUsuarioProprietario", target = "usuario.nome")
     @Mapping(source = "categoriaDtoId", target = "categoria.id")
     Item toEntity(ItemDTO dto);
 

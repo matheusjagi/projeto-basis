@@ -42,8 +42,13 @@
                                             <img [src]="item.foto">
                                         </div>
                                         <div class="p-col-8">
-                                            <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
-                                            <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
+                                            <div class="p-col-12 margemBaixo">
+                                                <span class="card">
+                                                    Usuário Ofertante: <b>{{ minhasOfertas[i].nomeUsuarioOfertante }}</b>
+                                                </span>
+                                            </div>
+                                            <div class="p-col-12">Item: <b>{{ item.nome }}</b></div>
+                                            <div class="p-col-12">Descrição: <b>{{ item.descricao }}</b></div>
                                         </div>
                                     </div>
                                 </div>
