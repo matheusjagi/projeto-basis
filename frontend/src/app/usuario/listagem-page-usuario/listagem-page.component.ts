@@ -34,10 +34,9 @@ export class ListagemPageComponent implements OnInit {
       id: [null],
       nome: [null,[Validators.required]],
       email: [null,[Validators.required, Validators.email]],
-      cpf: [null,[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
+      cpf: [{value: null,disabled:true},[Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
       dataNascimento: [null,[Validators.required]]
     });
-
     this.buscarUsuario();
   }
 
@@ -47,73 +46,26 @@ export class ListagemPageComponent implements OnInit {
   }
 
   salvar(){
-    this.submit = true;
-
-    if(this.isEditing){
-
-        this.usuarioService.atualizar(this.form.value)
-        .pipe(
-            finalize(() => {
-                this.submit = false;
-                this.fecharModal();
-            })
-        ).subscribe(
-            () => {
-                this.notification.addSuccessMessage("Usuário atualizado com sucesso!");
-            },
-            () => {
-                this.notification.addErrorMessage("Falha ao atualizar cadastro.");
-            }
-        )
-
-    } else {
-
-        this.usuarioService.salvar(this.form.value).pipe(
-            finalize(() => {
-                this.fecharModal();
-                this.submit = false;
-            })
-        ).subscribe(
-            (usuario) => {
-                this.notification.addSuccessMessage("Usuário criado com sucesso!");
-            },
-            () => {
-                this.notification.addErrorMessage("Falha ao realizar cadastro.");
-            }
-        )
-    }
-  }
-
-  editar(idUsuario){
-      this.isEditing = true;
-
-      this.usuarioService.buscarPorId(idUsuario).subscribe(
-        (usuario) => {
-            this.displayModal = true;
-            this.form.patchValue(usuario);
-        }
-      )
-  }
-
-  excluir(idUsuario){
-    console.log(idUsuario);
-    this.usuarioService.excluir(idUsuario).subscribe(
-        () => {
-            this.notification.addSuccessMessage("Usuário excluido com sucesso!");
-        },
-        () => {
-            this.notification.addErrorMessage("Falha ao excluir usuário.");
-        }
+    this.usuarioService.atualizar(this.form.value).subscribe(
+      (usuario) => {
+        this.localstorageService.setUsuario(usuario);
+        localStorage.setItem("usuario",JSON.stringify(usuario))
+        this.notification.addSuccessMessage("Usuário atualizado com sucesso!");
+      },
+      () => {
+        this.notification.addErrorMessage("Falha ao atualizar cadastro.");
+      }
     )
   }
 
-  abrirModal(){
-    this.displayModal = true;
-  }
-
-  fecharModal(){
-    this.form.reset();
-    this.displayModal = false;
-    this.isEditing = false;
+  excluir(idUsuario){
+    this.usuarioService.excluir(idUsuario).subscribe(
+      () => {
+        this.notification.addSuccessMessage("Usuário excluido com sucesso!");
+      },
+      () => {
+        this.notification.addErrorMessage("Falha ao excluir usuário.");
+      }
+    )
   }
 }

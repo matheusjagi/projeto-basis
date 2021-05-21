@@ -1,27 +1,31 @@
-<h3>Usuarios</h3>
+<div class="card">
+    <h2 id="titulo">Minha Conta</h2>
+</div>
+
+<p-card class="ui-g-12">
 
 <form [formGroup]="form" (ngSubmit)="salvar()">
         <div class="ui-fluid">
             <div class="p-field">
-                <label for="nome">Nome</label>
+                <label for="nome" id="idNome">Nome</label>
                 <input id="nome" type="text" pInputText formControlName="nome">
             </div>
             <div class="p-field">
-                <label for="email">Email</label>
+                <label for="email" id="idEmail">Email</label>
                 <input id="email" type="text" pInputText formControlName="email">
             </div>
             <div class="p-field">
-                <label for="cpf">CPF</label>
-                <p-inputMask mask="999.999.999-99" formControlName="cpf" unmask="true" disabled="true"></p-inputMask>
+                <label for="cpf" id="idCpf">CPF</label>
+                <p-inputMask mask="999.999.999-99" formControlName="cpf" unmask="true"></p-inputMask>
             </div>
             <div class="p-field">
-                <label for="dataNascimento">Data de Nascimento</label>
+                <label for="dataNascimento"id="idDataNascimento">Data de Nascimento</label>
                 <input id="data" type="date" formControlName="dataNascimento">
             </div>
         </div>
 
         <p-footer>
-            <button type="submit" pButton icon="pi pi-refresh" [label]="isEditing ? 'Salvar' : 'Criar'" [disabled]="form.invalid || submit "></button>
-            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar" class="ui-button-secondary"></button>
+            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Alterar"></button>
         </p-footer>
 </form>
+</p-card>

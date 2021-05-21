@@ -22,4 +22,8 @@ export class AppTopbarComponent {
         this.router.navigate(['login']);
     }
 
+    get nome(){
+        return this.localstorageService.getUsuario().nome;
+    }
+
 }
