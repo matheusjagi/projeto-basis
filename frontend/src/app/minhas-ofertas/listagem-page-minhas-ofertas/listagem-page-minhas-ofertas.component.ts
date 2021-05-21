@@ -98,11 +98,6 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
             )
     }
 
-    /*adicionaOfertaClicada(idOferta){
-        this.selectedOferta = new OfertaModel();
-        this.selectedOferta.id = idOferta;
-    }*/
-
     incrementaIndex(index){
         return index + 1;
     }
