@@ -30,14 +30,8 @@
 
 <p-dialog header="Ofertas em sua peça" [(visible)]="displayVerOfertas" showEffect="fade" [style]="{'width': '70vw'}" [modal]="true" [contentStyle]="{padding: '2em', textAlign: 'center'}">
     <div class="p-grid">
-        <div class="p-col-12">
-            <p-dropdown class="ng-tns-c3-4 ng-pristine ng-valid ng-touched dropCategoria" [options]="sortOferta"
-                placeholder="Escolha a oferta" [showClear]="true" (onChange)="adicionaOfertaClicada($event.value)">
-            </p-dropdown>
-        </div>
-        <div class="p-col-12 drop-column" pDroppable="itens" (onDrop)="drop($event)"
-            [ngClass]="{'ui-highlight-car':draggedItem}">
-            <p-tabView>
+        <div class="p-col-12 drop-column">
+            <p-tabView (onChange)="eventoTeste($event)">
                 <p-tabPanel *ngFor="let oferta of minhasOfertas; let i = index;" [header]="incrementaIndex(i)" leftIcon="fa fa-exchange" (onChange)="adicionaOfertaClicada(oferta)" >
                     <div *ngFor="let item of oferta.itensOfertados" id="item-linha" class="p-col-12">
                         <div class="p-grid">
@@ -62,10 +56,10 @@
     </div>
 
     <p-footer>
-        <button class="ui-button-success botaoVerOfertas" pButton type="button"
+        <button class="ui-button-success botaoVerOfertas" pButton type="button" [disabled]="!selectedOferta"
             icon="pi pi-check" (click)="aceitarOferta()" label="Aceitar" [style]="{'color': '#ffffff'}"></button>
 
-        <button class="ui-button-danger botaoVerOfertas" pButton type="button"
+        <button class="ui-button-danger botaoVerOfertas" pButton type="button" [disabled]="!selectedOferta"
         icon="pi pi-times" (click)="recusarOferta(selectedOferta)" label="Recusar" [style]="{'color': '#ffffff', 'background-color': '#e91224'}"></button>
     </p-footer>
 </p-dialog>

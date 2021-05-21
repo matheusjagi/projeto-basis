@@ -10,6 +10,10 @@ export class LocalstorageService {
 
     usuarioLogado: UsuarioModel = JSON.parse(localStorage.getItem('usuario'));
 
+    setUsuario (usuario) {
+        this.usuarioLogado = usuario;
+    }
+
     getUsuario(){
         return this.usuarioLogado;
     }

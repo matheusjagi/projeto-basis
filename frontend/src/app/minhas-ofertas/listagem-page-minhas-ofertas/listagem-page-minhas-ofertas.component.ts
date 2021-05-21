@@ -19,7 +19,7 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
     itensOfertados: ItemModel[] = [];
     displayVerOfertas: boolean = false;
     selectedItem: ItemModel;
-    selectedOferta: OfertaModel;
+    selectedOferta: OfertaModel = null;
     sortOferta: SelectItem[] = [];
 
     constructor(
@@ -98,12 +98,18 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
             )
     }
 
-    adicionaOfertaClicada(idOferta){
+    /*adicionaOfertaClicada(idOferta){
         this.selectedOferta = new OfertaModel();
         this.selectedOferta.id = idOferta;
-    }
+    }*/
 
     incrementaIndex(index){
         return index + 1;
+    }
+
+    eventoTeste(event){
+        console.log('select: ',this.selectedOferta);
+        this.selectedOferta = this.minhasOfertas[event.index];
+        console.log('select 2: ',this.selectedOferta);
     }
 }

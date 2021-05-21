@@ -82,4 +82,33 @@
                 tableName="ITEM"/>
     </changeSet>
 
+    <changeSet id="20210520210600-006" author="matheus.jagi">
+        <modifyDataType
+                columnName="DESCRICAO"
+                newDataType="text"
+                schemaName="public"
+                tableName="ITEM"/>
+    </changeSet>
+
+    <changeSet id="20210520211800-007" author="matheus.jagi">
+        <modifyDataType
+                columnName="DESCRICAO"
+                newDataType="varchar(150)"
+                schemaName="public"
+                tableName="ITEM"/>
+    </changeSet>
+
+    <changeSet id="20210520212000-007" author="matheus.jagi">
+        <modifyDataType
+                columnName="NOME"
+                newDataType="varchar(150)"
+                schemaName="public"
+                tableName="ITEM"/>
+
+        <modifyDataType
+                columnName="DESCRICAO"
+                newDataType="text"
+                schemaName="public"
+                tableName="ITEM"/>
+    </changeSet>
 </databaseChangeLog>
