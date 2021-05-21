@@ -20,7 +20,6 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
     displayVerOfertas: boolean = false;
     selectedItem: ItemModel;
     selectedOferta: OfertaModel = null;
-    sortOferta: SelectItem[] = [];
 
     constructor(
         private itemService: ItemService,
@@ -57,22 +56,25 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
         this.ofertaService.buscarPorItem(item.id)
             .subscribe(
                 (ofertas) => {
-                    if(!Object.values(ofertas).length){
-                        console.log("Oferta: ",ofertas);
+                    this.minhasOfertas = ofertas;
+                    this.minhasOfertas = this.minhasOfertas.filter(oferta => { return oferta.situacaoDtoId == 1 });
+
+                    if(!Object.values(this.minhasOfertas).length){
                         this.notification.addWarnMessage("Não existem ofertas para essa peça!");
                     }
                     else{
                         this.displayVerOfertas = true;
-                        this.minhasOfertas = ofertas;
+                        this.selectedOferta = null;
 
-                        this.minhasOfertas.forEach(oferta => {
-                            this.montaImagem(oferta.itensOfertados);
-                        })
-
-                        this.sortOferta = this.minhasOfertas.map(oferta => {
-                            let index = this.minhasOfertas.indexOf(oferta) + 1;
-                            return {label: `${index}`, value: oferta.id}
-                        });
+                        if(this.minhasOfertas.length == 1){
+                            this.selectedOferta = this.minhasOfertas[0];
+                            this.montaImagem(this.selectedOferta.itensOfertados);
+                        }
+                        else{
+                            this.minhasOfertas.forEach(oferta => {
+                                this.montaImagem(oferta.itensOfertados);
+                            })
+                        }
                     }
                 },
                 () => {
@@ -102,9 +104,7 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
         return index + 1;
     }
 
-    eventoTeste(event){
-        console.log('select: ',this.selectedOferta);
+    capturaOfertaSelecionada(event){
         this.selectedOferta = this.minhasOfertas[event.index];
-        console.log('select 2: ',this.selectedOferta);
     }
 }

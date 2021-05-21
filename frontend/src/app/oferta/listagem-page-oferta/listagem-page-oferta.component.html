@@ -108,6 +108,6 @@
     </div>
 
     <p-footer>
-        <button class="ui-button-success" type="submit" pButton icon="pi pi-check" (click)="criarOferta()" label="Ofertar" [style]="{'color': '#ffffff'}"></button>
+        <button class="ui-button-success" type="submit" pButton icon="pi pi-check" (click)="criarOferta()" label="Ofertar" [disabled]="criandoOferta" [style]="{'color': '#ffffff'}"></button>
     </p-footer>
 </p-dialog>

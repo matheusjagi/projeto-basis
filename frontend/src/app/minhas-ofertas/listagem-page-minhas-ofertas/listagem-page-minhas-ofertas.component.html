@@ -31,8 +31,8 @@
 <p-dialog header="Ofertas em sua peça" [(visible)]="displayVerOfertas" showEffect="fade" [style]="{'width': '70vw'}" [modal]="true" [contentStyle]="{padding: '2em', textAlign: 'center'}">
     <div class="p-grid">
         <div class="p-col-12 drop-column">
-            <p-tabView (onChange)="eventoTeste($event)">
-                <p-tabPanel *ngFor="let oferta of minhasOfertas; let i = index;" [header]="incrementaIndex(i)" leftIcon="fa fa-exchange" (onChange)="adicionaOfertaClicada(oferta)" >
+            <p-tabView (onChange)="capturaOfertaSelecionada($event)">
+                <p-tabPanel *ngFor="let oferta of minhasOfertas; let i = index;" [header]="incrementaIndex(i)" leftIcon="fa fa-exchange">
                     <div *ngFor="let item of oferta.itensOfertados" id="item-linha" class="p-col-12">
                         <div class="p-grid">
                             <div class="item-details">
@@ -60,6 +60,6 @@
             icon="pi pi-check" (click)="aceitarOferta()" label="Aceitar" [style]="{'color': '#ffffff'}"></button>
 
         <button class="ui-button-danger botaoVerOfertas" pButton type="button" [disabled]="!selectedOferta"
-        icon="pi pi-times" (click)="recusarOferta(selectedOferta)" label="Recusar" [style]="{'color': '#ffffff', 'background-color': '#e91224'}"></button>
+        icon="pi pi-times" (click)="recusarOferta()" label="Recusar" [style]="{'color': '#ffffff', 'background-color': '#e91224'}"></button>
     </p-footer>
 </p-dialog>

@@ -26,6 +26,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     draggedItem: ItemModel = null;
     displayDetalhesItem: boolean = false;
     displayTroca: boolean = false;
+    criandoOferta: boolean = false;
 
     constructor(
         private itemService: ItemService,
@@ -137,6 +138,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     criarOferta(){
+        this.criandoOferta = true;
         this.form.patchValue({itemDtoId: this.idItemOferta});
         this.form.patchValue({situacaoDtoId: 1});
         this.form.patchValue({usuarioDtoId: this.localstorageService.getId()});
@@ -155,8 +157,12 @@ export class ListagemPageOfertaComponent implements OnInit {
             (oferta) => {
                 this.displayTroca = false;
                 this.notification.addSuccessMessage("Oferta criada com sucesso!");
+                this.criandoOferta = false;
             },
-            () => { this.notification.addErrorMessage("Falha ao realizar a oferta."); }
+            () => {
+                this.notification.addErrorMessage("Falha ao realizar a oferta.");
+                this.criandoOferta = false;
+            }
         )
     }
 
