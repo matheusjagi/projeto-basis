@@ -18,6 +18,10 @@ export class LocalstorageService {
         return this.usuarioLogado;
     }
 
+    setUsuario(usuario){
+        this.usuarioLogado = usuario;
+    }
+
     getId() {
         return this.usuarioLogado.id;
     }
