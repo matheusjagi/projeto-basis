@@ -17,6 +17,10 @@ export class OfertaService {
         return this.http.patch(`${this.api}/aceitar/${idOferta}`, {});
     }
 
+    recusarOferta(idOferta){
+        return this.http.patch(`${this.api}/recusar/${idOferta}`, {});
+    }
+
     buscarTodos() {
         return this.http.get<OfertaModel[]>(`${this.api}`);
     }

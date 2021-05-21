@@ -20,6 +20,7 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
     displayVerOfertas: boolean = false;
     selectedItem: ItemModel;
     selectedOferta: OfertaModel = null;
+    isProgress: boolean = false;
 
     constructor(
         private itemService: ItemService,
@@ -97,6 +98,18 @@ export class ListagemPageMinhasOfertasComponent implements OnInit {
                     this.buscarMeusItens();
                 },
                 () => { this.notification.addErrorMessage("Falha ao aceitar a oferta.") }
+            )
+    }
+
+    recusarOferta(){
+        this.ofertaService.recusarOferta(this.selectedOferta.id)
+            .subscribe(
+                () => {
+                    this.displayVerOfertas = false;
+                    this.notification.addSuccessMessage("Oferta recusada com sucesso!");
+                    this.buscarMeusItens();
+                },
+                () => { this.notification.addErrorMessage("Falha ao recusar a oferta.") }
             )
     }
 

@@ -8,6 +8,7 @@ import { VersionTagModule } from '@nuvem/angular-base';
 import { AppTopbarComponent } from '../components/topbar/app.topbar.component';
 import { AppFooterComponent } from '../components/footer/app.footer.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { ProgressSpinnerModule } from 'primeng';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { BlockUIModule } from 'ng-block-ui';
         MenuModule,
         VersionTagModule,
         PageNotificationModule,
-        BlockUIModule
+        BlockUIModule,
+        ProgressSpinnerModule
     ]
 })
 export class AdminModule { }

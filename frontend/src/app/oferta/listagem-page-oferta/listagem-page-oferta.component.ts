@@ -27,6 +27,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     displayDetalhesItem: boolean = false;
     displayTroca: boolean = false;
     criandoOferta: boolean = false;
+    isProgress: boolean = false;
 
     constructor(
         private itemService: ItemService,
@@ -139,6 +140,7 @@ export class ListagemPageOfertaComponent implements OnInit {
 
     criarOferta(){
         this.criandoOferta = true;
+        this.isProgress = true;
         this.form.patchValue({itemDtoId: this.idItemOferta});
         this.form.patchValue({situacaoDtoId: 1});
         this.form.patchValue({usuarioDtoId: this.localstorageService.getId()});
@@ -156,6 +158,7 @@ export class ListagemPageOfertaComponent implements OnInit {
         ).subscribe(
             (oferta) => {
                 this.displayTroca = false;
+                this.isProgress = false;
                 this.notification.addSuccessMessage("Oferta criada com sucesso!");
                 this.criandoOferta = false;
             },

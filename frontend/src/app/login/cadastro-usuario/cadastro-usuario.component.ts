@@ -16,6 +16,7 @@ export class CadastroUsuarioComponent implements OnInit {
   @Output() fechar = new EventEmitter;
   form: FormGroup;
   submit: boolean = false;
+  isProgress: boolean = false;
 
   constructor(
       private usuarioService: UsuarioService,
@@ -38,19 +39,22 @@ export class CadastroUsuarioComponent implements OnInit {
 
   salvar(){
     this.submit = true;
+    this.isProgress = true;
     this.usuarioService.salvar(this.form.value).pipe(
     finalize(() => {
       this.fecharModal();
       this.submit = false;
     })).subscribe(
       (usuario) => {
+        this.isProgress = false;
         this.messageService.add({severity:'success', summary:'Sucesso', detail:'Usuário criado com sucesso!'});
       },
     () => {
+        this.isProgress = false;
         this.messageService.add({severity:'error', summary:'Falha', detail:'Falha ao cadastrar'});
       }
     )
-    
+
   }
 
   fecharModal(){

@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { CadastroUsuarioComponent } from './login/cadastro-usuario/cadastro-usuario.component';
+import { ProgressSpinnerModule } from 'primeng';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { CadastroUsuarioComponent } from './login/cadastro-usuario/cadastro-usua
         VersionTagModule,
         MenuModule,
         ReactiveFormsModule,
-        PageNotificationModule
+        PageNotificationModule,
+        ProgressSpinnerModule
         // SecurityModule.forRoot(environment.auth),
     ],
     providers: [

@@ -1,4 +1,9 @@
 <p-toast></p-toast>
+
+<div class="progress-spinner" *ngIf="isProgress">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+
 <form [formGroup]="form" (ngSubmit)="salvar()">
     <p-dialog header="Cadastro de Usuario" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
         [draggable]="false" [resizable]="false" (onHide)="fecharModal()">
@@ -22,8 +27,7 @@
         </div>
 
         <p-footer>
-            <button type="submit" pButton icon="pi pi-refresh" label="Criar" [disabled]="cadastrarUsuario()"></button>
-            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar" class="ui-button-secondary"></button>
+            <button type="submit" pButton icon="pi pi-plus" label="Criar" [disabled]="cadastrarUsuario()"></button>
         </p-footer>
     </p-dialog>
 </form>
