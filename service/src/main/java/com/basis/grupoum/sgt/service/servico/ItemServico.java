@@ -2,7 +2,6 @@ package com.basis.grupoum.sgt.service.servico;
 
 import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
-import com.basis.grupoum.sgt.service.repositorio.CategoriaRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.exception.RegraNegocioException;
@@ -19,7 +18,7 @@ public class ItemServico {
 
     private final ItemRepositorio itemRepositorio;
     private final ItemMapper itemMapper;
-    private final CategoriaRepositorio categoriaRepositorio;
+    private final CategoriaServico categoriaServico;
 
     public List<Categoria> listarCategoria(){
         return categoriaRepositorio.findAll();

@@ -4,7 +4,6 @@ import { LocalstorageService } from './../../services/localstorage.service';
 import { OfertaService } from './../../services/oferta.service';
 import { Component, OnInit } from '@angular/core';
 import { OfertaModel } from 'src/app/models/oferta-model';
-import { OfertaModule } from 'src/app/oferta/oferta.module';
 
 @Component({
     selector: 'app-listagem-page-minhas-ofertas',
