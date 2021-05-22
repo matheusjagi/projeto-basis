@@ -3,7 +3,6 @@ package com.basis.grupoum.sgt.service.builder;
 import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Usuario;
-import com.basis.grupoum.sgt.service.servico.CategoriaServico;
 import com.basis.grupoum.sgt.service.servico.ItemServico;
 import com.basis.grupoum.sgt.service.servico.dto.ItemDTO;
 import com.basis.grupoum.sgt.service.servico.mapper.ItemMapper;
