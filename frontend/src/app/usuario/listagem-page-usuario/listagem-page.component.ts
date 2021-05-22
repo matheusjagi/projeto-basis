@@ -46,10 +46,9 @@ export class ListagemPageComponent implements OnInit {
     }
 
     salvar() {
-        this.usuario = this.form.value;
-        this.usuario.cpf = this.localstorageService.getCpf();
+        this.form.patchValue({cpf: this.localstorageService.getCpf()});
 
-        this.usuarioService.atualizar(this.usuario).subscribe(
+        this.usuarioService.atualizar(this.form.getRawValue()).subscribe(
             (usuario) => {
                 this.localstorageService.setUsuario(usuario);
                 localStorage.setItem("usuario", JSON.stringify(usuario))
