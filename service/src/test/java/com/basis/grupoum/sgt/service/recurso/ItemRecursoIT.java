@@ -1,6 +1,7 @@
 package com.basis.grupoum.sgt.service.recurso;
 
 import com.basis.grupoum.sgt.service.builder.ItemBuilder;
+import com.basis.grupoum.sgt.service.dominio.Categoria;
 import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.repositorio.ItemRepositorio;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;

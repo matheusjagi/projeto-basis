@@ -21,7 +21,7 @@ public class ItemServico {
     private final CategoriaServico categoriaServico;
 
     public List<Categoria> listarCategoria(){
-        return categoriaServico.buscarTodasCategorias();
+        return categoriaRepositorio.findAll();
     }
 
     public List<ItemDTO> listar(){

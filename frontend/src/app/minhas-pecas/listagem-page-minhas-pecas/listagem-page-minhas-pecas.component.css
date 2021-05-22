@@ -1,8 +1,3 @@
-.botaoVerOfertas{
-    width: 10em;
-    margin-top: 5px;
-}
-
 .container img {
     width: 100%;
     height: 100%;
@@ -13,12 +8,11 @@
     max-height: 120px;
 }
 
-.cardUsuarioProprietario{
-    background-color: #e8e1e1;
-}
-
-.margemBaixo{
-    margin-bottom: 1em;
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 }
 
 .botaoVerOfertas{
@@ -41,4 +35,12 @@
 
 .margemBaixo{
     margin-bottom: 0.5em;
+}
+
+.ativo{
+    color: chartreuse;
+}
+
+.inativo{
+    color: #ff0000
 }

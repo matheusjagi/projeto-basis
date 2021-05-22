@@ -1,12 +1,9 @@
-import { UsuarioService } from './../../services/usuario.service';
-import { UsuarioModel } from './../../models/usuario-model';
-import { OfertaModel } from './../../models/oferta-model';
 import { ItemModel } from './../../models/item-model';
-import { OfertaService } from './../../services/oferta.service';
-import { LocalstorageService } from './../../services/localstorage.service';
-import { ItemService } from './../../services/item.service';
-import { Component, OnInit } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
+import { LocalstorageService } from './../../services/localstorage.service';
+import { OfertaService } from './../../services/oferta.service';
+import { Component, OnInit } from '@angular/core';
+import { OfertaModel } from 'src/app/models/oferta-model';
 
 @Component({
     selector: 'app-listagem-page-minhas-ofertas',
@@ -14,113 +11,67 @@ import { PageNotificationService } from '@nuvem/primeng-components';
     styleUrls: ['./listagem-page-minhas-ofertas.component.css']
 })
 export class ListagemPageMinhasOfertasComponent implements OnInit {
-
     minhasOfertas: OfertaModel[] = [];
-    meusItens: ItemModel[] = [];
-    itensOfertados: ItemModel[] = [];
     displayVerOfertas: boolean = false;
-    selectedItem: ItemModel;
-    selectedOferta: OfertaModel = null;
-    isProgress: boolean = false;
-    usuarioOfertante: UsuarioModel = null;
+    itensOfertados: ItemModel[] = [];
 
     constructor(
-        private itemService: ItemService,
         private ofertaService: OfertaService,
-        private usuarioService: UsuarioService,
         private localstorageService: LocalstorageService,
         private notification: PageNotificationService
     ) { }
 
     ngOnInit(): void {
-        this.buscarMeusItens();
+        this.buscarMinhasOfertas(this.localstorageService.getId());
     }
 
-    buscarMeusItens(){
-        this.itemService.buscarPorUsuario(this.localstorageService.getId())
-            .subscribe(
-                (itens) => {
-                    this.meusItens = itens;
-                    this.montaImagem(this.meusItens);
-                }
-            )
-    }
-
-    montaImagem(itens){
-        itens.forEach(item => {
+    montaImagem(ofertas) {
+        ofertas.forEach(oferta => {
             let montandoBase64 = 'data:image/png;base64,';
-            let novaString = montandoBase64.concat(item.foto);
-            item.foto = novaString;
+            let novaString = montandoBase64.concat(oferta.foto);
+            oferta.foto = novaString;
         });
     }
 
-    mostraOfertas(item: ItemModel){
-        this.selectedItem = item;
-
-        this.ofertaService.buscarPorItem(item.id)
+    buscarMinhasOfertas(idUsuario) {
+        this.ofertaService.buscarPorUsuario(idUsuario)
             .subscribe(
                 (ofertas) => {
-                    this.minhasOfertas = ofertas;
-                    this.minhasOfertas = this.minhasOfertas.filter(oferta => { return oferta.situacaoDtoId == 1 });
-
-                    if(!Object.values(this.minhasOfertas).length){
-                        this.notification.addWarnMessage("Não existem ofertas para essa peça!");
-                    }
-                    else{
-                        this.displayVerOfertas = true;
-                        this.selectedOferta = null;
-
-                        if(this.minhasOfertas.length == 1){
-                            this.selectedOferta = this.minhasOfertas[0];
-                            this.montaImagem(this.selectedOferta.itensOfertados);
-                        }
-                        else{
-                            this.minhasOfertas.forEach(oferta => {
-                                this.montaImagem(oferta.itensOfertados);
-                            })
-                        }
-                    }
+                    this.montaImagem(ofertas);
+                    this.minhasOfertas = ofertas.filter(oferta => {
+                        return oferta.situacaoDtoId == 1;
+                    })
                 },
                 () => {
-                    this.notification.addErrorMessage("Falha ao carregar as ofertas.");
+                    this.notification.addErrorMessage("Falha ao carregar a vizualização.");
                 }
             )
-
-        this.minhasOfertas.forEach(oferta => {
-            this.meusItens.push.apply(this.meusItens, oferta.itensOfertados);
-        })
-
     }
 
-    aceitarOferta(){
-        this.ofertaService.aceitarOferta(this.selectedOferta.id)
+    mostraOfertas(idOferta) {
+        this.ofertaService.buscarPorId(idOferta)
             .subscribe(
-                () => {
-                    this.displayVerOfertas = false;
-                    this.notification.addSuccessMessage("Oferta aceita com sucesso!");
-                    this.buscarMeusItens();
+                (oferta) => {
+                    this.montaImagem(oferta.itensOfertados);
+                    this.itensOfertados = oferta.itensOfertados;
+                    this.displayVerOfertas = true;
                 },
-                () => { this.notification.addErrorMessage("Falha ao aceitar a oferta.") }
+                () => {
+                    this.notification.addErrorMessage("Falha ao carregar a vizualização.");
+                }
             )
     }
 
-    recusarOferta(){
-        this.ofertaService.recusarOferta(this.selectedOferta.id)
+    cancelarOferta(idOferta){
+        this.ofertaService.cancelarOferta(idOferta)
             .subscribe(
                 () => {
                     this.displayVerOfertas = false;
-                    this.notification.addSuccessMessage("Oferta recusada com sucesso!");
-                    this.buscarMeusItens();
+                    this.notification.addSuccessMessage("Oferta cancelada com sucesso!");
+                    this.buscarMinhasOfertas(this.localstorageService.getId());
                 },
-                () => { this.notification.addErrorMessage("Falha ao recusar a oferta.") }
+                () => { this.notification.addErrorMessage("Falha ao cancelar a oferta.") }
             )
     }
 
-    incrementaIndex(index){
-        return index + 1;
-    }
-
-    capturaOfertaSelecionada(event){
-        this.selectedOferta = this.minhasOfertas[event.index];
-    }
 }

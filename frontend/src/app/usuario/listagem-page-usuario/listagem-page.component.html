@@ -21,7 +21,7 @@
         </div>
 
         <p-footer>
-            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Alterar"></button>
+            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Alterar" [disabled]="form.invalid"></button>
         </p-footer>
 </form>
 </p-card>
