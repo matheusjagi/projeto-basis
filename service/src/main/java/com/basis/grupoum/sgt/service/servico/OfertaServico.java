@@ -43,6 +43,11 @@ public class OfertaServico {
         return ofertaListagemMapper.toDto(ofertasPorSitucao);
     }
 
+    public List<OfertaListagemDTO> listarPorUsuario(Long idUsuario){
+        List<Oferta> ofertasPorUsuario = ofertaRepositorio.findAllByUsuarioId(idUsuario);
+        return ofertaListagemMapper.toDto(ofertasPorUsuario);
+    }
+
     public OfertaDTO obterPorId(Long id){
         Oferta oferta = ofertaRepositorio
                 .findById(id).orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
@@ -99,9 +104,11 @@ public class OfertaServico {
         atualizar(ofertaDTO);
     }
 
-    public void cancelar(Long idItem){
-        List<OfertaDTO> ofertasCanceladas = ofertaMapper.toDto(ofertaRepositorio.findAllByItemId(idItem));
-        cancelaDemaisOfertas(ofertasCanceladas,idItem);
+    public void cancelar(Long idOferta){
+        OfertaDTO ofertaDTO = obterPorId(idOferta);
+        ofertaDTO.setSituacaoDtoId(4L);
+        ofertaDTO = alteraDisponibilidadeItensOfertados(ofertaDTO, true);
+        atualizar(ofertaDTO);
     }
 
     public OfertaDTO alteraDisponibilidadeItensOfertados(OfertaDTO ofertaDTO, boolean disponibilidade){

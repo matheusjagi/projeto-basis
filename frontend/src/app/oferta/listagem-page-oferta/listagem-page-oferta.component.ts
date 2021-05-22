@@ -1,3 +1,4 @@
+import { ItemModel } from './../../models/item-model';
 import { LocalstorageService } from './../../services/localstorage.service';
 import { ItemService } from './../../services/item.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,6 @@ import { PageNotificationService } from '@nuvem/primeng-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfertaService } from 'src/app/services/oferta.service';
 import { finalize } from 'rxjs/operators';
-import { ItemModel } from 'src/app/models/item-model';
 import { SelectItem } from 'primeng';
 
 @Component({
@@ -19,7 +19,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     form: FormGroup;
     itens: ItemModel[] = [];
     sortCategoria: SelectItem[] = [];
-    selectedItem: ItemModel[] = [];
+    selectedItem: ItemModel = new ItemModel();
     selectedRemoveItem: ItemModel[] = [];
     selectedItensOfertados: ItemModel[] = [];
     availableItens: ItemModel[] = [];
@@ -28,6 +28,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     displayTroca: boolean = false;
     criandoOferta: boolean = false;
     isProgress: boolean = false;
+    isClosable: boolean = true;
 
     constructor(
         private itemService: ItemService,
@@ -144,6 +145,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     criarOferta(){
+        this.isClosable = false;
         this.criandoOferta = true;
         this.isProgress = true;
         this.form.patchValue({itemDtoId: this.idItemOferta});
@@ -166,10 +168,12 @@ export class ListagemPageOfertaComponent implements OnInit {
                 this.isProgress = false;
                 this.notification.addSuccessMessage("Oferta criada com sucesso!");
                 this.criandoOferta = false;
+                this.isClosable = true;
             },
             () => {
                 this.notification.addErrorMessage("Falha ao realizar a oferta.");
                 this.criandoOferta = false;
+                this.isClosable = true;
             }
         )
     }

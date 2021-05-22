@@ -6,7 +6,7 @@
 
 <form [formGroup]="form" (ngSubmit)="salvar()">
     <p-dialog header="Cadastro de Usuario" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
-        [draggable]="false" [resizable]="false" (onHide)="fecharModal()">
+        [draggable]="false" [resizable]="false" (onHide)="fecharModal()" [closable]="!submit">
         <div class="ui-fluid">
             <div class="p-field">
                 <label for="nome">Nome</label>

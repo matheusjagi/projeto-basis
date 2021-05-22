@@ -37,6 +37,12 @@ public class OfertaRecurso {
         return new ResponseEntity<>(ofertasPorSitucao, HttpStatus.OK);
     }
 
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<OfertaListagemDTO>> listarPorUsuario (@PathVariable("id") Long idUsuario){
+        List<OfertaListagemDTO> ofertasPorUsuario = ofertaServico.listarPorUsuario(idUsuario);
+        return new ResponseEntity<>(ofertasPorUsuario, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<OfertaDTO> obterPorId(@PathVariable("id") Long idOferta) {
         OfertaDTO oferta = ofertaServico.obterPorId(idOferta);
@@ -80,8 +86,8 @@ public class OfertaRecurso {
     }
 
     @PatchMapping("/cancelar/{id}")
-    public ResponseEntity<Void> cancelar (@PathVariable("id") Long idItem){
-        ofertaServico.cancelar(idItem);
+    public ResponseEntity<Void> cancelar (@PathVariable("id") Long idOferta){
+        ofertaServico.cancelar(idOferta);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -4,7 +4,6 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-listagem-page',
@@ -35,7 +34,7 @@ export class ListagemPageComponent implements OnInit {
             nome: [null, [Validators.required]],
             email: [null, [Validators.required, Validators.email]],
             cpf: [{ value: null, disabled: true }, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]],
-            dataNascimento: [null, [Validators.required]]
+            dataNascimento: [{ value: null, disabled: true }, [Validators.required]]
         });
         this.buscarUsuario();
     }

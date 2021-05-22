@@ -21,6 +21,10 @@ export class OfertaService {
         return this.http.patch(`${this.api}/recusar/${idOferta}`, {});
     }
 
+    cancelarOferta(idOferta){
+        return this.http.patch(`${this.api}/cancelar/${idOferta}`, {});
+    }
+
     buscarTodos() {
         return this.http.get<OfertaModel[]>(`${this.api}`);
     }
@@ -31,6 +35,10 @@ export class OfertaService {
 
     buscarPorItem(idItem) {
         return this.http.get<OfertaModule[]>(`${this.api}/item/${idItem}`);
+    }
+
+    buscarPorUsuario(idUsuario){
+        return this.http.get<OfertaModel[]>(`${this.api}/usuario/${idUsuario}`);
     }
 
     salvar(oferta) {
