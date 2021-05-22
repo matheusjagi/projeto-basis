@@ -1,9 +1,7 @@
 package com.basis.grupoum.sgt.service.repositorio;
 
 import com.basis.grupoum.sgt.service.dominio.Usuario;
-import com.basis.grupoum.sgt.service.servico.dto.UsuarioLoginDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 

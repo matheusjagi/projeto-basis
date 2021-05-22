@@ -28,8 +28,7 @@ public class UsuarioServico {
     private final EmailServico emailServico;
 
     public UsuarioLoginDTO autenticacao(UsuarioLoginDTO usuarioLoginDTO){
-        UsuarioLoginDTO usuLoginDTO = usuarioLoginMapper.toDto(usuarioRepositorio.findByEmailAndToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getToken()));
-        return usuLoginDTO;
+        return usuarioLoginMapper.toDto(usuarioRepositorio.findByEmailAndToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getToken()));
     }
 
     public List<UsuarioListagemDTO> listar (){
@@ -38,9 +37,7 @@ public class UsuarioServico {
     }
 
     public Usuario getUsuario(Long id){
-        Usuario usuario = usuarioRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
-        return usuario;
+        return usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario não encontrado"));
     }
 
     public List<UsuarioListagemDTO> getUsuarioByNome(String nome){
