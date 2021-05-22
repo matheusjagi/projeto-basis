@@ -1,6 +1,7 @@
 package com.basis.grupoum.sgt.service.recurso;
 
 import com.basis.grupoum.sgt.service.builder.OfertaBuilder;
+import com.basis.grupoum.sgt.service.dominio.Item;
 import com.basis.grupoum.sgt.service.dominio.Oferta;
 import com.basis.grupoum.sgt.service.repositorio.OfertaRepositorio;
 import com.basis.grupoum.sgt.service.servico.mapper.OfertaMapper;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -144,4 +148,5 @@ public class OfertaRecursoIT extends IntTestComum {
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
 }

@@ -73,11 +73,6 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
-    public void atualizarTodas(List<OfertaDTO> ofertas){
-        List<Oferta> ofertasAtualizaveis = ofertaMapper.toEntity(ofertas);
-        ofertaRepositorio.saveAll(ofertasAtualizaveis);
-    }
-
     public void deletar(Long idOferta){
         ofertaRepositorio.deleteById(idOferta);
     }
@@ -129,15 +124,6 @@ public class OfertaServico {
 
         itemServico.atualizarTodos(itensCompletos);
         return ofertaDTO;
-    }
-
-    public void cancelaDemaisOfertas(List<OfertaDTO> ofertasCanceladas, Long idItemCancelado){
-        ofertasCanceladas.stream().filter(ofertaDTO -> ofertaDTO.getItemDtoId().equals(idItemCancelado))
-                .forEach(ofertaDTO -> {
-                    ofertaDTO.setSituacaoDtoId(4L);
-                    alteraDisponibilidadeItensOfertados(ofertaDTO, true);
-                });
-        atualizarTodas(ofertasCanceladas);
     }
 
     private EmailDTO criarEmailOferta(Oferta oferta){

@@ -19,16 +19,13 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     private ItemServico itemServico;
 
     @Autowired
-    private CategoriaServico categoriaServico;
-
-    @Autowired
     private ItemMapper itemMapper;
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
 
     public List<Categoria> buscarCategorias(){
-        return categoriaServico.buscarTodasCategorias();
+        return itemServico.listarCategoria();
     }
 
     @Override
