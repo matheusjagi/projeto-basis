@@ -59,6 +59,15 @@ public class OfertaRecursoIT extends IntTestComum {
     }
 
     @Test
+    public void listarPorUsuario() throws Exception{
+        Oferta oferta = ofertaBuilder.construir();
+
+        getMockMvc().perform(get(URL+"/usuario/"+oferta.getUsuario().getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
     public void obterOfertasPorItem() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
 
@@ -130,7 +139,7 @@ public class OfertaRecursoIT extends IntTestComum {
     public void cancelar() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
 
-        getMockMvc().perform(patch(URL+"/cancelar/"+oferta.getItem().getId())
+        getMockMvc().perform(patch(URL+"/cancelar/"+oferta.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
                 .andExpect(MockMvcResultMatchers.status().isOk());

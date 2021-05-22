@@ -96,7 +96,7 @@
 </p-dialog>
 
 <p-dialog header="Faça sua Oferta! Arraste as Peças que deseja ofertar" [(visible)]="displayTroca" showEffect="fade"
-    [style]="{'width': '70vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}" [modal]="true">
+    [style]="{'width': '70vw'}" [contentStyle]="{padding: '2em', textAlign: 'center'}" [modal]="true" [closable]="isClosable">
 
     <div class="progress-spinner" *ngIf="isProgress">
         <p-progressSpinner></p-progressSpinner>
@@ -134,6 +134,6 @@
 
     <p-footer>
         <button class="ui-button-success" type="submit" pButton icon="pi pi-check" (click)="criarOferta()"
-            label="Ofertar" [disabled]="desabilitaBotaoOfertar()" [style]="{'color': '#ffffff'}"></button>
+            label="Ofertar" [disabled]="desabilitaBotaoOfertar() || !isClosable" [style]="{'color': '#ffffff'}"></button>
     </p-footer>
 </p-dialog>

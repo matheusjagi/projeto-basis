@@ -28,6 +28,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     displayTroca: boolean = false;
     criandoOferta: boolean = false;
     isProgress: boolean = false;
+    isClosable: boolean = true;
 
     constructor(
         private itemService: ItemService,
@@ -144,6 +145,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     }
 
     criarOferta(){
+        this.isClosable = false;
         this.criandoOferta = true;
         this.isProgress = true;
         this.form.patchValue({itemDtoId: this.idItemOferta});
@@ -166,10 +168,12 @@ export class ListagemPageOfertaComponent implements OnInit {
                 this.isProgress = false;
                 this.notification.addSuccessMessage("Oferta criada com sucesso!");
                 this.criandoOferta = false;
+                this.isClosable = true;
             },
             () => {
                 this.notification.addErrorMessage("Falha ao realizar a oferta.");
                 this.criandoOferta = false;
+                this.isClosable = true;
             }
         )
     }
