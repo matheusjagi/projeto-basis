@@ -1,26 +1,33 @@
-<p-virtualScroller [value]="meusItens" scrollHeight="50vw" [rows]="100" [lazy]="true">
+<p-virtualScroller [value]="minhasOfertas" scrollHeight="50vw" [rows]="100" [lazy]="true">
     <p-header [style]="{'color': '#333333'}">
-        Minhas Peças
+        Minhas Ofertas
     </p-header>
 
-    <ng-template let-item pTemplate="listItem">
+    <ng-template let-oferta pTemplate="listItem">
         <div id="item-linha" class="p-col-12">
             <div class="p-grid">
                 <div class="item-details">
                     <div class="p-col-10">
                         <div class="p-grid">
-                            <div class="container p-col-4 card showCard" (click)="mostrarItem(item)">
-                                <img [src]="item.foto">
+                            <div class="container p-col-4 card showCard">
+                                <img [src]="oferta.foto">
                             </div>
                             <div class="p-col-8">
-                                <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
-                                <div class="p-col-12">Descrição: <b>{{item.descricao}}</b></div>
+                                <div class="p-col-12 margemBaixo">
+                                    <span class="card cardUsuarioProprietario">
+                                        Usuário Proprietário: <b>{{ oferta.nomeUsuario }}</b>
+                                    </span>
+                                </div>
+                                <div class="p-col-12">Item da Oferta: <b>{{ oferta.nomeItem }}</b></div>
+                                <div class="p-col-12">Descrição: <b>{{ oferta.descricaoItem }}</b></div>
                             </div>
                         </div>
                     </div>
                     <div id="botao-item" class="p-col-2">
                         <button class="ui-button-raised botaoVerOfertas" pButton type="button" icon="pi pi-search"
-                            (click)="mostraOfertas(item)" label="Ver Ofertas"></button>
+                            (click)="mostraOfertas(oferta.id)" label="Ver Oferta"></button>
+                        <button class="ui-button-danger botaoVerOfertas" pButton type="button" icon="pi pi-times"
+                            (click)="cancelarOferta(oferta.id)" label="Cancelar"></button>
                     </div>
                 </div>
             </div>
@@ -28,44 +35,23 @@
     </ng-template>
 </p-virtualScroller>
 
-<p-dialog header="Ofertas em sua peça" [(visible)]="displayVerOfertas" showEffect="fade" [style]="{'width': '70vw'}" [modal]="true" [contentStyle]="{padding: '2em', textAlign: 'center'}">
-    <div class="p-grid">
-        <div class="p-col-12 drop-column">
-            <p-tabView (onChange)="capturaOfertaSelecionada($event)">
-                <p-tabPanel *ngFor="let oferta of minhasOfertas; let i = index;" [header]="incrementaIndex(i)" leftIcon="fa fa-exchange">
-                    <div *ngFor="let item of oferta.itensOfertados" id="item-linha" class="p-col-12">
-                        <div class="p-grid">
-                            <div class="item-details">
-                                <div class="p-col-12">
-                                    <div class="p-grid">
-                                        <div class="container p-col-4 card showCard" (click)="mostrarItem(item)">
-                                            <img [src]="item.foto">
-                                        </div>
-                                        <div class="p-col-8">
-                                            <div class="p-col-12 margemBaixo">
-                                                <span class="card">
-                                                    Usuário Ofertante: <b>{{ minhasOfertas[i].nomeUsuarioOfertante }}</b>
-                                                </span>
-                                            </div>
-                                            <div class="p-col-12">Item: <b>{{ item.nome }}</b></div>
-                                            <div class="p-col-12">Descrição: <b>{{ item.descricao }}</b></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<p-dialog header="Itens que ofertei" [(visible)]="displayVerOfertas" showEffect="fade" [style]="{'width': '70vw'}"
+    [modal]="true" [contentStyle]="{padding: '2em', textAlign: 'center'}">
+    <div *ngFor="let item of itensOfertados"  id="item-linha" class="p-col-12">
+        <div class="p-grid">
+            <div class="item-details">
+                <div class="p-col-10">
+                    <div class="p-grid">
+                        <div class="container p-col-4 card showCard">
+                            <img [src]="item.foto">
+                        </div>
+                        <div class="p-col-8">
+                            <div class="p-col-12">Item da Oferta: <b>{{ item.nome }}</b></div>
+                            <div class="p-col-12">Descrição: <b>{{ item.descricao }}</b></div>
                         </div>
                     </div>
-                </p-tabPanel>
-            </p-tabView>
+                </div>
+            </div>
         </div>
     </div>
-
-    <p-footer>
-        <button class="ui-button-success botaoVerOfertas" pButton type="button" [disabled]="!selectedOferta"
-            icon="pi pi-check" (click)="aceitarOferta()" label="Aceitar" [style]="{'color': '#ffffff'}"></button>
-
-        <button class="ui-button-danger botaoVerOfertas" pButton type="button" [disabled]="!selectedOferta"
-        icon="pi pi-times" (click)="recusarOferta()" label="Recusar" [style]="{'color': '#ffffff', 'background-color': '#e91224'}"></button>
-    </p-footer>
 </p-dialog>
-

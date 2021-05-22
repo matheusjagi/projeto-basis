@@ -1,3 +1,4 @@
+import { ItemModel } from './../../models/item-model';
 import { LocalstorageService } from './../../services/localstorage.service';
 import { ItemService } from './../../services/item.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,6 @@ import { PageNotificationService } from '@nuvem/primeng-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfertaService } from 'src/app/services/oferta.service';
 import { finalize } from 'rxjs/operators';
-import { ItemModel } from 'src/app/models/item-model';
 import { SelectItem } from 'primeng';
 
 @Component({
@@ -19,7 +19,7 @@ export class ListagemPageOfertaComponent implements OnInit {
     form: FormGroup;
     itens: ItemModel[] = [];
     sortCategoria: SelectItem[] = [];
-    selectedItem: ItemModel[] = [];
+    selectedItem: ItemModel = new ItemModel();
     selectedRemoveItem: ItemModel[] = [];
     selectedItensOfertados: ItemModel[] = [];
     availableItens: ItemModel[] = [];

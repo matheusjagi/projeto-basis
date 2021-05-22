@@ -1,12 +1,10 @@
-<p-dataView #dv [value]="itens" [paginator]="true" [rows]="12" paginatorPosition="both" filterBy="nome"
-    [loading]="loading">
+<p-dataView #dv [value]="itens" [paginator]="true" [rows]="12" paginatorPosition="both" filterBy="nome">
     <p-header>
         <div class="ui-helper-clearfix">
             <div class="p-grid">
                 <div class="p-col-12 p-md-4">
                     <p-dropdown class="ng-tns-c3-4 ng-pristine ng-valid ng-touched dropCategoria"
-                        [options]="sortCategoria" placeholder="Pesquisar por Categoria" [showClear]="true"
-                        (onChange)="filterCategoria($event.value)">
+                        [options]="sortCategoria" placeholder="Pesquisar por Categoria" [showClear]="true">
                     </p-dropdown>
                 </div>
                 <div class="p-col-6 p-md-4 filter-container">

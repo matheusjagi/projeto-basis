@@ -10,6 +10,7 @@ const routes: Routes = [
             { path: 'usuarios', loadChildren: () => import('../usuario/usuario.module').then(m => m.UsuarioModule) },
             { path: 'itens', loadChildren: () => import('../item/item.module').then(m => m.ItemModule) },
             { path: 'ofertas', loadChildren: () => import('../oferta/oferta.module').then(m => m.OfertaModule) },
+            { path: 'minhas-pecas', loadChildren: () => import('../minhas-pecas/minhas-pecas.module').then(m => m.MinhasPecasModule) },
             { path: 'minhas-ofertas', loadChildren: () => import('../minhas-ofertas/minhas-ofertas.module').then(m => m.MinhasOfertasModule) }
         ]
     }
